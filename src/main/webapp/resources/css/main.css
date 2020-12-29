@@ -1,0 +1,306 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 24, 2017, 9:45:08 AM
+    Author     : vasilije
+*/
+
+body {
+    font-size:14px;
+}
+
+h1 {
+    font-size:30px;
+    margin-bottom:20px;
+    border-bottom: 1px #eee solid;
+}
+
+.title {
+    font-size:22px;
+    padding-bottom:20px;
+    border-bottom: 1px #eee solid;
+}
+
+.ui-growl {
+    width:280px;
+    right:5px;
+}
+
+.ui-growl-item-container {
+    top: 80px;
+    background-image: linear-gradient(#333, #111);
+    color:#EDEDED;
+    opacity: .98;
+}
+
+.ui-growl-message {
+    width: 180px;
+}
+
+.input-group {
+    margin-bottom: 4px;
+}
+
+#special_menu {
+    margin-top: 30px;
+    border-right: 1px #eee solid
+}
+
+#logo {
+    color:#fff;
+    font-weight:bold;
+    font-size:1.5em;
+}
+
+#repol-logo {
+    float:left;
+    margin-right:10px;
+    max-height:50px;
+}
+
+#logo-text {
+    float:right;
+    padding-top:4%;
+}
+
+.navbar-fixed-top .navbar-brand {
+    padding: 8px 0;
+}
+
+#content {
+    padding-left:5%;
+    padding-right:5%;
+}
+
+#footer {
+    border-top: 1px #eee solid;
+    margin-top:30px;
+    margin-bottom:20px;
+    padding-top:15px;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    color: #fff;
+    /*RCUB custom */
+    /* background-color: #8d8d8d; */
+    background-color: #f05532;
+}
+
+/*RCUB custom */
+.nav-pills > li > a:hover {
+    background-color: #fdebe7;
+}
+
+.nav > li > a {
+    color: #1d1d1d;
+}
+
+.dashboard {
+    text-align:center;
+    vertical-align: middle;
+    padding:20px;
+    margin:5px;
+    border: 1px solid #eee;
+    border-radius: 7px;
+}
+
+.dashboard label {
+    padding:8px;
+    border: 2px solid #ffffff;
+    margin-bottom:10px;
+}
+
+.uninitialized {
+    background: #eeeeee
+}
+
+.operational {
+    background: #BBFFBB;
+}
+
+.malfunction {
+    background: #EE8080;
+}
+
+.busy {
+
+}
+
+/* RCUB CUSTOM */
+
+a, a:hover {
+    color:#f05532;
+}
+
+.navbar-inverse {
+    border-bottom: 5px solid #f05532;
+    background-image: url("images/header_pattern.png");
+    box-shadow: 0px 0px 10px #888888;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #eee;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #fff;
+    font-weight: bold;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover {
+    color:#fff;
+    background-color: #f05532;
+    border-radius: 5px;
+}
+
+.ui-growl {
+    top: 30px;
+}
+
+.ui-growl-item {
+    color:#000;
+    background-color: #eee;
+    border-radius:5px;
+}
+
+.form-separator {
+    margin-top:10px;
+    margin-bottom:30px;
+}
+
+.form-input-element-box {
+    width:98%;
+}
+
+.form-input-element {
+    border-right: 1px solid #eee;
+    display:block;
+    min-height:35px;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin-bottom:5px;
+    border-bottom:1px solid #eee;
+    font-size:0.85em;
+}
+
+.big-form-input-element {
+    min-height:60px;
+    display: block;
+}
+
+.form-input-element-label {
+    padding-right:10px;
+}
+
+.addValueRow {
+    white-space: nowrap;
+}
+
+.remove-clink {
+    float:right;
+}
+
+.checkboxLabel {
+    margin-left:15px;
+}
+
+.form-link {
+    font-size:1.1em;
+    margin-bottom:10px;
+    padding-top:10px;
+    border-bottom: 2px dotted #eee;
+}
+
+h4 {
+    margin-bottom:20px;
+}
+
+.form-panel {
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+.poolpicker-grid {
+    margin-bottom:20px;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+    border:none;
+}
+
+.form-description {
+    display:inline-block;
+    width:100%;
+    margin-top:20px;
+    margin-bottom:30px;
+    border:1px solid #eee;
+    padding:20px;
+    font-size:1.2em;
+}
+
+.submission-time {
+    font-size: 1.1em;
+    font-weight: lighter;
+    float:right;
+    display:inline-block;
+}
+
+.ui-tooltip-right {
+    max-width:400px;
+    font-size:1.2em;
+}
+
+.empty_mandatory {
+    box-shadow: 1px 1px 2px #f00;
+    padding:5px;
+}
+
+.form-element-description {
+    display:block;
+    margin:10px;
+    padding:4px;
+    padding-left:12px;
+    padding-right:12px;
+    border:1px solid #eee;
+    margin-bottom:8px;
+    border-radius: 5px;
+    color:#10285a;
+}
+
+.form-element-description > a, a:hover {
+    color: #f05532;
+}
+
+.ui-progressbar.ui-widget-content {
+    height: 25px;
+}
+
+.ui-progressbar .ui-progressbar-value.ui-widget-header {
+    height:25px;
+    background-color: #cfc;
+    background-image:none;
+}
+
+#upload_download {
+    margin-top:40px;
+}
+
+.footer-img {
+    max-height:55px;
+    margin-left:20px;
+}
+
+.header-img {
+    max-height:40px;
+}
+
+.return-link {
+    margin-top:30px;
+}
+
+.footer-ec {
+    font-size:0.9em;
+}

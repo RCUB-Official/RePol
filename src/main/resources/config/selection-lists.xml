@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<lists>
+    <list id="owner_types">
+        <element value="department">Department</element>
+        <element value="faculty">Faculty (school of an university)</element>
+        <element value="other">Other organization</element>
+    </list>
+    
+    <list id="minimum_optimum">
+        <element value="minimum">Minimum</element>
+        <element value="optimum">Optimum</element>
+    </list>
+    
+    <list id="repo_types">
+        <element value="departmental">Departmental</element>
+        <element value="institutional">Institutional</element>
+        <element value="multi-institutional">Multi-institutional</element>
+        <element value="subject-based">Subject-based</element>
+        <element value="aggregating">Aggregating</element>
+        <element value="governmental">Governmental</element>
+    </list>
+    
+    <list id="item_types_overally">
+        <element value="all">All types of materials</element>
+        <element value="publications">Publications</element>
+        <element value="data">Data</element>
+        <element value="educational materials">Educational materials</element>
+        <element value="research materials">Selected types of research materials</element>
+    </list>
+    
+    <list id="curation_levels">
+        <element value="none">Content is distributed as deposited (without any changes)</element>
+        <element value="basic">Basic metadata curation (brief checking, adding basic metadata, etc.)</element>
+        <element value="enhanced">Enhanced curation (conversion to new formats, enhancement of documentation)</element>
+        <element value="data">Data-level curation (conversion to new formats, enhancement of documentation and additional editing for accuracy)</element>
+    </list>
+    
+    <list id="item_types">
+        <element value="article">Journal articles</element>
+        <element value="preprints">Preprints</element>
+        <element value="bibliographic references">Bibliographic references</element>
+        <element value="conference and workshop papers">Conference and workshop papers</element>
+        <element value="theses and dissertations">Theses and dissertations</element>
+        <element value="reports and working papers">Reports and working papers</element>
+        <element value="books, chapters and section">Books, chapters and sections</element>
+        <element value="dataset">Datasets</element>
+        <element value="learning objects">Learning objects</element>
+        <element value="scientific and statistical data">Scientific and statistical data</element>
+        <element value="images">Images</element>
+        <element value="plain text">Plain text</element>
+        <element value="structured text">Structured text</element>
+        <element value="structured graphics">Structured graphics</element>
+        <element value="databases">Databases</element>
+        <element value="audiovisual data">Audiovisual data</element>
+        <element value="bibliographic data">Bibliographic data</element>
+
+
+        <element value="software">Software</element>
+        <element value="patent">Patents</element>
+        <element value="other">Other special item types</element>
+    </list>
+    
+    <list id="license_flavors_metadata">
+        <element value="descriptive">Descriptive - OpenDOAR-style metadata policy</element>
+        <!--
+        <element value="cc0">CC0 - Creative Commons option - waive all copyright and related rights</element>
+        -->
+        <element value="cc-by">CC BY attribution to the repository - could complicate reuse by other services</element>
+    </list>
+    
+    <list id="license_flavors_item">
+        <element value="descriptive">Descriptive - OpenDOAR-style content policy</element>
+        <!--
+        <element value="cc0">CC0 - Creative Commons option - waive all copyright and related rights</element>
+        -->
+        <element value="cc-by">CC BY attribution to the author - could complicate reuse by other services</element>
+        <element value="cc-by-nc-sa">CC BY-NC-SA attribution to the author, non-commercial, share-alike</element>
+    </list>
+    
+    <list id="cc_licences">
+        <element value="by">Creative Commons - Attribution 4.0 International</element>
+        <element value="by-sa">Creative Commons - Attribution-Share Alike 4.0 International</element>
+        <element value="by-nd">Creative Commons - Attribution-No Derivative Works 4.0 International</element>
+        <element value="by-nc">Creative Commons - Attribution-NonCommercial 4.0 International</element>
+        <element value="by-nc-sa">Creative Commons - Attribution-Noncommercial-Share Alike 4.0 International</element>
+        <element value="by-nc-nd">Creative Commons - Attribution-Noncommercial-No Derivative Works 4.0 International</element>
+        <element value="cc0">Creative Commons - CC0 public domain</element>
+        <element value="arr">All rights reserved</element>
+    </list>
+    
+    <list id="subject_list">
+        <element value="arts and humanities">Arts and humanities general</element>
+        <element value="agricultural sciences">Agricultural sciences</element>
+        <element value="medical and health sciences">Medical and health sciences</element>
+        <element value="natural sciences">Natural sciences</element>
+        <element value="social sciences">Social sciences</element>
+        <element value="engineering and technology">Engineering and technology</element>
+        <element value="support activities">Support activities (infrastructure, digital archives, training/demonstrations)</element>
+        <element value="multidisciplinary">Multidisciplinary</element>
+    </list>
+    
+    <list id="allowed_depositors">
+        <element value="librarians">Librarians</element>
+        <element value="staff">Staff members</element>
+        <element value="researchers">Researchers</element>
+        <element value="associates">Associates</element>
+        <element value="affiliates">Affiliates</element>
+        <element value="alumni">Alumni</element>
+        <element value="students">Students</element>
+        <element value="general public">General public</element>
+    </list>
+    
+    <list id="languages">
+        <element value="English">English</element>
+        <element value="German">German</element>
+        <element value="French">French</element>
+        <element value="Spanish">Spanish</element>
+        <element value="Russian">Russian</element>
+        <element value="Albanian">Albanian</element>
+        <element value="Armenian">Armenian</element>
+        <element value="Bosnian">Bosnian</element>
+        <element value="Bulgarian">Bulgarian</element>
+        <element value="Croatian">Croatian</element>
+        <element value="Georgian">Georgian</element>
+        <element value="Greek">Greek</element>
+        <element value="Hungarian">Hungarian</element>
+        <element value="Macedonian">Macedonian</element>
+        <element value="Moldovan">Moldovan</element>
+        <element value="Montenegrin">Montenegrin</element>
+        <element value="Romanian">Romanian</element>
+        <element value="Serbian">Serbian</element>
+        <element value="Slovene">Slovene</element>
+    </list>
+</lists>

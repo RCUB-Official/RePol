@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/facelets/template.xhtml">
+
+            <ui:define name="title">
+                RePol - Repository Policy Generator
+            </ui:define>
+
+            <ui:define name="special_menu"/>
+
+            <ui:define name="content">
+                <c:choose>
+                    <c:when test="#{dashboard.operational}">
+                        <h3>Document Creation Forms</h3>
+                        <c:forEach items="#{formController.formHeaders}" var="formHeaderRow">
+                            <div class="form-link">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>
+                                            <p:link outcome="form">
+                                                <f:param name="document_id" value="#{formHeaderRow.formId}"/>
+                                                #{formHeaderRow.label}
+                                            </p:link>
+                                        </h4>
+                                        #{formHeaderRow.description}
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formHeaderRow.formId)}"
+                                                       rendered="#{dataShare.getProgress(formHeaderRow.formId) > 0}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+
+                        <h3 id="upload_download">Data Download/Upload</h3>
+
+                        <h:form id="save_data_form">
+                            <div class="form-element-description">Download the data entered into above forms<br/>
+                                <p:commandButton id="save_data_btn" icon="fa fa-fw fa-save" ajax="false" value="Download Data as XML" action="#{dataShare.downloadStandalone()}"/>
+                            </div>
+                        </h:form>
+
+
+                        <h:form id="upload_form" enctype="multipart/form-data">
+                            <div class="form-element-description">If you wish to edit an existing policy generated using RePol, upload the previously generated document or a standalone XML<br/>
+                                <p:panelGrid columns="2">
+                                    <h:inputFile value="#{dataShare.rawfile}"/>
+                                    <p:commandButton ajax="false" value="Upload" icon="fa fa-fw fa-upload"
+                                                     action="#{dataShare.uploadFile()}"/>
+                                </p:panelGrid>
+                            </div>
+                        </h:form>
+
+                        <h:form id="reset_data_form">
+                            <div class="form-element-description">Reset data in all forms.<br/>
+                                <p:commandButton id="reset_data_btn" icon="fa fa-fw fa-refresh" ajax="false" value="Reset Data" action="#{dataShare.reset()}"/>
+                            </div>
+                        </h:form>
+
+                        <h3>Usage</h3>
+                        <p>A trustworthy repository should have a transparent policy, informing users about the roles, responsibilities, rights and procedures aimed at ensuring that their deposited data are preserved and disseminated in line with the FAIR principles. RePol uses a lightweight online form to guide you through the process of defining a repository policy. By choosing options in the form, you choose sets of predefined policy clauses formulated in line with the current best practice. The resulting policy document may be downloaded, additionally customized, and integrated into your repository.</p>
+                        <ul>
+                            <li><strong>Access, data entry and document creation</strong> &ndash; You can access RePol through a web browser, without any authentication. Data entry starts with the selection of a form for a document that is to be generated. Once all fields in the form are properly filled, the document can be generated. The same fields are shared across several forms.</li>
+                            <li><strong>Editing of generated documents</strong> &ndash; The generated HTML document is a draft that must be read and edited before it is considered final. The sections that must be revised are clearly marked. If you want to re-upload and re-use the document in RePol, please refrain from deleting or altering the portion between tags because that is where the machine-readable data is stored.</li>
+                            <li><strong>Saving all forms</strong> &ndash; At any time, you can download an XML (standalone) file containing all entered data &ndash; the latest values of the input elements, from all forms at once. Each generated document also contains its data in a machine-readable format.</li>
+                            <li><strong>Later changes of data and documents</strong> &ndash; Both standalone XML exports and generated documents can be re-uploaded to the RePol and their data parsed to fill the appropriate input elements in all forms that have them, allowing to update the data or the same data to be re-used in other templates or newer versions of the existing ones. All user-made customisations of the earlier created text will have to be repeated in the new document.</li>
+                        </ul>
+                        <p>More information about RePol is available at <a target="_blank" href="https://wiki.ni4os.eu/index.php/RePol">NI4OS-Europe Wiki</a>.</p>
+                    </c:when>
+                    <c:otherwise>
+                        <h3>Malfunction!</h3>
+                    </c:otherwise>
+                </c:choose>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

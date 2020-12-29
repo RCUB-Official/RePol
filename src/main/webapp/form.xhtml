@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/facelets/template.xhtml">
+
+            <ui:define name="title">
+                RePol - #{formController.form.label}</ui:define>
+
+            <ui:define name="special_menu"/>
+
+            <ui:define name="content">
+
+                <h:form id="form_itself">
+                    <h:panelGroup styleClass="submission-time">
+                        <h:outputText id="current_time" value="#{formController.form.currentTime}">
+                            <f:convertDateTime pattern="YYYY-MM-dd HH:mm"/>
+                        </h:outputText>
+                        <p:poll update="current_time" interval="10"/>
+                    </h:panelGroup>
+                    <div class="form-description"><h:outputText value="#{formController.form.description}" escape="false"/></div>
+                    <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formController.form.id)}"/>
+
+                    <c:choose>
+                        <c:when test="#{formController.form.validTemplate}">
+                            <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
+                                <p:panel header="#{panel.label}" styleClass="form-panel" rendered="#{panel.rendered}">
+                                    <c:forEach items="#{panel.elements}" var="formElement" varStatus="elementIterator">
+                                        <c:choose>
+                                            <c:when test="#{formElement.type == 'SEPARATOR'}">
+                                                <div class="form-separator"/>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'ONELINE'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <p:outputLabel for="oneline#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                           styleClass="form-input-element-label"/>
+                                                        </div>
+                                                        <div class="col-lg-8 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                            <p:inputText id="oneline#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.value}"
+                                                                         styleClass="form-input-element-box">
+                                                                <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                            </p:inputText>
+                                                        </div>
+                                                    </div>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'TEXT'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <p:outputLabel for="text#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"/>
+                                                        </div>
+                                                        <div class="col-lg-9 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                            <p:inputTextarea id="text#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.value}"
+                                                                             styleClass="form-input-element-box">
+                                                                <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                            </p:inputTextarea>
+                                                        </div>
+                                                    </div>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'BOOLEAN'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <p:outputLabel for="boolean#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                           styleClass="form-input-element-label"/>
+                                                        </div>
+                                                        <div class="col-lg-8">
+                                                            <p:selectBooleanCheckbox id="boolean#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.value}">
+                                                                <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                            </p:selectBooleanCheckbox>
+                                                        </div>
+                                                    </div>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'INTEGER'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <p:outputLabel for="integer#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                           styleClass="form-input-element-label"/>
+                                                        </div>
+                                                        <div class="col-lg-8 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                            <p:inputNumber id="integer#{panelIterator.count}_#{elementIterator.count}" decimalPlaces="0" value="#{formElement.value}">
+                                                                <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                            </p:inputNumber>
+                                                        </div>
+                                                    </div>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'DOUBLE'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <p:outputLabel for="double#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                           styleClass="form-input-element-label"/>
+                                                        </div>
+                                                        <div class="col-lg-8 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                            <p:inputNumber id="double#{panelIterator.count}_#{elementIterator.count}" decimalPlaces="5" value="#{formElement.value}">
+                                                                <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                            </p:inputNumber>
+                                                        </div>
+                                                    </div>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'DATE'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <p:outputLabel for="date#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                           styleClass="form-input-element-label"/>
+                                                        </div>
+                                                        <div class="col-lg-8 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                            <p:datePicker id="date#{panelIterator.count}_#{elementIterator.count}" pattern="yyyy-MM-dd" value="#{formElement.value}">
+                                                                <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                                <p:ajax event="dateSelect" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                            </p:datePicker>
+                                                        </div>
+                                                    </div>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'ADDLIST'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element" rendered="#{formElement.rendered}">
+                                                    <p:outputLabel for="addlist#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                   styleClass="form-input-element-label"/>
+                                                    <h:panelGroup id="addlist#{panelIterator.count}_#{elementIterator.count}">
+                                                        <p:repeat value="#{formElement.values}" var="valueRow">
+                                                            <div class="addValueRow">
+                                                                #{valueRow}<p:commandLink action="#{formElement.values.remove(valueRow)}" update="@form">
+                                                                    <span class="remove-clink fa fa-fw fa-remove"/>
+                                                                </p:commandLink>
+                                                            </div>
+                                                        </p:repeat>
+                                                    </h:panelGroup>
+                                                    <p:inputText id="addlist#{panelIterator.count}_#{elementIterator.count}toBeAdded" value="#{formElement.toBeAdded}"
+                                                                 styleClass="form-input-element-box"/><br/>
+                                                    <p:commandButton id="addlist#{panelIterator.count}_#{elementIterator.count}Button" icon="fa fa-fw fa-plus" value="add" action="#{formElement.add()}"
+                                                                     update="addlist#{panelIterator.count}_#{elementIterator.count}toBeAdded addlist#{panelIterator.count}_#{elementIterator.count}"/>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'POOLPICKER'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element" rendered="#{formElement.rendered}">
+                                                    <p:outputLabel for="poolpicker#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                   styleClass="form-input-element-label"/>
+                                                    <h:panelGroup id="poolpicker#{panelIterator.count}_#{elementIterator.count}">
+                                                        <p:panelGrid styleClass="poolpicker-grid">
+                                                            <p:column>
+                                                                <p:dataTable value="#{formElement.displayedList}" var="availableValue"
+                                                                             scrollable="true" scrollHeight="300">
+                                                                    <p:column headerText="Available">#{availableValue}</p:column>
+                                                                    <p:column width="5%">
+                                                                        <p:commandButton update="@root" icon="fa fa-fw fa-arrow-right" action="#{availableValue.select()}"/>
+                                                                    </p:column>
+                                                                </p:dataTable>
+                                                            </p:column>
+                                                            <p:column>
+                                                                <p:dataTable value="#{formElement.selectedValues}" var="selectedValue"
+                                                                             emptyMessage="No values selected" scrollable="true" scrollHeight="300">
+                                                                    <p:column headerText="Selected">#{selectedValue}</p:column>
+                                                                    <p:column width="5%">
+                                                                        <p:commandButton update="@root" icon="fa fa-fw #{empty selectedValue.label ? 'fa-trash' : 'fa-arrow-left'}"
+                                                                                         action="#{selectedValue.deselect()}"/>
+                                                                    </p:column>
+                                                                </p:dataTable>
+                                                            </p:column>
+                                                        </p:panelGrid>
+                                                    </h:panelGroup>
+                                                    <p:inputText value="#{formElement.toBeAdded}">
+                                                        <p:ajax event="keyup" update="poolpicker#{panelIterator.count}_#{elementIterator.count} poolpicker#{panelIterator.count}_#{elementIterator.count}_addbutton" listener="#{formElement.search()}"/>
+                                                    </p:inputText>
+                                                    <p:commandButton id="poolpicker#{panelIterator.count}_#{elementIterator.count}_addbutton" update="@parent" icon="fa fa-fw fa-plus" value="Add New" action="#{formElement.addNew()}"
+                                                                     disabled="#{not empty formElement.displayedList}"/>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'SELECTONE'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element" rendered="#{formElement.rendered}">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <p:outputLabel for="selectone#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                           styleClass="form-input-element-label"/>
+                                                        </div>
+                                                        <div class="col-lg-8">
+                                                            <p:selectOneMenu id="selectone#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.value}">
+                                                                <f:selectItems value="#{formElement.availableValues}" var="availableValue"
+                                                                               itemValue="#{availableValue.value}" itemLabel="#{availableValue.label}"/>
+                                                                <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                            </p:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                            <c:when test="#{formElement.type == 'SELECTMANY'}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element" rendered="#{formElement.rendered}">
+                                                    <p:outputLabel for="selectmany#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
+                                                                   styleClass="form-input-element-label"/>
+                                                    <h:panelGroup id="selectmany#{panelIterator.count}_#{elementIterator.count}">
+                                                        <c:forEach items="#{formElement.availableValues}" var="availableValue">
+                                                            <div class="checkboxRow">
+                                                                <p:selectBooleanCheckbox value="#{availableValue.selected}">
+                                                                    <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
+                                                                </p:selectBooleanCheckbox>
+                                                                <h:outputText styleClass="checkboxLabel" value="#{availableValue.label}"/>
+                                                            </div>
+                                                        </c:forEach>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup rendered="#{formElement.description != null}">
+                                                        <div class="form-element-description">
+                                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    <p:tooltip for="input#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.tooltip}" rendered="#{not empty formElement.tooltip}"/>
+                                                </h:panelGroup>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:forEach>
+                                </p:panel>
+                            </c:forEach>
+
+                            <p:commandButton icon="fa fa-fw fa-cogs" ajax="false" value="Generate Document" action="#{formController.form.generateDocument()}">
+                                <f:param name="document_id" value="#{formController.form.id}"/>
+                            </p:commandButton>
+
+                            <p:commandButton icon="fa fa-fw fa-refresh" ajax="false" value="Reset Form" action="#{formController.reset()}">
+                                <f:param name="document_id" value="#{formController.form.id}"/>
+                            </p:commandButton>
+
+                            <div class="return-link">
+                                <p:link value="Return to the main page." outcome="index"/>
+                            </div>
+
+                        </c:when>
+                        <c:otherwise>
+                            <h3>#{formController.errorMessage}</h3>
+                        </c:otherwise>
+                    </c:choose>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

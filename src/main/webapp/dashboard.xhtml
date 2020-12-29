@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/facelets/template.xhtml">
+
+            <ui:define name="title">
+                Policy Generator - Dashboard
+                <c:if test="#{!dashboard.operational}">
+                    <span class="fa fa-fw fa-warning"/>
+                </c:if>
+            </ui:define>
+
+            <ui:define name="special_menu"/>
+
+            <ui:define name="content">
+                <c:choose>
+                    <c:when test="#{authenticator.authenticated}">
+                        <h:form>
+                            <div class="ui-g">
+                                <ui:repeat value="#{dashboard.monitorables}" var="monitorable" varStatus="iterator">
+                                    <div class="ui-g-12 ui-md-3 dashboard #{monitorable.status.state}">
+                                        <label>#{monitorable.label}</label>
+                                        <p:commandButton ajax="false" value="#{monitorable.status.uninitialized ? 'Initialize' : 'Reload'}" icon="#{monitorable.status.uninitialized ? 'fa fa-start' : 'fa fa-refresh'}" action="dashboard?faces-redirect=true">
+                                            <f:actionListener binding="#{monitorable.reload()}"/>
+                                        </p:commandButton>
+                                        <small>
+                                            <p:commandButton type="button" title="Malfunction" id="malfunction" icon="fa fa-fw fa-warning" rendered="#{monitorable.status.malfunction}"/>
+                                        </small>
+                                        <p:overlayPanel  id="exception" for="malfunction" hideEffect="fade">
+                                            #{monitorable.status.exception.message}
+                                        </p:overlayPanel>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </h:form>
+                    </c:when>
+                    <c:otherwise>
+                        <h:form>
+                            <p:password value="#{authenticator.pin}"/>
+                            <p:commandButton update="@all" value="Unlock" icon="fa fa-fw fa-key" action="#{authenticator.authenticate()}"/>
+                        </h:form>
+                    </c:otherwise>
+                </c:choose>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

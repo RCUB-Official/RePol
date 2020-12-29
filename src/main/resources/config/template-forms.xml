@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms>    
+    <form id="policy" label="Repository Policy">
+        <description>Creation of customised repository policies</description>
+        
+        <panel label="General Information"> <!-- condition id can be specified -->
+            <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
+                <description>
+                    Enter the name of the repository for which you wish to generate a policy.
+                </description>
+            </input>
+            <input type="oneline" id="repo_url" label="Repository URL">
+                <description>Enter the full URL of the repository’s home page.</description>
+            </input>
+            <input type="oneline" id="manual_url" label="User manual URL">
+                <description>Enter the URL of the user manual, if available.</description>
+            </input>
+            
+            <separator/>
+                        
+            <input type="oneline" id="repo_owner" label="Owning organization(s)" mandatory="true">
+                <description>Provide the name of the legal entity or body/unit owning the repository. This field is mandatory because the policy must be bound to an entity.</description>                
+            </input>
+            <input type="oneline" id="parent_organization" label="Parent organization">
+                <description>If the owner of the repository is a unit within a larger legal entity (e.g. a faculty or an institute within a university), provide the name of the parent organization</description>                
+            </input>            
+            <input type="oneline" id="oa_policy_url" label="Institutional Open Access/Science policy URL"/>
+            
+            <separator/>
+            
+            <input type="boolean" id="include_preamble" label="Include preamble" default="true">
+                <description>If selected, an outline of the policy preamble is included. The preamble contains the basic descriptive information about the repository. You may edit the text once you download the generated policy.</description>
+            </input>
+            <input type="selectone" id="opendoar_min_opt" label="Preferred OpenDOAR policy flavour" list-id="minimum_optimum"
+                   default="optimum">
+                <description>Formulatons descibing submission, curation and preservation policies rely on the wording used by <a href="https://v2.sherpa.ac.uk/opendoar/policytool/" target="_blank">OpenDOAR</a>.</description>
+                <trigger condition="opendoar_optimum" target="commercial_metadata_use_allowed" operation="set" value="true"/>
+                <trigger condition="opendoar_optimum" target="commercial_item_use_allowed" operation="set" value="true"/>
+                
+                <trigger condition="opendoar_minimum" target="commercial_metadata_use_allowed" operation="set" value="false"/>
+                <trigger condition="opendoar_minimum" target="commercial_item_use_allowed" operation="set" value="false"/>
+            </input>
+            <input type="boolean" id="include_cc_explainer" label="Include Creative Commons licenses explainer" default="true">
+                <description>If selected, a customized explanation of the CC licenses mentioned in the policy is added to the text.</description>
+            </input>
+            <input type="date" id="policy_date" label="Date of the policy document"/>
+        </panel>
+        
+        <panel label="Metadata">
+            <input type="boolean" id="restricted_access_some_metadata" label="Restricted access to some metadata">
+                <description>Check the box if the repository contains metadata that is not publicly available.</description>
+            </input>
+            <input type="selectone" id="metadata_policy_flavour" label="Flavour of the metadata license" list-id="license_flavors_metadata" default="cc0">
+                <trigger condition="deactivate_cc_explainer" target="include_cc_explainer" operation="set" value="false"/>
+                <trigger condition="activate_cc_explainer" target="include_cc_explainer" operation="set" value="true"/>
+            </input>
+            <input type="boolean" id="commercial_metadata_use_allowed" label="Commercial metadata use allowed" default="true" rendered="commercial_metadata_use_visible"/>
+            <input type="boolean" id="mention_repository_owner" label="Mention repository owner in re-used metadata" default="true">
+                <description>Check this box if you wish to encourage users to cite the repository as the source of metadata, even if the metadata license does not require attribution.</description>
+            </input>
+        </panel>
+        
+        <panel label="Data/Content Access">
+            <input type="boolean" id="restricted_access_some_items" label="Restricted access to some items">
+                <description>Check the box if the repository contains some items that are restricted to general public. Restricted access is usually due to legal limitations, copyright agreements, privacy protection, etc.</description>
+            </input>
+            <input type="selectone" id="data_policy_flavour" label="Flavour of the content license" list-id="license_flavors_item" default="cc0">
+                <description>Some repositories recommend particular license types. If this is the case in your repository, check all applicable options. You may manually add additional licenses, if necessary, once you download the generated policy.</description>
+                <trigger condition="deactivate_cc_explainer" target="include_cc_explainer" operation="set" value="false"/>
+                <trigger condition="activate_cc_explainer" target="include_cc_explainer" operation="set" value="true"/>
+
+                <trigger condition="data_policy_flavour_cc" target="mention_cc_by_sa" operation="set" value="false"/>
+                <trigger condition="data_policy_flavour_cc" target="mention_cc_by_nc" operation="set" value="false"/>
+                <trigger condition="data_policy_flavour_cc" target="mention_cc_by_nc_sa" operation="set" value="false"/>
+            </input>
+            
+            <input type="boolean" id="commercial_item_use_allowed" label="Commercial use of items allowed" default="true" rendered="commercial_data_use_visible"/>
+            <input type="boolean" id="mention_cc_by_sa" label="Mention CC BY-SA license for items" default="true" rendered="data_policy_flavour_cc"/>
+            <input type="boolean" id="mention_cc_by_nc" label="Mention CC BY-NC license for items" rendered="data_policy_flavour_cc"/>
+            <input type="boolean" id="mention_cc_by_nc_sa" label="Mention CC BY-NC-SA license for items" rendered="data_policy_flavour_cc"/>
+        </panel>
+        
+        <panel label="Content">
+            <input type="selectone" id="repo_type" label="Repository type" list-id="repo_types" default="institutional">
+                <description>Multi-departmental repositories should be considered institutional, while subject-based ones may additionally restrict depositors.</description>
+                <trigger condition="not_departmental_multi_institutional" target="allowed_depositors" operation="clear"/>
+                <trigger condition="departmental_multi_institutional" target="allowed_depositors" operation="clear"/>
+                <trigger condition="departmental_multi_institutional" target="allowed_depositors" operation="set" value="librarians"/>
+                <trigger condition="departmental_multi_institutional" target="allowed_depositors" operation="set" value="staff"/>
+                <trigger condition="departmental_multi_institutional" target="allowed_depositors" operation="set" value="researchers"/>
+            </input>
+            <input type="boolean" id="direct_submissions_allowed" label="Direct submissions allowed?" default="true" rendered="type_aggregating"/>
+            <input type="poolpicker" id="repo_subjects" label="Repository subjects" list-id="subject_list"/>
+            <input type="poolpicker" id="principal_languages" label="Principal languages" list-id="languages" default="English"/>
+        </panel>
+        
+        <panel label="Submission">
+            <input type="poolpicker" id="allowed_depositors" label="Allowed depositors" list-id="allowed_depositors">
+                <description>List allowed depositors, e.g. &quot;researchers from SEE Europe&quot; or &quot;Institution A, Institution B and Institution C&quot;</description>
+            </input>
+            <input type="boolean" id="available_after_embargo" label="Embargoed  items available after embargo expiration?">
+                <description>Items may be deposed at any time but will be made available after the expiration of the embargo period.</description>
+            </input>
+
+            <input type="selectone" id="item_types_overally" label="Accepted content types"
+                   list-id="item_types_overally" default="all">
+                <trigger condition="not_overal_type_all" target="item_types" operation="clear"/>
+                
+                <trigger condition="includes_publications" target="item_types" operation="set" value="article"/>
+                <trigger condition="includes_publications" target="item_types" operation="set" value="preprints"/>
+                <trigger condition="includes_publications" target="item_types" operation="set" value="conference and workshop papers"/>
+                <trigger condition="includes_publications" target="item_types" operation="set" value="theses and dissertations"/>
+                <trigger condition="includes_publications" target="item_types" operation="set" value="reports and working papers"/>
+                <trigger condition="includes_publications" target="item_types" operation="set" value="books, chapters and section"/>
+                
+                <trigger condition="includes_data" target="item_types" operation="set" value="scientific and statistical data"/>
+                <trigger condition="includes_data" target="item_types" operation="set" value="images"/>
+                <trigger condition="includes_data" target="item_types" operation="set" value="plain text"/>
+                <trigger condition="includes_data" target="item_types" operation="set" value="structured text"/>
+                <trigger condition="includes_data" target="item_types" operation="set" value="structured graphics"/>
+                <trigger condition="includes_data" target="item_types" operation="set" value="databases"/>
+                <trigger condition="includes_data" target="item_types" operation="set" value="audiovisual data"/>
+                <trigger condition="includes_data" target="item_types" operation="set" value="bibliographic data"/>
+                
+                <trigger condition="includes_educational_materials" target="item_types" operation="set" value="books, chapters and section"/>
+                <trigger condition="includes_educational_materials" target="item_types" operation="set" value="learning objects"/>
+                
+                <trigger condition="includes_research_materials" target="item_types" operation="set" value="article"/>
+                <trigger condition="includes_research_materials" target="item_types" operation="set" value="preprints"/>
+                <trigger condition="includes_research_materials" target="item_types" operation="set" value="conference and workshop papers"/>
+                <trigger condition="includes_research_materials" target="item_types" operation="set" value="theses and dissertations"/>
+                <trigger condition="includes_research_materials" target="item_types" operation="set" value="scientific and statistical data"/>
+                <trigger condition="includes_research_materials" target="item_types" operation="set" value="images"/>
+            </input>
+            <input type="poolpicker" id="item_types" label="Item types" list-id="item_types" rendered="not_overal_type_all"/>
+            
+            <input type="integer" id="retention_period_years" label="Retention period (years)">
+                <description>From the date of depositing. Blank or 0 for the unlimited period.</description>
+            </input>
+            <input type="boolean" id="links_between_versions" label="Links between versions">
+                <description>Record versions have links to the older and newer versions.</description>
+            </input>
+            <input type="boolean" id="links_to_latest_versions" label="Links to the latest versions of items">
+                <description>Set if each item has a persistent link to its latest version.</description>
+            </input>
+            <input type="boolean" id="links_to_withdrawn_items" label="Links to the withdrawn items">
+                <description>Set if withdrawn items&apos; identifiers/URLs are retained indefinitely.</description>
+            </input>
+            <input type="boolean" id="committed_to_preserve_repository_database" label="Archived in a long-term preservation archive">
+                <description>Is the database going to be archived for long-term preservation, especially if the repository is closed down?</description>
+            </input>
+            <input type="boolean" id="full_harvesting_robots" label="Allow full harvesting of items by robots">
+                <description>Normally, aggregators harvest metadata only. However, some aggregators harvest deposited items, too, if available. Disable this if you want to preserve the items in the repository only.<br/>Full harvesting is still allowed for text indexing or citations.</description>
+            </input>
+            <input type="integer" id="file_size_limit" label="File size limit (KB)" default="0">
+                <description>File size limit for files that can be uploaded to the repository without requesting special permission.<br/>
+                    Set 0 for no file size limit.</description>
+            </input>
+        </panel>
+        
+        <panel label="Curation">
+            <input type="selectmany" id="curation_levels" list-id="curation_levels" label="Curation levels">
+                <description>Check all options that apply.</description>
+            </input>
+        </panel>
+        
+        
+        <!-- CONDITIONS -->      
+        <condition id="not_overal_type_all">
+            <match id="item_types_overally" value="all" inverted="true"/>
+        </condition>
+        <condition id="includes_publications">
+            <match id="item_types_overally" value="publications"/>
+        </condition>
+        <condition id="includes_data">
+            <match id="item_types_overally" value="data"/>
+        </condition>
+        <condition id="includes_educational_materials">
+            <match id="item_types_overally" value="educational materials"/>
+        </condition>
+        <condition id="includes_research_materials">
+            <match id="item_types_overally" value="research materials"/>
+        </condition>
+        <condition id="type_aggregating">
+            <match id="repo_type" value="aggregating"/>
+        </condition>
+        <condition id="data_descriptive">
+            <match id="data_policy_flavour" value="descriptive"/>
+        </condition>
+        <condition id="metadata_descriptive">
+            <match id="metadata_policy_flavour" value="descriptive"/>
+        </condition>
+        <condition id="activate_cc_explainer" operator="or" inverted="false"> <!-- Default operator="or" and inverted="false"-->
+            <match id="metadata_policy_flavour" value="descriptive" inverted="true"/>
+            <match id="data_policy_flavour" value="descriptive" inverted="true"/>
+        </condition>
+        <condition id="deactivate_cc_explainer" operator="and" inverted="false"> <!-- Default operator="or" and inverted="false"-->
+            <match id="metadata_policy_flavour" value="descriptive"/>
+            <match id="data_policy_flavour" value="descriptive"/>
+        </condition>
+        <condition id="data_policy_flavour_cc" operator="or">
+            <match id="data_policy_flavour" value="cc0"/>
+            <match id="data_policy_flavour" value="cc-by"/>
+            <match id="data_policy_flavour" value="cc-by-nc-sa"/>
+        </condition>
+        
+        <condition id="departmental_multi_institutional">
+            <match id="repo_type" value="departmental"/>
+            <match id="repo_type" value="multi-institutional"/>
+            <match id="repo_type" value="institutional"/>
+        </condition>
+        
+        <condition id="not_departmental_multi_institutional" inverted="true">
+            <match id="repo_type" value="departmental"/>
+            <match id="repo_type" value="multi-institutional"/>
+            <match id="repo_type" value="institutional"/>
+        </condition>
+        
+        <condition id="commercial_metadata_use_visible">
+            <and>
+                <match id="opendoar_min_opt" value="optimum"/>
+                <match id="metadata_policy_flavour" value="descriptive"/>
+            </and>
+        </condition>
+        
+        <condition id="commercial_data_use_visible">
+            <and>
+                <match id="opendoar_min_opt" value="optimum"/>
+                <match id="data_policy_flavour" value="descriptive"/>
+            </and>
+        </condition>
+        
+        
+        <!-- Template conditions -->
+        <condition id="includes_software">
+            <match id="item_types" value="software"/>
+        </condition>
+        <condition id="includes_patents">
+            <match id="item_types" value="patent"/>
+        </condition>
+        <condition id="includes_other">
+            <match id="item_types" value="other"/>
+        </condition>
+        
+
+        
+        <condition id="opendoar_minimum">
+            <match id="opendoar_min_opt" value="minimum"/>
+        </condition>
+        
+        <condition id="opendoar_optimum">
+            <match id="opendoar_min_opt" value="optimum"/>
+        </condition>
+        
+        <condition id="empty_curation_levels">
+            <empty id="curation_levels"/>
+        </condition>
+        <condition id="curation_none">
+            <match id="curation_levels" value="none"/>
+        </condition>
+        <condition id="curation_basic">
+            <match id="curation_levels" value="basic"/>
+        </condition>
+        <condition id="curation_enhanced">
+            <match id="curation_levels" value="enhanced"/>
+        </condition>
+        <condition id="curation_data">
+            <match id="curation_levels" value="data"/>
+        </condition>
+        
+    </form>
+    
+<!--
+    <form id="test" label="Second Form">
+        <description>Testing data share.</description>
+        
+            <panel label="General Information">
+                <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
+                    <description>
+                        Just do the testing.
+                    </description>
+                </input>
+                <input type="oneline" id="repo_url" label="Repository URL" mandatory="true"/>
+                <input type="oneline" id="some_url" label="Repository manual URL"/>
+            </panel>
+        </form>
+    -->
+    
+</forms>
