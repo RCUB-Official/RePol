@@ -139,7 +139,7 @@ public abstract class FormElement {
                 panel.getForm().processTrigger(t.getTargetId(), t.getOperation(), t.getValue());
             }
         }
-        
+
         push();
     }
 
@@ -159,7 +159,25 @@ public abstract class FormElement {
         }
     }
 
+    public String getConditionId() {
+        return conditionId;
+    }
+
+    public Condition getCondition() throws ConditionNotFoundException {
+        if (conditionId == null) {
+            return null;
+        } else {
+            return panel.getForm().getCondition(conditionId);
+        }
+    }
+
+    public List<Trigger> getTriggers() {
+        return triggers;
+    }
+
     public abstract void sync(FormElement element);
 
+    // For embedded and standalone export
     public abstract String getXml();
+
 }

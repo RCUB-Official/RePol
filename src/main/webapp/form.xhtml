@@ -10,24 +10,32 @@
         <ui:composition template="/WEB-INF/facelets/template.xhtml">
 
             <ui:define name="title">
-                RePol - #{formController.form.label}</ui:define>
+                <c:choose>
+                    <c:when test="#{formController.form.validTemplate}">
+                        RePol - #{formController.form.label}
+                    </c:when>
+                    <c:otherwise>
+                        RePol - Error
+                    </c:otherwise>
+                </c:choose>
+            </ui:define>
 
             <ui:define name="special_menu"/>
 
             <ui:define name="content">
 
                 <h:form id="form_itself">
-                    <h:panelGroup styleClass="submission-time">
-                        <h:outputText id="current_time" value="#{formController.form.currentTime}">
-                            <f:convertDateTime pattern="YYYY-MM-dd HH:mm"/>
-                        </h:outputText>
-                        <p:poll update="current_time" interval="10"/>
-                    </h:panelGroup>
-                    <div class="form-description"><h:outputText value="#{formController.form.description}" escape="false"/></div>
-                    <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formController.form.id)}"/>
-
                     <c:choose>
                         <c:when test="#{formController.form.validTemplate}">
+                            <h:panelGroup styleClass="submission-time">
+                                <h:outputText id="current_time" value="#{formController.form.currentTime}">
+                                    <f:convertDateTime pattern="YYYY-MM-dd HH:mm"/>
+                                </h:outputText>
+                                <p:poll update="current_time" interval="10"/>
+                            </h:panelGroup>
+                            <div class="form-description"><h:outputText value="#{formController.form.description}" escape="false"/></div>
+                            <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formController.form.id)}"/>
+
                             <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
                                 <p:panel header="#{panel.label}" styleClass="form-panel" rendered="#{panel.rendered}">
                                     <c:forEach items="#{panel.elements}" var="formElement" varStatus="elementIterator">
@@ -286,10 +294,16 @@
                                 <f:param name="document_id" value="#{formController.form.id}"/>
                             </p:commandButton>
 
-                            <div class="return-link">
-                                <p:link value="Return to the main page." outcome="index"/>
+                            <div class="row">
+                                <div class="col-lg-8 return-link">
+                                    <p:link value="Return to the main page" outcome="index"/>
+                                </div>
+                                <div class="col-lg-4 return-link">
+                                    <p:link value="Form specifications" outcome="form_specs">
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                    </p:link>
+                                </div>
                             </div>
-
                         </c:when>
                         <c:otherwise>
                             <h3>#{formController.errorMessage}</h3>

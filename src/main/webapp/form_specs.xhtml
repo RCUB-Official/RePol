@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/facelets/template.xhtml">
+
+            <ui:define name="title">
+                <c:choose>
+                    <c:when test="#{formController.form.validTemplate}">
+                        RePol - #{formController.form.label}
+                    </c:when>
+                    <c:otherwise>
+                        RePol - Error
+                    </c:otherwise>
+                </c:choose>
+            </ui:define>
+
+            <ui:define name="special_menu"/>
+
+            <ui:define name="content">
+
+                <h:form id="form_itself">
+                    <c:choose>
+                        <c:when test="#{formController.form.validTemplate}">
+
+                            <div class="form-description"><h:outputText value="#{formController.form.description}" escape="false"/></div>
+                            <h3>Panels and input elements</h3>
+
+                            <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
+                                <p:dataTable value="#{panel.elements}" var="formElement" styleClass="spec-element-table"
+                                             rowStyleClass="#{formElement.type == 'SEPARATOR' ? 'element-separator' : null}">
+                                    <f:facet name="header">#{panel.label}</f:facet>
+                                    <p:column headerText="ID">
+                                        <h:panelGroup rendered="#{empty formElement.label &amp;&amp; empty formElement.description}">
+                                            #{formElement.id}
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{not empty formElement.label || not empty formElement.description}">
+                                            <p:commandLink id="info-link">#{formElement.id}</p:commandLink>
+                                        </h:panelGroup>
+                                        <p:overlayPanel for="info-link" showEffect="fade" hideEffect="fade" style="width:600px">
+                                            <table>
+                                                <tr>
+                                                    <th>Label</th>
+                                                    <h:panelGroup rendered="#{not empty formElement.description}">
+                                                        <th>Description</th>
+                                                    </h:panelGroup>
+                                                </tr>
+                                                <tr>
+                                                    <td>#{formElement.label}</td>
+                                                    <h:panelGroup rendered="#{not empty formElement.description}">
+                                                        <td>#{formElement.description}</td>
+                                                    </h:panelGroup>
+                                                </tr>
+                                            </table>
+                                        </p:overlayPanel>
+
+                                        <h:panelGroup rendered="#{formElement.conditionId != null}">
+                                            &nbsp;
+                                            <p:commandLink id="condition-link"><span class="fa fa-fw fa-eye"/></p:commandLink>
+                                            <p:overlayPanel for="condition-link" showEffect="fade" hideEffect="fade" style="width:600px">
+                                                <b>#{formElement.conditionId}</b><br/>
+                                                #{formElement.condition}
+                                            </p:overlayPanel>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    <p:column headerText="Type" width="100">
+                                        #{formElement.type}
+                                    </p:column>
+                                    <p:column headerText="Available / default value(s)">
+                                        <h:panelGroup rendered="#{formElement.type == 'ONELINE' || formElement.type == 'TEXT' || formElement.type == 'BOOLEAN'
+                                                                  || formElement.type == 'INTEGER' || formElement.type == 'DOUBLE' || formElement.type == 'DATE'}">
+                                            <h:panelGroup rendered="#{!formElement.isEmpty()}">
+                                                <div class="default-value">#{formElement.value}</div>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{formElement.type == 'POOLPICKER' || formElement.type == 'SELECTONE'
+                                                                  || formElement.type == 'SELECTMANY' || formElement.type == 'ADDLIST'}">
+                                            <ul>
+                                                <p:repeat value="#{formElement.availableValues}" var="avRow">
+                                                    <li class="#{formElement.match(avRow.value) ? 'default-value' : null}">#{avRow} &nbsp; <b>(#{avRow.value})</b></li>
+                                                </p:repeat>
+                                            </ul>
+                                        </h:panelGroup>
+                                    </p:column>
+                                </p:dataTable>
+                            </c:forEach>
+
+                            <h3>Conditions</h3>
+
+                            <p:dataTable value="#{formController.form.conditions}" var="conditionRow"
+                                         styleClass="spec-element-table">
+                                <p:column headerText="Condition ID" width="30%">
+                                    #{conditionRow.id}
+                                </p:column>
+                                <p:column headerText="Expression">
+                                    #{conditionRow}
+                                </p:column>
+                            </p:dataTable>
+
+                            <h4>Triggers</h4>
+
+                            <c:forEach items="#{formController.form.panels}" var="panelRow" varStatus="panelIterator">
+                                <c:forEach items="#{panelRow.elements}" var="elementRow" varStatus="elementIterator">
+                                    <c:if test="#{not empty elementRow.triggers}">
+                                        <div class="form-element-triggers">
+                                            <b>#{elementRow.id}</b>
+                                            <c:if test="#{not empty elementRow.triggers}">
+                                                <div class="triggers-summary">
+                                                    <c:forEach items="#{elementRow.triggers}" var="triggerRow" varStatus="triggerIterator">
+                                                        <c:if test="#{triggerIterator.count == 1 || elementRow.triggers[triggerIterator.index - 1].conditionId != triggerRow.conditionId}">
+                                                            <div class="trigger-condition">if (#{triggerRow.conditionId})</div>
+                                                        </c:if>
+                                                        <div class="trigger-itself">#{triggerRow}</div>
+                                                    </c:forEach>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
+                            </c:forEach>
+
+                            <div class="row">
+                                <div class="col-lg-8 return-link">
+                                    <p:link value="Return to the form" outcome="form">
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                    </p:link>
+                                </div>
+                                <div class="col-lg-4 return-link">
+                                    <p:link value="Return to the main page." outcome="index"/>
+                                </div>
+                            </div>
+                        </c:when>                        
+                        <c:otherwise>
+                            <h3>#{formController.errorMessage}</h3>
+                        </c:otherwise>
+                    </c:choose>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

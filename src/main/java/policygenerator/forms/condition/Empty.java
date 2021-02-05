@@ -41,4 +41,9 @@ public class Empty extends Condition {
         }
     }
 
+    @Override
+    public String toString() {
+        return (inverted ? "NOT " : "") + "EMPTY(" + element.getId() + ")";
+    }
+
 }

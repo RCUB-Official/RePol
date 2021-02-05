@@ -45,4 +45,20 @@ public final class Trigger {
         return value;
     }
 
+    @Override
+    public String toString() {
+        String expression = null;
+        switch (operation) {
+            case SET:
+                expression = targetId + " = \"" + value + "\"";
+                break;
+            case CLEAR:
+                expression = "clear(" + targetId + ")";
+                break;
+            case REMOVE:
+                expression = "remove(" + targetId + ", \"" + value + "\")";
+                break;
+        }
+        return expression;
+    }
 }

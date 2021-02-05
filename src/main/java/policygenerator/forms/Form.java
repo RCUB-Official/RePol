@@ -283,4 +283,7 @@ public final class Form {
         }
     }
 
+    public List<Condition> getConditions() {
+        return conditions;
+    }
 }

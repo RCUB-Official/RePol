@@ -43,4 +43,9 @@ public class Match extends Condition {
         }
     }
 
+    @Override
+    public String toString() {
+        return element.getId() + (inverted ? " != \"" : " == \"") + matchValue + "\"";
+    }
+
 }

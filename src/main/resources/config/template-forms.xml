@@ -26,7 +26,7 @@
                 <description>If the owner of the repository is a unit within a larger legal entity (e.g. a faculty or an institute within a university), provide the name of the parent organization</description>                
             </input>            
             <input type="oneline" id="oa_policy_url" label="Institutional Open Access/Science policy URL"/>
-            
+            <input type="integer" id="policy_renewal_interval_years" label="Policy renewal interval (years)"  default="3"/>
             <separator/>
             
             <input type="boolean" id="include_preamble" label="Include preamble" default="true">

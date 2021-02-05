@@ -304,3 +304,42 @@ h4 {
 .footer-ec {
     font-size:0.9em;
 }
+
+.spec-element-table {
+    margin-bottom:35px;
+    font-size:0.9em;
+}
+
+.element-separator {
+    background: #777;
+    color:#fff;
+}
+
+.ui-widget-content a {
+    color:#f05532;
+}
+
+.form-element-triggers {
+    margin-bottom:30px;
+    border-bottom:2px dotted #eee;
+}
+
+.trigger-condition {
+    margin-top:15px;
+    border:1px solid #ddd;
+    padding:5px;
+    font-size:1.1em;
+}
+
+.trigger-itself {
+    margin-left:20px;
+}
+
+.fa-eye {
+    color:#333;
+}
+
+.default-value {
+    background:#e1ffe1;
+    padding:5px;
+}

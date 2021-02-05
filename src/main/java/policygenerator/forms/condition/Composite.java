@@ -98,4 +98,27 @@ public class Composite extends Condition {
         }
     }
 
+    @Override
+    public String toString() {
+        String expression = "";
+        for (int i = 0; i < subConditions.size(); i++) {
+            if (i > 0) {
+                if (this.operator == Operator.AND) {
+                    expression += " AND ";
+                } else if (this.operator == Operator.OR) {
+                    expression += " OR ";
+                }
+            }
+            if (subConditions.get(i) instanceof Composite && !subConditions.get(i).inverted && subConditions.size() > 1) {
+                expression += "(" + subConditions.get(i) + ")";
+            } else {
+                expression += subConditions.get(i);
+            }
+        }
+        if (inverted) {
+            return "NOT(" + expression + ")";
+        } else {
+            return expression;
+        }
+    }
 }
