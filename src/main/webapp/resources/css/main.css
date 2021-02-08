@@ -336,10 +336,14 @@ h4 {
 }
 
 .fa-eye {
-    color:#333;
 }
 
 .default-value {
-    background:#e1ffe1;
+    color:#119911;
+    font-size:1.1em;
     padding:5px;
+}
+
+form-element-description-specs {
+    font-size:1.1em;
 }

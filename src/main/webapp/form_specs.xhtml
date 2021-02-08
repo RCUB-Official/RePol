@@ -35,30 +35,13 @@
                                 <p:dataTable value="#{panel.elements}" var="formElement" styleClass="spec-element-table"
                                              rowStyleClass="#{formElement.type == 'SEPARATOR' ? 'element-separator' : null}">
                                     <f:facet name="header">#{panel.label}</f:facet>
-                                    <p:column headerText="ID">
-                                        <h:panelGroup rendered="#{empty formElement.label &amp;&amp; empty formElement.description}">
-                                            #{formElement.id}
+                                    <p:column headerText="Label / ID">
+                                        <h:panelGroup rendered="#{not empty formElement.label}">
+                                            <div class="form-element-description-specs">
+                                                #{formElement.label}<br/>
+                                            </div>
                                         </h:panelGroup>
-                                        <h:panelGroup rendered="#{not empty formElement.label || not empty formElement.description}">
-                                            <p:commandLink id="info-link">#{formElement.id}</p:commandLink>
-                                        </h:panelGroup>
-                                        <p:overlayPanel for="info-link" showEffect="fade" hideEffect="fade" style="width:600px">
-                                            <table>
-                                                <tr>
-                                                    <th>Label</th>
-                                                    <h:panelGroup rendered="#{not empty formElement.description}">
-                                                        <th>Description</th>
-                                                    </h:panelGroup>
-                                                </tr>
-                                                <tr>
-                                                    <td>#{formElement.label}</td>
-                                                    <h:panelGroup rendered="#{not empty formElement.description}">
-                                                        <td>#{formElement.description}</td>
-                                                    </h:panelGroup>
-                                                </tr>
-                                            </table>
-                                        </p:overlayPanel>
-
+                                        <b>#{formElement.id}</b>
                                         <h:panelGroup rendered="#{formElement.conditionId != null}">
                                             &nbsp;
                                             <p:commandLink id="condition-link"><span class="fa fa-fw fa-eye"/></p:commandLink>
@@ -67,11 +50,17 @@
                                                 #{formElement.condition}
                                             </p:overlayPanel>
                                         </h:panelGroup>
+
+                                        <h:panelGroup rendered="#{not empty formElement.description}" styleClass="form-element-description">
+                                            <h:outputText value="#{formElement.description}" escape="false"/>
+                                        </h:panelGroup>
                                     </p:column>
-                                    <p:column headerText="Type" width="100">
-                                        #{formElement.type}
+                                    <p:column headerText="Type / Mandatory" width="95">
+                                        <small>
+                                            #{formElement.type}<h:panelGroup rendered="#{formElement.mandatory}"><b> *</b></h:panelGroup>
+                                        </small>
                                     </p:column>
-                                    <p:column headerText="Available / default value(s)">
+                                    <p:column headerText="Displayed - &quot;value&quot; (default: green)" width="40%">
                                         <h:panelGroup rendered="#{formElement.type == 'ONELINE' || formElement.type == 'TEXT' || formElement.type == 'BOOLEAN'
                                                                   || formElement.type == 'INTEGER' || formElement.type == 'DOUBLE' || formElement.type == 'DATE'}">
                                             <h:panelGroup rendered="#{!formElement.isEmpty()}">
@@ -82,7 +71,8 @@
                                                                   || formElement.type == 'SELECTMANY' || formElement.type == 'ADDLIST'}">
                                             <ul>
                                                 <p:repeat value="#{formElement.availableValues}" var="avRow">
-                                                    <li class="#{formElement.match(avRow.value) ? 'default-value' : null}">#{avRow} &nbsp; <b>(#{avRow.value})</b></li>
+                                                    <li class="#{formElement.match(avRow.value) ? 'default-value' : null}">
+                                                        <h:panelGroup rendered="#{not empty avRow.label}">#{avRow} - </h:panelGroup><b>&quot;#{avRow.value}&quot;</b></li>
                                                 </p:repeat>
                                             </ul>
                                         </h:panelGroup>

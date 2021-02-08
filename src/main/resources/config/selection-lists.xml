@@ -117,7 +117,7 @@
         <element value="Russian">Russian</element>
         <element value="Albanian">Albanian</element>
         <element value="Armenian">Armenian</element>
-        <element value="Bosnian">Bosnian</element>
+        <element value="Bosnian"></element>
         <element value="Bulgarian">Bulgarian</element>
         <element value="Croatian">Croatian</element>
         <element value="Georgian">Georgian</element>
