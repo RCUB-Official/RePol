@@ -44,7 +44,7 @@ public class SelectionElement {
 
     @Override
     public String toString() {
-        if (label != null) {
+        if (label != null && !"".equals(label)) {
             return label;
         } else {
             return value;

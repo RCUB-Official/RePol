@@ -34,7 +34,7 @@
             </input>
             <input type="selectone" id="opendoar_min_opt" label="Preferred OpenDOAR policy flavour" list-id="minimum_optimum"
                    default="optimum">
-                <description>Formulatons descibing submission, curation and preservation policies rely on the wording used by <a href="https://v2.sherpa.ac.uk/opendoar/policytool/" target="_blank">OpenDOAR</a>.</description>
+                <description>Formulations descibing submission, curation and preservation policies rely on the wording used by <a href="https://v2.sherpa.ac.uk/opendoar/policytool/" target="_blank">OpenDOAR</a>.</description>
                 <trigger condition="opendoar_optimum" target="commercial_metadata_use_allowed" operation="set" value="true"/>
                 <trigger condition="opendoar_optimum" target="commercial_item_use_allowed" operation="set" value="true"/>
                 

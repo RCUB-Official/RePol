@@ -110,24 +110,24 @@
     </list>
     
     <list id="languages">
-        <element value="English">English</element>
-        <element value="German">German</element>
-        <element value="French">French</element>
-        <element value="Spanish">Spanish</element>
-        <element value="Russian">Russian</element>
-        <element value="Albanian">Albanian</element>
-        <element value="Armenian">Armenian</element>
-        <element value="Bosnian"></element>
-        <element value="Bulgarian">Bulgarian</element>
-        <element value="Croatian">Croatian</element>
-        <element value="Georgian">Georgian</element>
-        <element value="Greek">Greek</element>
-        <element value="Hungarian">Hungarian</element>
-        <element value="Macedonian">Macedonian</element>
-        <element value="Moldovan">Moldovan</element>
-        <element value="Montenegrin">Montenegrin</element>
-        <element value="Romanian">Romanian</element>
-        <element value="Serbian">Serbian</element>
-        <element value="Slovene">Slovene</element>
+        <element value="English"/>
+        <element value="German"/>
+        <element value="French"/>
+        <element value="Spanish"/>
+        <element value="Russian"/>
+        <element value="Albanian"/>
+        <element value="Armenian"/>
+        <element value="Bosnian"/>
+        <element value="Bulgarian"/>
+        <element value="Croatian"/>
+        <element value="Georgian"/>
+        <element value="Greek"/>
+        <element value="Hungarian"/>
+        <element value="Macedonian"/>
+        <element value="Moldovan"/>
+        <element value="Montenegrin"/>
+        <element value="Romanian"/>
+        <element value="Serbian"/>
+        <element value="Slovene"/>
     </list>
 </lists>
