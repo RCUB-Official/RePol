@@ -130,4 +130,11 @@
         <element value="Serbian"/>
         <element value="Slovene"/>
     </list>
+    
+    <list id="collected_data_list">
+        <element value="the Internet domain and IP address from which the repository was accessed">Internet domain and IP address</element>
+        <element value="the type of browser and operating system">Type of browser and operating system browser and OS</element>
+        <element value="date and time">Date and time</element>
+        <element value="pages visited">Pages visited</element>
+    </list>
 </lists>

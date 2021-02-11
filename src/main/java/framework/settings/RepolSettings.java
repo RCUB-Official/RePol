@@ -31,6 +31,7 @@ public final class RepolSettings implements Monitorable {
     private String templatePath;
     private String authenticationPin;
     private String repolVersion;
+    private String repolUrl;
 
     private Status status;
 
@@ -56,6 +57,7 @@ public final class RepolSettings implements Monitorable {
             templatePath = myProperties.getProperty(prefix + ".templatePath");
             authenticationPin = myProperties.getProperty(prefix + ".authenticationPin");
             repolVersion = myProperties.getProperty(prefix + ".version");
+            repolUrl = myProperties.getProperty(prefix + ".url");
             //intField = Integer.parseInt(myProperties.getProperty(prefix + ".intField"));
             status = new Status(State.operational, null);
         } catch (Exception ex) {
@@ -108,6 +110,10 @@ public final class RepolSettings implements Monitorable {
 
     public String getRepolVersion() {
         return repolVersion;
+    }
+
+    public String getRepolUrl() {
+        return repolUrl;
     }
 
 }

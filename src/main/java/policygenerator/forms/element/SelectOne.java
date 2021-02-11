@@ -44,6 +44,7 @@ public class SelectOne extends FormElement {
         for (SelectionElement se : availableValues) {
             if (se.getValue().equals(defaultValue)) {
                 this.value = defaultValue;
+                this.defaultValue = defaultValue;
                 break;
             }
         }

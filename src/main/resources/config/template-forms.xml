@@ -150,12 +150,20 @@
             <input type="boolean" id="committed_to_preserve_repository_database" label="Archived in a long-term preservation archive">
                 <description>Is the database going to be archived for long-term preservation, especially if the repository is closed down?</description>
             </input>
-            <input type="boolean" id="full_harvesting_robots" label="Allow full harvesting of items by robots">
-                <description>Normally, aggregators harvest metadata only. However, some aggregators harvest deposited items, too, if available. Disable this if you want to preserve the items in the repository only.<br/>Full harvesting is still allowed for text indexing or citations.</description>
-            </input>
             <input type="integer" id="file_size_limit" label="File size limit (KB)" default="0">
                 <description>File size limit for files that can be uploaded to the repository without requesting special permission.<br/>
                     Set 0 for no file size limit.</description>
+            </input>
+        </panel>
+        
+        <panel label="Privacy">
+            <input type="boolean" id="use_google_analytics" label="Repository is using Google Analytics"/>
+            <input type="poolpicker" id="collected_data" label="Collected user data" list-id="collected_data_list"/>
+        </panel>
+        
+        <panel label="Harvesting">
+            <input type="boolean" id="full_harvesting_robots" label="Allow full harvesting of items by robots">
+                <description>Normally, aggregators harvest metadata only. However, some aggregators harvest deposited items, too, if available. Disable this if you want to preserve the items in the repository only.<br/>Full harvesting is still allowed for text indexing or citations.</description>
             </input>
         </panel>
         
@@ -163,6 +171,10 @@
             <input type="selectmany" id="curation_levels" list-id="curation_levels" label="Curation levels">
                 <description>Check all options that apply.</description>
             </input>
+        </panel>
+        
+        <panel label="Preservation">
+            <input type="boolean" id="performs_backups" label="Repository is performing backups" default="true"/>
         </panel>
         
         

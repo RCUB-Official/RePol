@@ -30,6 +30,7 @@ public class IntegerInput extends FormElement {
     public void setDefaultValue(String defaultValue) {
         try {
             this.value = Integer.parseInt(defaultValue);
+            this.defaultValue = defaultValue;
         } catch (Exception ex) {
             this.value = null;
         }

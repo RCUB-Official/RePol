@@ -46,6 +46,7 @@ public class SelectMany extends FormElement {
             if (se.getValue().equals(defaultValue)) {
                 try {
                     se.select();
+                    this.defaultValue = defaultValue;
                 } catch (Exception ex) {
                 }
             }

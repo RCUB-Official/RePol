@@ -53,6 +53,7 @@ public class AddList extends FormElement {
     @Override
     public void setDefaultValue(String defaultValue) {
         values.add(defaultValue);
+        this.defaultValue= defaultValue;
         push();
     }
 

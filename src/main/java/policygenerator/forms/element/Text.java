@@ -35,6 +35,7 @@ public class Text extends FormElement {
     @Override
     public void setDefaultValue(String defaultValue) {
         this.value = defaultValue;
+        this.defaultValue = defaultValue;
         touch();
     }
 

@@ -198,10 +198,13 @@ public final class Form {
 
     public void generateDocument() throws IOException, TemplateException, ConditionNotFoundException {
 
+        RepolSettings settings = RepolSettings.getInstance();
+        
         Map model = new HashMap();
-
+        
         model.put("current_time", getCurrentTime());    // Can be overrided by a form element.
-        model.put("repol_version", RepolSettings.getInstance().getRepolVersion());
+        model.put("repol_version", settings.getRepolVersion());
+        model.put("repol_url", settings.getRepolUrl());
         model.put("embedded_data", "<!--EMBEDDED_BEGIN\n" + getXml() + "\nEMBEDDED_END-->");
 
         List<FormElement> elements = new LinkedList<FormElement>();

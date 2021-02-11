@@ -16,6 +16,7 @@ public class BooleanCheckbox extends FormElement {
     public BooleanCheckbox(Panel panel, String id, boolean mandatory, String label, String conditionId) {
         super(panel, Type.BOOLEAN, id, mandatory, label, conditionId);
         this.value = false;
+        this.defaultValue = "false";
     }
 
     public boolean isValue() {
@@ -29,6 +30,7 @@ public class BooleanCheckbox extends FormElement {
     @Override
     public void setDefaultValue(String defaultValue) {
         this.value = "true".equalsIgnoreCase(defaultValue);
+        this.defaultValue = this.value + "";
         touch();
     }
 

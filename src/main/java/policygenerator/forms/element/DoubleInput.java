@@ -30,6 +30,7 @@ public class DoubleInput extends FormElement {
     public void setDefaultValue(String defaultValue) {
         try {
             this.value = Double.parseDouble(defaultValue);
+            this.defaultValue = defaultValue;
         } catch (Exception ex) {
             this.value = null;
         }

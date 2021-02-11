@@ -42,6 +42,7 @@ public class PoolPicker extends FormElement {
                     selectedValues.add(av);
                     availableValues.remove(av);
                     displayedList.remove(av);
+                    this.defaultValue = defaultValue;
                     break;
                 }
             }

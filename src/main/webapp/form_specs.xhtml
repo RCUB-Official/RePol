@@ -62,16 +62,25 @@
                                     </p:column>
                                     <p:column headerText="Displayed - &quot;value&quot; (default: green)" width="40%">
                                         <h:panelGroup rendered="#{formElement.type == 'ONELINE' || formElement.type == 'TEXT' || formElement.type == 'BOOLEAN'
-                                                                  || formElement.type == 'INTEGER' || formElement.type == 'DOUBLE' || formElement.type == 'DATE'}">
+                                                                  || formElement.type == 'INTEGER' || formElement.type == 'DOUBLE'}">
                                             <h:panelGroup rendered="#{!formElement.isEmpty()}">
-                                                <span class="default-value">#{formElement.value}</span>
+                                                <span class="#{formElement.value == formElement.defaultValue ? 'default-value' : null}">#{formElement.value}</span>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{formElement.type == 'DATE'}">
+                                            <h:panelGroup rendered="#{!formElement.isEmpty()}">
+                                                <span class="default-value">
+                                                    <h:outputText value="#{formElement.value}" >
+                                                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm zzz" />
+                                                    </h:outputText>
+                                                </span>
                                             </h:panelGroup>
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{formElement.type == 'POOLPICKER' || formElement.type == 'SELECTONE'
                                                                   || formElement.type == 'SELECTMANY' || formElement.type == 'ADDLIST'}">
                                             <ul>
                                                 <p:repeat value="#{formElement.availableValues}" var="avRow">
-                                                    <li class="#{formElement.match(avRow.value) ? 'default-value' : null}">
+                                                    <li class="#{avRow.value == formElement.defaultValue ? 'default-value' : null}">
                                                         <h:panelGroup rendered="#{not empty avRow.label}">#{avRow} - </h:panelGroup><b>&quot;#{avRow.value}&quot;</b></li>
                                                 </p:repeat>
                                             </ul>

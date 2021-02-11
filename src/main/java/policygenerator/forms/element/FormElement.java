@@ -48,6 +48,8 @@ public abstract class FormElement {
     List<Trigger> triggers;
     Map<String, Condition> conditions;
 
+    protected String defaultValue;
+
     FormElement(Panel panel, Type type, String id, boolean mandatory, String label, String conditionId) {
         this.panel = panel;
         this.type = type;
@@ -61,6 +63,7 @@ public abstract class FormElement {
 
         triggers = new LinkedList<Trigger>();
         conditions = new HashMap<String, Condition>();
+        defaultValue = null;
     }
 
     public Type getType() {
@@ -173,6 +176,10 @@ public abstract class FormElement {
 
     public List<Trigger> getTriggers() {
         return triggers;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
     }
 
     public abstract void sync(FormElement element);
