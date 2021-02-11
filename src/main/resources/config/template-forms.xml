@@ -157,8 +157,8 @@
         </panel>
         
         <panel label="Privacy">
-            <input type="boolean" id="use_google_analytics" label="Repository is using Google Analytics"/>
             <input type="poolpicker" id="collected_data" label="Collected user data" list-id="collected_data_list"/>
+            <input type="boolean" id="use_google_analytics" label="Repository is using Google Analytics"/>
         </panel>
         
         <panel label="Harvesting">
