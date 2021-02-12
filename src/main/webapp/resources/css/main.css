@@ -333,6 +333,7 @@ h4 {
 }
 
 .fa-eye {
+    margin-left:10px;
 }
 
 .default-value {
@@ -341,4 +342,9 @@ h4 {
 
 form-element-description-specs {
     font-size:1.1em;
+}
+
+.value-row {
+    margin-bottom:7px;
+    border-bottom:1px #f5f5f5 solid;
 }

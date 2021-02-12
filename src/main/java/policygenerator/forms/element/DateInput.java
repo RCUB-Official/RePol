@@ -5,8 +5,10 @@
  */
 package policygenerator.forms.element;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -31,7 +33,12 @@ public class DateInput extends FormElement {
 
     @Override
     public void setDefaultValue(String defaultValue) {
-        //TODO: Implement
+        try {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            value = format.parse(defaultValue);
+            this.defaultValue = defaultValue;
+        } catch (Exception ex) {
+        }
     }
 
     @Override

@@ -12,6 +12,9 @@ import framework.settings.RepolSettings;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -100,6 +103,11 @@ public class FMHandler implements Monitorable {
             }
         }
         return exists;
+    }
+
+    public InputStream getInputStream(String filename) throws FileNotFoundException {
+        File file = new File(RepolSettings.getInstance().getTemplatePath() + "/" + filename + ".ftlh");
+        return new FileInputStream(file);
     }
 
 }

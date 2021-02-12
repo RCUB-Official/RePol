@@ -7,10 +7,13 @@ package policygenerator.forms;
 
 import framework.EventHandler;
 import framework.settings.RepolSettings;
+import framework.utilities.HttpUtilities;
 import framework.utilities.Utilities;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -19,6 +22,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import policygenerator.forms.Trigger.Operation;
@@ -199,9 +204,9 @@ public final class Form {
     public void generateDocument() throws IOException, TemplateException, ConditionNotFoundException {
 
         RepolSettings settings = RepolSettings.getInstance();
-        
+
         Map model = new HashMap();
-        
+
         model.put("current_time", getCurrentTime());    // Can be overrided by a form element.
         model.put("repol_version", settings.getRepolVersion());
         model.put("repol_url", settings.getRepolUrl());
@@ -288,5 +293,23 @@ public final class Form {
 
     public List<Condition> getConditions() {
         return conditions;
+    }
+
+    public void downloadTemplate() {
+        try (InputStream is = FMHandler.getInstance().getInputStream(id)) {
+            HttpUtilities.sendFileToClient(is, "text/plain", id + ".ftlh");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void downloadConfig() {
+        try (InputStream is = FormFactory.getInstance().getStream()) {
+            HttpUtilities.sendFileToClient(is, "application/xml", "template-forms.xml");
+        } catch (IOException ex) {
+            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

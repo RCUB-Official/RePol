@@ -32,9 +32,9 @@
                             <h3>Panels and input elements</h3>
 
                             <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
+                                <h4>#{panel.label}</h4>
                                 <p:dataTable value="#{panel.elements}" var="formElement" styleClass="spec-element-table"
                                              rowStyleClass="#{formElement.type == 'SEPARATOR' ? 'element-separator' : null}">
-                                    <f:facet name="header">#{panel.label}</f:facet>
                                     <p:column headerText="Label / ID">
                                         <h:panelGroup rendered="#{not empty formElement.label}">
                                             <div class="form-element-description-specs">
@@ -43,28 +43,22 @@
                                         </h:panelGroup>
                                         <b>#{formElement.id}</b>
                                         <h:panelGroup rendered="#{formElement.conditionId != null}">
-                                            &nbsp;
                                             <p:commandLink id="condition-link"><span class="fa fa-fw fa-eye"/></p:commandLink>
                                             <p:overlayPanel for="condition-link" showEffect="fade" hideEffect="fade" style="width:600px">
                                                 <b>#{formElement.conditionId}</b><br/>
                                                 #{formElement.condition}
                                             </p:overlayPanel>
                                         </h:panelGroup>
-
                                         <h:panelGroup rendered="#{not empty formElement.description}" styleClass="form-element-description">
                                             <h:outputText value="#{formElement.description}" escape="false"/>
                                         </h:panelGroup>
                                     </p:column>
-                                    <p:column headerText="Type / Mandatory" width="95">
-                                        <small>
-                                            #{formElement.type}<h:panelGroup rendered="#{formElement.mandatory}"><b> *</b></h:panelGroup>
-                                        </small>
-                                    </p:column>
+                                    <p:column headerText="Type / Mandatory" width="95"><small>#{formElement.type}<h:panelGroup rendered="#{formElement.mandatory}"><b> *</b></h:panelGroup></small></p:column>
                                     <p:column headerText="Displayed - &quot;value&quot; (default: green)" width="40%">
                                         <h:panelGroup rendered="#{formElement.type == 'ONELINE' || formElement.type == 'TEXT' || formElement.type == 'BOOLEAN'
                                                                   || formElement.type == 'INTEGER' || formElement.type == 'DOUBLE'}">
-                                            <h:panelGroup rendered="#{!formElement.isEmpty()}">
-                                                <span class="#{formElement.value == formElement.defaultValue ? 'default-value' : null}">#{formElement.value}</span>
+                                            <h:panelGroup rendered="#{formElement.defaultValue != null}">
+                                                <span class="default-value">#{formElement.defaultValue}</span>
                                             </h:panelGroup>
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{formElement.type == 'DATE'}">
@@ -79,12 +73,9 @@
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{formElement.type == 'POOLPICKER' || formElement.type == 'SELECTONE'
                                                                   || formElement.type == 'SELECTMANY' || formElement.type == 'ADDLIST'}">
-                                            <ul>
-                                                <p:repeat value="#{formElement.availableValues}" var="avRow">
-                                                    <li class="#{avRow.value == formElement.defaultValue ? 'default-value' : null}">
-                                                        <h:panelGroup rendered="#{not empty avRow.label}">#{avRow} - </h:panelGroup><b>&quot;#{avRow.value}&quot;</b></li>
-                                                </p:repeat>
-                                            </ul>
+                                            <p:repeat value="#{formElement.availableValues}" var="avRow">
+                                                <div class="value-row #{avRow.value == formElement.defaultValue ? 'default-value' : null}"><h:panelGroup rendered="#{not empty avRow.label}">#{avRow} - </h:panelGroup><b>&quot;#{avRow.value}&quot;</b></div>
+                                            </p:repeat>
                                         </h:panelGroup>
                                     </p:column>
                                 </p:dataTable>
@@ -123,6 +114,20 @@
                                     </c:if>
                                 </c:forEach>
                             </c:forEach>
+                            <div class="row>">
+                                <div class="col-lg-4">
+                                    <p:commandButton value="Download template" icon="fa fa-fw fa-download"
+                                                     ajax="false" action="#{formController.form.downloadTemplate()}">
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                    </p:commandButton>
+                                </div>
+                                <div class="col-lg-4">
+                                    <p:commandButton value="Download configuration file" icon="fa fa-fw fa-download"
+                                                     ajax="false" action="#{formController.form.downloadConfig()}">
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                    </p:commandButton>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-lg-8 return-link">

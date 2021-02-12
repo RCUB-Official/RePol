@@ -21,7 +21,7 @@ import org.w3c.dom.NodeList;
  * @author vasilije
  */
 abstract class XMLHandler implements Monitorable {
-    
+
     protected Document xmlDoc;
 
     protected final boolean VITAL;
@@ -90,4 +90,7 @@ abstract class XMLHandler implements Monitorable {
         return VITAL;
     }
 
+    public InputStream getStream() {
+        return XMLHandler.class.getResourceAsStream(docPath);
+    }
 }
