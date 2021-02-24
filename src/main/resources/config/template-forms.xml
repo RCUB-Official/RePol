@@ -23,18 +23,18 @@
                 <description>Provide the name of the legal entity or body/unit owning the repository. This field is mandatory because the policy must be bound to an entity.</description>                
             </input>
             <input type="oneline" id="parent_organization" label="Parent organization">
-                <description>If the owner of the repository is a unit within a larger legal entity (e.g. a faculty or an institute within a university), provide the name of the parent organization</description>                
+                <description>If the owner of the repository is a unit within a larger legal entity (e.g., a faculty or an institute within a university), provide the name of the parent organization.</description>                
             </input>            
             <input type="oneline" id="oa_policy_url" label="Institutional Open Access/Science policy URL"/>
-            <input type="integer" id="policy_renewal_interval_years" label="Policy renewal interval (years)"  default="3"/>
+            <input type="integer" id="policy_renewal_interval_years" label="Policy renewal interval in years"  default="3"/>
             <separator/>
             
             <input type="boolean" id="include_preamble" label="Include preamble" default="true">
-                <description>If selected, an outline of the policy preamble is included. The preamble contains the basic descriptive information about the repository. You may edit the text once you download the generated policy.</description>
+                <description>Check to include a policy preamble. It contains the basic descriptive information about the repository. You may edit the text once you download the generated policy.</description>
             </input>
             <input type="selectone" id="opendoar_min_opt" label="Preferred OpenDOAR policy flavour" list-id="minimum_optimum"
                    default="optimum">
-                <description>Formulations descibing submission, curation and preservation policies rely on the wording used by <a href="https://v2.sherpa.ac.uk/opendoar/policytool/" target="_blank">OpenDOAR</a>.</description>
+                <description>Formulations describing submission, curation and preservation policies rely on the wording used by <a href="https://v2.sherpa.ac.uk/opendoar/policytool/" target="_blank">OpenDOAR</a>.</description>
                 <trigger condition="opendoar_optimum" target="commercial_metadata_use_allowed" operation="set" value="true"/>
                 <trigger condition="opendoar_optimum" target="commercial_item_use_allowed" operation="set" value="true"/>
                 
@@ -42,7 +42,7 @@
                 <trigger condition="opendoar_minimum" target="commercial_item_use_allowed" operation="set" value="false"/>
             </input>
             <input type="boolean" id="include_cc_explainer" label="Include Creative Commons licenses explainer" default="true">
-                <description>If selected, a customized explanation of the CC licenses mentioned in the policy is added to the text.</description>
+                <description>Check to include a customized explanation of the CC licenses mentioned in the policy.</description>
             </input>
             <input type="date" id="policy_date" label="Date of the policy document"/>
         </panel>
@@ -57,13 +57,13 @@
             </input>
             <input type="boolean" id="commercial_metadata_use_allowed" label="Commercial metadata use allowed" default="true" rendered="commercial_metadata_use_visible"/>
             <input type="boolean" id="mention_repository_owner" label="Mention repository owner in re-used metadata" default="true">
-                <description>Check this box if you wish to encourage users to cite the repository as the source of metadata, even if the metadata license does not require attribution.</description>
+                <description>Check to encourage users to cite the repository as the source of metadata, even if the metadata license does not require attribution.</description>
             </input>
         </panel>
         
         <panel label="Data/Content Access">
             <input type="boolean" id="restricted_access_some_items" label="Restricted access to some items">
-                <description>Check the box if the repository contains some items that are restricted to general public. Restricted access is usually due to legal limitations, copyright agreements, privacy protection, etc.</description>
+                <description>Check the box if the repository contains some items that are restricted to the general public. Restricted access is usually due to legal limitations, copyright agreements, privacy protection, etc.</description>
             </input>
             <input type="selectone" id="data_policy_flavour" label="Flavour of the content license" list-id="license_flavors_item" default="cc0">
                 <description>Some repositories recommend particular license types. If this is the case in your repository, check all applicable options. You may manually add additional licenses, if necessary, once you download the generated policy.</description>
@@ -90,16 +90,16 @@
                 <trigger condition="departmental_multi_institutional" target="allowed_depositors" operation="set" value="staff"/>
                 <trigger condition="departmental_multi_institutional" target="allowed_depositors" operation="set" value="researchers"/>
             </input>
-            <input type="boolean" id="direct_submissions_allowed" label="Direct submissions allowed?" default="true" rendered="type_aggregating"/>
+            <input type="boolean" id="direct_submissions_allowed" label="Direct submissions allowed" default="true" rendered="type_aggregating"/>
             <input type="poolpicker" id="repo_subjects" label="Repository subjects" list-id="subject_list"/>
             <input type="poolpicker" id="principal_languages" label="Principal languages" list-id="languages" default="English"/>
         </panel>
         
         <panel label="Submission">
             <input type="poolpicker" id="allowed_depositors" label="Allowed depositors" list-id="allowed_depositors">
-                <description>List allowed depositors, e.g. &quot;researchers from SEE Europe&quot; or &quot;Institution A, Institution B and Institution C&quot;</description>
+                <description>List allowed depositors, e.g., &quot;researchers from SEE Europe&quot; or &quot;Institution A, Institution B and Institution C&quot;.</description>
             </input>
-            <input type="boolean" id="available_after_embargo" label="Embargoed  items available after embargo expiration?">
+            <input type="boolean" id="available_after_embargo" label="Embargoed items available after embargo expiration">
                 <description>Items may be deposed at any time but will be made available after the expiration of the embargo period.</description>
             </input>
 
@@ -135,30 +135,34 @@
             </input>
             <input type="poolpicker" id="item_types" label="Item types" list-id="item_types" rendered="not_overal_type_all"/>
             
-            <input type="integer" id="retention_period_years" label="Retention period (years)">
+            <input type="integer" id="retention_period_years" label="Retention period in years">
                 <description>From the date of depositing. Blank or 0 for the unlimited period.</description>
             </input>
             <input type="boolean" id="links_between_versions" label="Links between versions">
-                <description>Record versions have links to the older and newer versions.</description>
+                <description>Record versions have links to the older and/or newer versions.</description>
             </input>
             <input type="boolean" id="links_to_latest_versions" label="Links to the latest versions of items">
-                <description>Set if each item has a persistent link to its latest version.</description>
+                <description>Check if each item has a persistent link to its latest version.</description>
             </input>
-            <input type="boolean" id="links_to_withdrawn_items" label="Links to the withdrawn items">
-                <description>Set if withdrawn items&apos; identifiers/URLs are retained indefinitely.</description>
+            <input type="boolean" id="links_to_withdrawn_items" label="Links to withdrawn items">
+                <description>Check if withdrawn items&apos; identifiers/URLs are retained indefinitely.</description>
             </input>
             <input type="boolean" id="committed_to_preserve_repository_database" label="Archived in a long-term preservation archive">
-                <description>Is the database going to be archived for long-term preservation, especially if the repository is closed down?</description>
+                <description>Check if the database is going to be archived for long-term preservation, especially if the repository is closed down.</description>
             </input>
-            <input type="integer" id="file_size_limit" label="File size limit (KB)" default="0">
-                <description>File size limit for files that can be uploaded to the repository without requesting special permission.<br/>
+            <input type="integer" id="file_size_limit" label="File size limit (MB)" default="0">
+                <description>Size limit for files that can be uploaded to the repository without requesting special permission.<br/>
                     Set 0 for no file size limit.</description>
             </input>
         </panel>
         
         <panel label="Privacy">
-            <input type="poolpicker" id="collected_data" label="Collected user data" list-id="collected_data_list"/>
-            <input type="boolean" id="use_google_analytics" label="Repository is using Google Analytics"/>
+            <input type="poolpicker" id="collected_data" label="Collected user data" list-id="collected_data_list">
+                <description>Select all options that apply and add new ones if needed.</description>
+            </input>
+            <input type="boolean" id="use_google_analytics" label="Repository is using Google Analytics">
+                <description>Check to include a reference to Google’s Privacy Policy.</description>
+            </input>
         </panel>
         
         <panel label="Harvesting">
@@ -174,7 +178,9 @@
         </panel>
         
         <panel label="Preservation">
-            <input type="boolean" id="performs_backups" label="Repository is performing backups" default="true"/>
+            <input type="boolean" id="performs_backups" label="If the repository is performing backups." default="true">
+                <description>Check if the repository is regularly backed up.</description>
+            </input>
         </panel>
         
         
