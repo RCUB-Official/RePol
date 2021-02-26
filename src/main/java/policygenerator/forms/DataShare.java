@@ -216,10 +216,11 @@ public class DataShare implements Serializable {
             }
 
             int total = mandatoryFieldIds.get(formId).size();
-
-            int result = 100 * completed / total;
-
-            return result;
+            if (total == 0) {
+                return 100;
+            } else {
+                return 100 * completed / total;
+            }
         } else {
             return 0;
         }
