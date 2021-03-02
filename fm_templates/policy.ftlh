@@ -1,5 +1,5 @@
 ${embedded_data?no_esc}
-
+ 
 <html>
             <head>
                         <title>Repository Policy - ${repo_name}</title>
@@ -255,6 +255,23 @@ and applicable embargos</li>
             <li>${repo_name} is an aggregating repository. Direct submissions are not possible.</li>
 </#if>
 </ul>
+
+ <!-- VERSIONING POLICY -->
+ 
+<h2>Versioning Policy</h2>
+<ul>
+            <li>If necessary, an updated version may be deposited.
+                        <ul>
+                                    <li>The earlier version may be withdrawn from public view.</li>
+<#if links_to_latest_versions>
+                                    <li>There will be links between versions, with the most recent version clearly identified.</li>
+</#if>
+<#if links_between_versions>
+                                    <li>The item&apos;s permanent URL or PID will always link to the latest version.</li>
+</#if>
+                        </ul>
+            </li> 
+</ul>
  
 <!-- PRIVACY POLICY -->
  
@@ -273,7 +290,7 @@ and applicable embargos</li>
     </li>
 </#if>
 
-<li>This information is only used internally for technical troubleshooting, to improve the usability of the repository, and to record aggregate statistics. 
+<li>This information is only used internally for technical troubleshooting, to improve the usability of the repository, and to record aggregate statistics.
 The system collects personal information submitted during the deposit process. Submitted information will be used only for the purpose for which you submitted it, and will not be shared with third parties or used for commercial purposes.</li>
 
 <#if use_google_analytics>
@@ -322,21 +339,20 @@ The system collects personal information submitted during the deposit process. S
 <#else>
             <li>Items will be retained indefinitely.</li>
 </#if>
+
+<#if regular_backups>
+    <li>${repo_name} regularly backs up its files according to current best practice.</li>
+</#if>
+
             <li>${repo_name} will try to ensure continued content readability and accessibility of the deposited items.</li>
-<#if opendoar_optimum>
+<#if file_format_migration>
             <li>Where possible, items will be migrated to new file formats when necessary.</li>
             <li>The repository may work with external partners to convert or migrate file formats, develop and implement software emulations for old file formats, and/or record preservation metadata.</li>
             <li>Where possible, software emulations will be provided to access un-migrated formats.</li>
             <li>It may not be possible to guarantee the readability of some less common file formats over time.</li>
-</#if>
-
-    <#if performs_backups>
-        <li>${repo_name} regularly backs up its files according to current best practice.</li>
-    </#if>
- 
-    <#if opendoar_optimum>
             <li>The original bitstream  is retained for all items, in addition to any upgraded formats.</li> 
-    </#if>
+</#if>
+<#if records_withdrawal>
             <li>Items may not normally be removed from the repository.</li>
             <li>Acceptable reasons for withdrawal include:
                         <ul>
@@ -348,10 +364,10 @@ The system collects personal information submitted during the deposit process. S
                         </ul>
             </li>
             <li>Withdrawn items remain available for audit purposes to administrators only.</li>
-            <li>[l16] Data may be removed at the request of the author/copyright holder, but metadata with explanatory notes about interventions must remain.</li>
+            <li>Data may be removed at the request of the author/copyright holder, but metadata with explanatory notes about interventions must remain.</li>
             <li>Withdrawn items are not deleted per se, but are removed from public view.</li>
  
-<#if links_to_withdrawn_items>
+            <#if links_to_withdrawn_items>
             <li>Withdrawn items&apos; identifiers/URLs are retained indefinitely.</li>
             <li>URLs will continue to point to &apos;tombstone&apos; citations, to avoid broken links and to retain item histories, with:
                         <ul>
@@ -359,25 +375,15 @@ The system collects personal information submitted during the deposit process. S
                                     <li>A note explaining the reasons for withdrawal</li>
                         </ul>
             </li>
-<#else>
+            <#else>
             <li>Identifiers/URLs of withdrawn items will be retained transiently. ${repo_name} may reveal a deleted status for records upon harvesting requests.</li>
-</#if>
+            </#if>
             <li>The metadata of withdrawn items will not be searchable.</li>
             <li>Changes to deposited items are not permitted.<!-- Sometimes, updates are allowed, see below. --></li>
+</#if>
 <#if opendoar_optimum>
             <li>Errata and corrigenda lists may be included with the original record if required.</li>
 </#if>
-            <li>If necessary, an updated version may be deposited.
-                        <ul>
-                                    <li>The earlier version may be withdrawn from public view.</li>
-<#if links_to_latest_versions>
-                                    <li>There will be links between versions, with the most recent version clearly identified.</li>
-</#if>
-<#if links_between_versions>
-                                    <li>The item&apos;s permanent URL or PID will always link to the latest version.</li>
-</#if>
-                        </ul>
-            </li> 
 <#if committed_to_preserve_repository_database>
             <li>In the event of ${repo_name} being closed down, ${repo_owner} will endeavour to transfer the database to another archive</li>
 <#else>
@@ -449,8 +455,9 @@ This policy is subject to revision every ${policy_renewal_interval_years} years 
 <!-- GENERATED FOOTER -->
  
 <div class="generated_footer">
-            <p><i>Created by <a href="${repol_url}" target="_blank">RePol (htttps://repol.ni4os.eu)</a> version ${repol_version}, <a href="https://github.com/RestlessDevil/RePol" target="_blank">source code at GitHub</a> under <a href="https://spdx.org/licenses/EUPL-1.2.html" target="_blank">EUPL-1.2</a>, on ${current_time?string("yyyy-MM-dd HH:mm zzz")}</i></p>
+            <p><i>Created by <a href="${repol_url}" target="_blank">RePol (${repol_url})</a> version ${repol_version}, <a href="https://github.com/RestlessDevil/RePol" target="_blank">source code at GitHub</a> under <a href="https://spdx.org/licenses/EUPL-1.2.html" target="_blank">EUPL-1.2</a>, on ${current_time?string("yyyy-MM-dd HH:mm zzz")}</i></p>
 </div>
- 
+
             </body>
 </html>
+

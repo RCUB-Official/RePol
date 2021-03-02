@@ -42,6 +42,7 @@ public class FormController implements Serializable {
             if (form != null) {
                 form.test();
                 form.sync();
+                
                 errorMessage = null;
             } else {
                 errorMessage = "Form not found!";

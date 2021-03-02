@@ -132,8 +132,8 @@
     </list>
     
     <list id="collected_data_list">
-        <element value="the Internet domain and IP address from which the repository was accessed">Internet domain and IP address</element>
-        <element value="http referer">Http Referer - HTTP header field that identifies the address of the webpage which is linked to the resource being requested</element>
+        <element value="IP address">IP address or Internet domain of the accessor</element>
+        <element value="HTTP referer">HTTP header field 'Referer' with the webpage from which the resource was linked</element>
         <element value="the type of browser and operating system">Type of browser and operating system browser and OS</element>
         <element value="date and time">Date and time</element>
         <element value="pages visited">Pages visited</element>

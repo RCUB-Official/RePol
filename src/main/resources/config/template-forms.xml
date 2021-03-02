@@ -35,11 +35,20 @@
             <input type="selectone" id="opendoar_min_opt" label="Preferred OpenDOAR policy flavour" list-id="minimum_optimum"
                    default="optimum">
                 <description>Formulations describing submission, curation and preservation policies rely on the wording used by <a href="https://v2.sherpa.ac.uk/opendoar/policytool/" target="_blank">OpenDOAR</a>.</description>
+                <trigger condition="opendoar_minimum" target="commercial_metadata_use_allowed" operation="set" value="false"/>
                 <trigger condition="opendoar_optimum" target="commercial_metadata_use_allowed" operation="set" value="true"/>
+                
+                <trigger condition="opendoar_minimum" target="commercial_item_use_allowed" operation="set" value="false"/>
                 <trigger condition="opendoar_optimum" target="commercial_item_use_allowed" operation="set" value="true"/>
                 
                 <trigger condition="opendoar_minimum" target="commercial_metadata_use_allowed" operation="set" value="false"/>
+                <trigger condition="opendoar_optimum" target="commercial_metadata_use_allowed" operation="set" value="true"/>
+                
                 <trigger condition="opendoar_minimum" target="commercial_item_use_allowed" operation="set" value="false"/>
+                <trigger condition="opendoar_optimum" target="commercial_item_use_allowed" operation="set" value="true"/>
+                
+                <trigger condition="opendoar_minimum" target="file_format_migration" operation="set" value="false"/>
+                <trigger condition="opendoar_optimum" target="file_format_migration" operation="set" value="true"/>
             </input>
             <input type="boolean" id="include_cc_explainer" label="Include Creative Commons licenses explainer" default="true">
                 <description>Check to include a customized explanation of the CC licenses mentioned in the policy.</description>
@@ -135,24 +144,21 @@
             </input>
             <input type="poolpicker" id="item_types" label="Item types" list-id="item_types" rendered="not_overal_type_all"/>
             
-            <input type="integer" id="retention_period_years" label="Retention period in years">
-                <description>From the date of depositing. Blank or 0 for the unlimited period.</description>
-            </input>
-            <input type="boolean" id="links_between_versions" label="Links between versions">
-                <description>Record versions have links to the older and/or newer versions.</description>
-            </input>
-            <input type="boolean" id="links_to_latest_versions" label="Links to the latest versions of items">
-                <description>Check if each item has a persistent link to its latest version.</description>
-            </input>
-            <input type="boolean" id="links_to_withdrawn_items" label="Links to withdrawn items">
-                <description>Check if withdrawn items&apos; identifiers/URLs are retained indefinitely.</description>
-            </input>
-            <input type="boolean" id="committed_to_preserve_repository_database" label="Archived in a long-term preservation archive">
-                <description>Check if the database is going to be archived for long-term preservation, especially if the repository is closed down.</description>
-            </input>
             <input type="integer" id="file_size_limit" label="File size limit (MB)" default="0">
                 <description>Size limit for files that can be uploaded to the repository without requesting special permission.<br/>
                     Set 0 for no file size limit.</description>
+            </input>
+        </panel>
+        
+        <panel label="Versioning">
+            <input type="boolean" id="record_versioning" label="Records are versioned" default="true"/>
+
+            <input type="boolean" id="links_to_latest_versions" label="Links to the latest versions of items">
+                <description>Check if each item has a persistent link to its latest version.</description>
+            </input>
+            
+            <input type="boolean" id="links_between_versions" label="Links between versions">
+                <description>Record versions have links to the older and/or newer versions.</description>
             </input>
         </panel>
         
@@ -166,8 +172,8 @@
         </panel>
         
         <panel label="Harvesting">
-            <input type="boolean" id="full_harvesting_robots" label="Allow full harvesting of items by robots">
-                <description>Normally, aggregators harvest metadata only. However, some aggregators harvest deposited items, too, if available. Disable this if you want to preserve the items in the repository only.<br/>Full harvesting is still allowed for text indexing or citations.</description>
+            <input type="boolean" id="full_harvesting_robots" label="Allow full harvesting of items by robots and aggregators">
+                <description>Most aggregators only harvest metadata. However, some harvest deposited items, if available. Disable this if you want to preserve the items in the repository only.<br/>Full harvesting is still allowed for text indexing or citations.</description>
             </input>
         </panel>
         
@@ -178,8 +184,21 @@
         </panel>
         
         <panel label="Preservation">
-            <input type="boolean" id="performs_backups" label="If the repository is performing backups." default="true">
+            <input type="integer" id="retention_period_years" label="Retention period in years">
+                <description>From the date of depositing. Blank or 0 for the unlimited period.</description>
+            </input>
+            <input type="boolean" id="regular_backups" label="If the repository is performing backups" default="true">
                 <description>Check if the repository is regularly backed up.</description>
+            </input>
+            <input type="boolean" id="file_format_migration" label="Migrated to new formats" default="true">
+                <description>Files will be migrated to new formats if possible.</description>
+            </input>
+            <input type="boolean" id="records_withdrawal" label="Records can be withdrawn" default="true"/>
+            <input type="boolean" id="links_to_withdrawn_items" label="Links to withdrawn items" rendered="withdrawal_allowed">
+                <description>Check if withdrawn items&apos; identifiers/URLs are retained indefinitely.</description>
+            </input>            
+            <input type="boolean" id="committed_to_preserve_repository_database" label="Long-term preservation archive">
+                <description>Check if the database is going to be archived for long-term preservation, especially if the repository is closed down.</description>
             </input>
         </panel>
         
@@ -247,6 +266,10 @@
                 <match id="opendoar_min_opt" value="optimum"/>
                 <match id="data_policy_flavour" value="descriptive"/>
             </and>
+        </condition>
+        
+        <condition id="withdrawal_allowed">
+            <match id="records_withdrawal" value="true"/>
         </condition>
         
         
