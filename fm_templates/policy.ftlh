@@ -246,8 +246,8 @@ and applicable embargos</li>
              <li>If ${repo_name} receives proof of copyright violation, the relevant item will be removed as soon as possible.</li>
             </#if>
  
-            <#if file_size_limit gt 0>
-            <li>Files exceeding ${file_size_limit} KB in size should not be directly uploaded to the repository. For files with sizes larger than ${file_size_limit} KB, a special upload permission may be sought out with repository administrators.</li>
+            <#if file_size_limit_mb gt 0>
+            <li>Files exceeding ${file_size_limit_mb} MB in size should not be directly uploaded to the repository. For files with sizes larger than ${file_size_limit_mb} MB, a special upload permission may be sought out with repository administrators.</li>
             </#if>
  
             <li>By depositing metadata and the content into ${repo_name}, the depositors accept the terms and conditions defined in this Repository Policy.</li>

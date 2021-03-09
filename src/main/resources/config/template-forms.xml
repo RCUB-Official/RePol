@@ -144,7 +144,7 @@
             </input>
             <input type="poolpicker" id="item_types" label="Item types" list-id="item_types" rendered="not_overal_type_all"/>
             
-            <input type="integer" id="file_size_limit" label="File size limit (MB)" default="0">
+            <input type="integer" id="file_size_limit_mb" label="File size limit (MB)" default="0">
                 <description>Size limit for files that can be uploaded to the repository without requesting special permission.<br/>
                     Set 0 for no file size limit.</description>
             </input>
@@ -190,10 +190,12 @@
             <input type="boolean" id="regular_backups" label="If the repository is performing backups" default="true">
                 <description>Check if the repository is regularly backed up.</description>
             </input>
-            <input type="boolean" id="file_format_migration" label="Migrated to new formats" default="true">
-                <description>Files will be migrated to new formats if possible.</description>
+            <input type="boolean" id="file_format_migration" label="Migration to new formats" default="true">
+                <description>Files will be migrated to new formats to ensure continuity and accessibility, if possible.</description>
             </input>
-            <input type="boolean" id="records_withdrawal" label="Records can be withdrawn" default="true"/>
+            <input type="boolean" id="records_withdrawal" label="Withdrawn records are preserved" default="true">
+                <description>Check if records removed from public view remain preserved in the repository.</description>
+            </input>
             <input type="boolean" id="links_to_withdrawn_items" label="Links to withdrawn items" rendered="withdrawal_allowed">
                 <description>Check if withdrawn items&apos; identifiers/URLs are retained indefinitely.</description>
             </input>            

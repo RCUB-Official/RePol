@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import policygenerator.forms.Trigger.Operation;
 import policygenerator.forms.condition.Condition;
 import policygenerator.forms.element.FormElement.Type;
@@ -65,6 +66,9 @@ public final class Form {
         this.conditionMap = new HashMap<String, Condition>();
 
         needValidation = new LinkedList<FormElement>();
+
+        Logger.getLogger(Form.class.getName()).log(Level.INFO, FacesContext.getCurrentInstance().getExternalContext().getSessionId(true) + " ("
+                + ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr() + ")" + " opened form \"" + id + "\"");
     }
 
     public String getId() {
@@ -279,6 +283,9 @@ public final class Form {
                 template.process(model, out);
                 fc.responseComplete();
             }
+
+            Logger.getLogger(Form.class.getName()).log(Level.INFO, FacesContext.getCurrentInstance().getExternalContext().getSessionId(true) + " ("
+                    + ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr() + ")" + " generated document");
         }
     }
 
@@ -298,6 +305,8 @@ public final class Form {
     public void downloadTemplate() {
         try (InputStream is = FMHandler.getInstance().getInputStream(id)) {
             HttpUtilities.sendFileToClient(is, "text/plain", id + ".ftlh");
+            Logger.getLogger(Form.class.getName()).log(Level.INFO, FacesContext.getCurrentInstance().getExternalContext().getSessionId(true) + " ("
+                    + ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr() + ")" + " downloaded template");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -308,6 +317,8 @@ public final class Form {
     public void downloadConfig() {
         try (InputStream is = FormFactory.getInstance().getStream()) {
             HttpUtilities.sendFileToClient(is, "application/xml", "template-forms.xml");
+            Logger.getLogger(Form.class.getName()).log(Level.INFO, FacesContext.getCurrentInstance().getExternalContext().getSessionId(true) + " ("
+                    + ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr() + ")" + " downloaded config");
         } catch (IOException ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
         }
