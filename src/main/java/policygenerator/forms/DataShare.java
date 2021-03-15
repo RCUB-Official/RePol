@@ -63,6 +63,7 @@ public class DataShare implements Serializable {
         for (FormHeader fh : FormFactory.getInstance().getFormHeaders()) {
             mandatoryFieldIds.put(fh.getFormId(), fh.getMandatoryFieldIds());
         }
+        ActivityLogger.getActivityLogger().resetValues();
     }
 
     public synchronized void push(FormElement element) {
@@ -93,6 +94,8 @@ public class DataShare implements Serializable {
         xml += "\n</embedded-data>";
 
         HttpUtilities.sendFileToClient(xml, "PolGen-Export-" + System.currentTimeMillis() + ".xml");
+
+        ActivityLogger.getActivityLogger().downloadedStandalone();
     }
 
     public void uploadFile() {
@@ -190,6 +193,7 @@ public class DataShare implements Serializable {
                 }
             }
 
+            ActivityLogger.getActivityLogger().uploadedDocument();
         } catch (Exception ex) {
             Logger.getLogger(DataShare.class.getName()).log(Level.SEVERE, null, ex);
         }
