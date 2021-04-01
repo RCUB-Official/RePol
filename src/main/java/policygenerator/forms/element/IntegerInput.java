@@ -27,14 +27,12 @@ public class IntegerInput extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
+    public void set(String value) {
         try {
-            this.value = Integer.parseInt(defaultValue);
-            this.defaultValue = defaultValue;
+            this.value = Integer.parseInt(value);
         } catch (Exception ex) {
             this.value = null;
         }
-        touch();
     }
 
     @Override
@@ -43,19 +41,9 @@ public class IntegerInput extends FormElement {
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) { // Maybe validate as a string?
-    }
-
-    @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
+        //TODO: validacija nad toString()
         return true;
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        //TODO: Handle exception
-        this.value = Integer.parseInt(value);
-        push();
     }
 
     @Override

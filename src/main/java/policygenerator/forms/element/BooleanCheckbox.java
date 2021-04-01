@@ -28,10 +28,8 @@ public class BooleanCheckbox extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
-        this.value = "true".equalsIgnoreCase(defaultValue);
-        this.defaultValue = this.value + "";
-        touch();
+    public void set(String value) {
+        this.value = "true".equalsIgnoreCase(value);
     }
 
     @Override
@@ -40,18 +38,8 @@ public class BooleanCheckbox extends FormElement {
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) {
-    }
-
-    @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
         return true;
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        this.value = "true".equalsIgnoreCase(value);
-        push();
     }
 
     @Override

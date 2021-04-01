@@ -110,7 +110,7 @@
     </list>
     
     <list id="languages">
-        <element value="English"/>
+        <element value="English">English</element>
         <element value="German"/>
         <element value="French"/>
         <element value="Spanish"/>

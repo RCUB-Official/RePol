@@ -16,12 +16,10 @@ import java.util.regex.Pattern;
 public class OneLine extends FormElement {
 
     private String value;
-    private String validationRegex;
 
     public OneLine(Panel panel, String id, boolean mandatory, String label, String conditionId) {
         super(panel, Type.ONELINE, id, mandatory, label, conditionId);
         this.value = "";
-        this.validationRegex = null;
     }
 
     public String getValue() {
@@ -33,10 +31,8 @@ public class OneLine extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
-        this.value = defaultValue;
-        this.defaultValue = defaultValue;
-        touch();
+    public void set(String value) {
+        this.value = value;
     }
 
     @Override
@@ -45,25 +41,14 @@ public class OneLine extends FormElement {
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) {
-        this.validationRegex = validationRegex;
-    }
-
-    @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
         boolean valueValid = true;
         if (value != null && validationRegex != null) {
             Pattern pattern = Pattern.compile(validationRegex);
             Matcher matcher = pattern.matcher(value);
             valueValid = matcher.find();
         }
-        return valueValid && !(isEmpty() && mandatory);
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        this.value = value;
-        push();
+        return valueValid;
     }
 
     @Override
@@ -108,5 +93,4 @@ public class OneLine extends FormElement {
     public String getXml() {
         return "<field type=\"oneline\" id=\"" + getId() + "\"><value>" + Utilities.xmlEscape(value) + "</value></field>";
     }
-
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+        <ui:composition>
+            <h:form id="navigationForm">
+
+                <c:choose>
+                    <c:when test="#{page == 'index'}">
+                        <c:set var="index" value="0"/>
+                    </c:when>
+                    <c:when test="#{page == 'forms'}">
+                        <c:set var="index" value="1"/>
+                    </c:when>
+                    <c:when test="#{page == 'form'}">
+                        <c:set var="index" value="2"/>
+                    </c:when>
+                    <c:when test="#{page == 'form_specs'}">
+                        <c:set var="index" value="3"/>
+                    </c:when>
+                    <c:when test="#{page == 'save'}">
+                        <c:set var="index" value="3"/>
+                    </c:when>
+                    <c:when test="#{page == 'tos'}">
+                        <c:set var="index" value="4"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="index" value="0"/>
+                    </c:otherwise>
+                </c:choose>
+
+                <style type="text/css">
+                    .ui-sticky {
+                        top: 70px !important;
+                    }
+
+                    @media (max-width: 960px) {
+                        .ui-sticky {
+                            top: 110px !important;
+                        }
+                    }
+                </style>
+
+                <div class="card">
+                    <p:tabMenu id="navigationMenu" activeIndex="#{index}">
+                        <p:menuitem value="Start"  icon="fa fa-fw fa-upload" outcome="index"/>
+
+                        <p:menuitem value="Select"  icon="fa fa-fw fa-list" outcome="forms">
+                            <c:if test="#{formController.form != null}">
+                                <f:param name="document_id" value="#{formController.formId}"/>
+                            </c:if>
+                        </p:menuitem>
+
+
+                        <p:menuitem value="Enter Data"  icon="fa fa-fw fa-pencil" outcome="form" disabled="#{formController.form == null}">
+                            <f:param name="document_id" value="#{formController.form.id}"/>
+                        </p:menuitem>
+
+
+                        <c:if test="#{request.requestURI.endsWith('form_specs.xhtml')}">
+                            <p:menuitem value="#{formController.form.label}"  icon="fa fa-fw fa-eye">
+                                <f:param name="document_id" value="#{param.document_id}"/>
+                            </p:menuitem>
+                        </c:if>
+
+                        <p:menuitem value="Get Results"  icon="fa fa-fw fa-download" outcome="save" disabled="#{!dataShare.used}">
+                            <c:if test="#{formController.form != null}">
+                                <f:param name="document_id" value="#{param.document_id}"/>
+                            </c:if>
+                        </p:menuitem>
+
+                        <c:if test="#{page == 'tos'}">
+                            <p:menuitem value="Privacy and Terms of Use"  icon="fa fa-fw fa-legal"/>
+                        </c:if>
+
+                    </p:tabMenu>
+
+                    <p:sticky target="navigationMenu"/>
+                </div>
+            </h:form>
+        </ui:composition>
+    </body>
+</html>

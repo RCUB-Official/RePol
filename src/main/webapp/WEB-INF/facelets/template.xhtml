@@ -16,7 +16,7 @@ and open the template in the editor.
         <h:outputScript library="primefaces" name="jquery/jquery.js"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <title><ui:insert name="title"/></title>
+        <title>RePol - Repository Policy Generator - <ui:insert name="title"/></title>
     </h:head>
     <h:body>
         <f:facet name="last">
@@ -54,21 +54,20 @@ and open the template in the editor.
                         </a>
                     </div>
                 </div>
-                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.container -->
         </nav>
 
         <!-- Page Content -->
         <div class="container">
             <div class="row">
+                <div id="content" class="col-lg-12">
 
-                <ui:insert name="special_menu">
-                    <ui:include src="default_special_menu.xhtml"/>
-                </ui:insert>
+                    <ui:insert name="navigation">
+                        <ui:include src="navigation.xhtml"/>
+                    </ui:insert>
 
-                <div id="content" class="col-lg-10">
                     <div class="title"><ui:insert name="title"/></div>
+
                     <ui:insert name="content"/>
                 </div>
             </div>

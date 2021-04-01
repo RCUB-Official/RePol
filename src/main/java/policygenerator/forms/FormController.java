@@ -42,7 +42,7 @@ public class FormController implements Serializable {
             if (form != null) {
                 form.test();
                 form.sync();
-                
+
                 errorMessage = null;
             } else {
                 errorMessage = "Form not found!";
@@ -51,6 +51,10 @@ public class FormController implements Serializable {
             form = null;
             errorMessage = ex.getMessage();
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (formId == null && !getFormHeaders().isEmpty()) {
+            formId = getFormHeaders().get(0).getFormId();
         }
     }
 
@@ -72,6 +76,14 @@ public class FormController implements Serializable {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public String getFormId() {
+        return formId;
+    }
+
+    public void setFormId(String formId) {
+        this.formId = formId;
     }
 
 }

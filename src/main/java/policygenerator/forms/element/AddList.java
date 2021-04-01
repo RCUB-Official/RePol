@@ -21,21 +21,17 @@ public class AddList extends FormElement {
 
     private final List<String> values;
     private String toBeAdded;
-    private String validationRegex;
 
     public AddList(Panel panel, String id, boolean mandatory, String label, String conditionId) {
         super(panel, Type.ADDLIST, id, mandatory, label, conditionId);
         this.values = new LinkedList<String>();
         this.toBeAdded = "";
-        validationRegex = null;
     }
 
     public void add() throws ElementNotFoundException, ConditionNotFoundException {
-        if (!"".equals(toBeAdded)) {
-            values.add(toBeAdded);
-            toBeAdded = "";
-            processTriggers();
-        }
+        set(toBeAdded);
+        toBeAdded = "";
+        processTriggers();
     }
 
     public List<String> getValues() {
@@ -51,10 +47,19 @@ public class AddList extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
-        values.add(defaultValue);
-        this.defaultValue= defaultValue;
-        push();
+    public void set(String value) {
+        if (!"".equals(value)) {
+            boolean exists = false;
+            for (String v : values) {
+                if (v.equals(value)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                values.add(value);
+            }
+        }
     }
 
     @Override
@@ -63,12 +68,7 @@ public class AddList extends FormElement {
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) {
-        this.validationRegex = validationRegex;
-    }
-
-    @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
         boolean allValuesValid = true;
         if (validationRegex != null & !isEmpty()) {
             Pattern pattern = Pattern.compile(validationRegex);
@@ -80,13 +80,7 @@ public class AddList extends FormElement {
                 }
             }
         }
-        return allValuesValid && !(isEmpty() && mandatory);
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        values.add(value);
-        touch();
+        return allValuesValid;
     }
 
     @Override
@@ -121,24 +115,24 @@ public class AddList extends FormElement {
         switch (element.getType()) {
             case ADDLIST:
                 for (String s : ((AddList) element).getValues()) {
-                    setByTrigger(s);
+                    set(s);
                 }
                 break;
             case POOLPICKER:
                 for (SelectionElement se : ((PoolPicker) element).getSelectedValues()) {
-                    setByTrigger(se.getValue());
+                    set(se.getValue());
                 }
                 break;
             case SELECTMANY:
                 for (SelectionElement se : ((PoolPicker) element).getSelectedValues()) {
-                    setByTrigger(se.getValue());
+                    set(se.getValue());
                 }
                 break;
             case ONELINE:
-                setByTrigger(((OneLine) element).getValue());
+                set(((OneLine) element).getValue());
                 break;
             case TEXT:
-                setByTrigger(((Text) element).getValue());
+                set(((Text) element).getValue());
                 break;
         }
     }

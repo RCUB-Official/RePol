@@ -16,25 +16,17 @@ public class Separator extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) { // No effect
-    }
-
-    @Override
     public boolean isEmpty() { // Always empty
         return true;
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) {
-    }
-
-    @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
         return true;
     }
 
     @Override
-    public void setByTrigger(String value) { // Not supposed to have a value
+    public void set(String value) { // Not supposed to have a value
     }
 
     @Override
@@ -52,7 +44,6 @@ public class Separator extends FormElement {
 
     @Override
     public void sync(FormElement element) {
-        //DO NOTHING
     }
 
     @Override

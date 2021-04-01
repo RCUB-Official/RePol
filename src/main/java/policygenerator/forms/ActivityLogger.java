@@ -7,6 +7,8 @@ package policygenerator.forms;
 
 import framework.utilities.Utilities;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PreDestroy;
@@ -30,6 +32,8 @@ public class ActivityLogger implements Serializable {
 
     private final String HEADER;
 
+    Set<String> formSet = new HashSet<String>();
+
     public ActivityLogger() {
         sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
         ipAddr = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
@@ -44,7 +48,10 @@ public class ActivityLogger implements Serializable {
 
     //Event Listeners
     public void openedForm(String formId) {
-        LOG.log(Level.INFO, "{0}: opened the form \"{1}\".", new Object[]{HEADER, formId});
+        if (!formSet.contains(formId)) {
+            LOG.log(Level.INFO, "{0}: opened the form \"{1}\".", new Object[]{HEADER, formId});
+            formSet.add(formId);
+        }
     }
 
     public void documentGenerated(String formId) {
@@ -68,7 +75,7 @@ public class ActivityLogger implements Serializable {
     }
 
     public void resetValues() {
-        LOG.log(Level.INFO, "{0}: triggered a reset.", HEADER);
+        LOG.log(Level.INFO, "{0}: triggered a global data reset.", HEADER);
     }
 
     @PreDestroy

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/facelets/template.xhtml">
+            <ui:param name="page" value="forms" />
+
+            <ui:define name="title">
+                Document Creation Forms
+            </ui:define>
+
+            <ui:define name="content">
+                <c:choose>
+                    <c:when test="#{dashboard.operational}">
+                        <h:form id="formSelectionForm">
+                            <div class="forms spaced-bottom">
+                                <c:forEach items="#{formController.formHeaders}" var="formHeaderRow">
+                                    <div class="form-header">
+                                        <div class="row">
+                                            <div class="col-lg-1">
+                                                <p:commandButton icon="fa fa-fw #{formController.formId == formHeaderRow.formId ? 'fa-circle' : 'fa-circle-o'}" action="#{formController.setFormId(formHeaderRow.formId)}"
+                                                                 update="@form navigationForm" value="&nbsp;" styleClass="bool-button"/>
+                                            </div>
+                                            <div class="col-lg-7">
+                                                <h4 class="#{formController.formId == formHeaderRow.formId ? 'selected' : null}">
+                                                    #{formHeaderRow.label}
+                                                </h4>
+                                                #{formHeaderRow.description}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formHeaderRow.formId)}"
+                                                               rendered="#{dataShare.getProgress(formHeaderRow.formId) > 0}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+
+                            <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>
+                        </h:form>
+                    </c:when>
+                    <c:otherwise>
+                        <h3>Malfunction!</h3>
+                    </c:otherwise>
+                </c:choose>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

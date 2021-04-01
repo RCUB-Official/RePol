@@ -27,14 +27,12 @@ public class DoubleInput extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
+    public void set(String value) {
         try {
-            this.value = Double.parseDouble(defaultValue);
-            this.defaultValue = defaultValue;
+            this.value = Double.parseDouble(value);
         } catch (Exception ex) {
             this.value = null;
         }
-        touch();
     }
 
     @Override
@@ -43,19 +41,9 @@ public class DoubleInput extends FormElement {
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) {
-    }
-
-    @Override
-    public boolean isValid() {
-        return true;    //Always valid except maybe in NAN case
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        //TODO: Handle exception
-        this.value = Double.parseDouble(value);
-        push();
+    public boolean isRegexValid() {
+        //TODO: validacija nad toString()
+        return true;    
     }
 
     @Override

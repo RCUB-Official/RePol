@@ -8,6 +8,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="/WEB-INF/facelets/template.xhtml">
+            <ui:param name="page" value="form_specs" />
 
             <ui:define name="title">
                 <c:choose>
@@ -20,13 +21,14 @@
                 </c:choose>
             </ui:define>
 
-            <ui:define name="special_menu"/>
-
             <ui:define name="content">
 
                 <h:form id="form_itself">
                     <c:choose>
                         <c:when test="#{formController.form.validTemplate}">
+                            <f:metadata>
+                                <f:viewParam name="document_id" value="#{formController.formId}" />
+                            </f:metadata>
 
                             <div class="form-description"><h:outputText value="#{formController.form.description}" escape="false"/></div>
                             <h3>Panels and input elements</h3>
@@ -44,7 +46,7 @@
                                         <b>#{formElement.id}</b>
                                         <h:panelGroup rendered="#{formElement.conditionId != null}">
                                             <p:commandLink id="condition-link"><span class="fa fa-fw fa-eye"/></p:commandLink>
-                                            <p:overlayPanel for="condition-link" showEffect="fade" hideEffect="fade" style="width:600px">
+                                            <p:overlayPanel for="condition-link" style="width:600px">
                                                 <b>#{formElement.conditionId}</b><br/>
                                                 #{formElement.condition}
                                             </p:overlayPanel>
@@ -114,14 +116,14 @@
                                     </c:if>
                                 </c:forEach>
                             </c:forEach>
-                            <div class="row>">
-                                <div class="col-lg-4">
+                            <div class="row spaced-bottom">
+                                <div class="col-lg-3">
                                     <p:commandButton value="Download template" icon="fa fa-fw fa-download"
                                                      ajax="false" action="#{formController.form.downloadTemplate()}">
                                         <f:param name="document_id" value="#{formController.form.id}"/>
                                     </p:commandButton>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <p:commandButton value="Download configuration file" icon="fa fa-fw fa-download"
                                                      ajax="false" action="#{formController.form.downloadConfig()}">
                                         <f:param name="document_id" value="#{formController.form.id}"/>
@@ -129,16 +131,8 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-8 return-link">
-                                    <p:link value="Return to the form" outcome="form">
-                                        <f:param name="document_id" value="#{formController.form.id}"/>
-                                    </p:link>
-                                </div>
-                                <div class="col-lg-4 return-link">
-                                    <p:link value="Return to the main page." outcome="index"/>
-                                </div>
-                            </div>
+                            <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>
+
                         </c:when>                        
                         <c:otherwise>
                             <h3>#{formController.errorMessage}</h3>

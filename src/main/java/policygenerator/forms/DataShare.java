@@ -51,35 +51,48 @@ public class DataShare implements Serializable {
     private final Map<String, List<String>> mandatoryFieldIds;
     private Part rawfile;
 
+    private boolean used;
+
     public DataShare() {
         latestValues = new HashMap<String, FormElement>();
         mandatoryFieldIds = new HashMap<String, List<String>>();
     }
 
     @PostConstruct
-    public void reset() {
+    public void init() {
         latestValues.clear();
         mandatoryFieldIds.clear();
         for (FormHeader fh : FormFactory.getInstance().getFormHeaders()) {
             mandatoryFieldIds.put(fh.getFormId(), fh.getMandatoryFieldIds());
         }
+
+        used = false;
+    }
+
+    public void reset() {
+        init();
         ActivityLogger.getActivityLogger().resetValues();
     }
 
     public synchronized void push(FormElement element) {
         latestValues.put(element.getId(), element);
+        used = true;
     }
 
     public synchronized void touch(FormElement element) {
         if (!latestValues.containsKey(element.getId())) {
             latestValues.put(element.getId(), element);
         }
+        used = true;
     }
 
     public synchronized void sync(FormElement element) {
         if (latestValues.containsKey(element.getId())) {
-            element.sync(latestValues.get(element.getId()));
+            if (element != latestValues.get(element.getId())) {
+                element.sync(latestValues.get(element.getId()));
+            }
         }
+        used = true;
     }
 
     public void downloadStandalone() throws IOException {
@@ -193,6 +206,7 @@ public class DataShare implements Serializable {
                 }
             }
 
+            used = true;
             ActivityLogger.getActivityLogger().uploadedDocument();
         } catch (Exception ex) {
             Logger.getLogger(DataShare.class.getName()).log(Level.SEVERE, null, ex);
@@ -229,4 +243,9 @@ public class DataShare implements Serializable {
             return 0;
         }
     }
+
+    public boolean isUsed() {
+        return used;
+    }
+
 }

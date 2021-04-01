@@ -31,6 +31,16 @@ public class SelectOne extends FormElement {
         this.value = value;
     }
 
+    @Override
+    public void set(String value) {
+        for (SelectionElement se : availableValues) {
+            if (se.getValue().equals(value)) {
+                this.value = value;
+                break;
+            }
+        }
+    }
+
     public void setAvailableValues(List<SelectionElement> availableValues) {
         this.availableValues = availableValues;
     }
@@ -40,40 +50,13 @@ public class SelectOne extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
-        for (SelectionElement se : availableValues) {
-            if (se.getValue().equals(defaultValue)) {
-                this.value = defaultValue;
-                this.defaultValue = defaultValue;
-                break;
-            }
-        }
-        touch();
-    }
-
-    @Override
     public boolean isEmpty() {
         return (value == null);
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) {
-    }
-
-    @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
         return true;
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        for (SelectionElement se : availableValues) {
-            if (se.getValue().equals(value)) {
-                this.value = value;
-                break;
-            }
-        }
-        push();
     }
 
     @Override
@@ -97,22 +80,22 @@ public class SelectOne extends FormElement {
     public void sync(FormElement element) {
         switch (element.getType()) {
             case SELECTONE:
-                setByTrigger(((SelectOne) element).getValue());
+                set(((SelectOne) element).getValue());
                 break;
             case TEXT:
-                setByTrigger(((Text) element).getValue());
+                set(((Text) element).getValue());
                 break;
             case ONELINE:
-                setByTrigger(((OneLine) element).getValue());
+                set(((OneLine) element).getValue());
                 break;
             case INTEGER:
-                setByTrigger(((IntegerInput) element).getValue() + "");
+                set(((IntegerInput) element).getValue() + "");
                 break;
             case DOUBLE:
-                setByTrigger(((DoubleInput) element).getValue() + "");
+                set(((DoubleInput) element).getValue() + "");
                 break;
             case DATE:
-                setByTrigger(((DateInput) element).getValue() + "");
+                set(((DateInput) element).getValue() + "");
                 break;
         }
     }

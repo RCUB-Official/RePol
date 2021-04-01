@@ -10,11 +10,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import policygenerator.forms.DataShare;
 import policygenerator.forms.Trigger;
 import policygenerator.forms.condition.Condition;
 import policygenerator.forms.condition.exceptions.ConditionNotFoundException;
-import policygenerator.forms.element.exceptions.ElementNotFoundException;
 
 public abstract class FormElement {
 
@@ -37,7 +38,7 @@ public abstract class FormElement {
     private final Type type;
     private final String id;
 
-    final boolean mandatory;
+    protected final boolean mandatory;
 
     private final String label;
     private String tooltip;
@@ -49,6 +50,9 @@ public abstract class FormElement {
     Map<String, Condition> conditions;
 
     protected String defaultValue;
+
+    protected String validationRegex;
+    protected String validationMessage;
 
     FormElement(Panel panel, Type type, String id, boolean mandatory, String label, String conditionId) {
         this.panel = panel;
@@ -64,17 +68,20 @@ public abstract class FormElement {
         triggers = new LinkedList<Trigger>();
         conditions = new HashMap<String, Condition>();
         defaultValue = null;
+
+        validationRegex = null;
+        validationMessage = null;
     }
 
-    public Type getType() {
+    public final Type getType() {
         return type;
     }
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
-    public String getLabel() {
+    public final String getLabel() {
         if (label != null) {
             return label;
         } else {
@@ -98,68 +105,56 @@ public abstract class FormElement {
         this.description = description;
     }
 
-    public abstract void setDefaultValue(String defaultValue);
+    public String getDefaultValue() {
+        return defaultValue;
+    }
 
-    public abstract void setValidationRegex(String validationRegex);
+    //VALUE FUNCTIONS
+    public abstract void set(String value);
 
     public abstract void clear();
 
     public abstract void remove(String value);
 
-    public abstract boolean isEmpty();
-
-    public boolean isMandatory() {
-        return mandatory;
-    }
-
-    public abstract boolean isValid();
-
-    public void addTrigger(Trigger trigger) {
-        this.triggers.add(trigger);
-    }
-
-    public void addCondition(String conditionId, Condition condition) {
-        this.conditions.put(id, condition);
-    }
-
-    public abstract void setByTrigger(String value);
-
     public abstract boolean match(String value);
 
-    public void push() {
-        DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");
-        myShare.push(this);
+    public final void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+        set(defaultValue);
+        touch();
     }
 
-    public void touch() {
-        DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");
-        myShare.touch(this);
-    }
-
-    public void processTriggers() throws ElementNotFoundException, ConditionNotFoundException {
-        for (Trigger t : triggers) {
-            if (panel.getForm().getCondition(t.getConditionId()).evaluate()) {
-                panel.getForm().processTrigger(t.getTargetId(), t.getOperation(), t.getValue());
-            }
-        }
-
+    public final void setByTrigger(String value) {
+        set(value);
         push();
     }
 
-    public List<String> getTriggerConditionIds() {
-        List<String> conditionIds = new LinkedList<String>();
-        for (Trigger t : triggers) {
-            conditionIds.add(t.getConditionId());
-        }
-        return conditionIds;
+    public final void resetToDefault() {
+        clear();
+        set(defaultValue);
+        push();
     }
 
-    public boolean isRendered() throws ConditionNotFoundException {
-        if (conditionId == null) {
-            return true;
-        } else {
-            return panel.getForm().getCondition(conditionId).evaluate();
-        }
+    //VALIDATION
+    public abstract boolean isEmpty();
+
+    public abstract boolean isRegexValid();
+
+    public final boolean isValid() {
+        return (!mandatory || !isEmpty()) && (validationRegex == null || isRegexValid());
+    }
+
+    public final boolean isMandatory() {
+        return mandatory;
+    }
+
+    public void setValidationRegex(String validationRegex) {
+        this.validationRegex = validationRegex;
+    }
+
+    // CONDITION FUNCTIONS
+    public void addCondition(String conditionId, Condition condition) {
+        this.conditions.put(id, condition);
     }
 
     public String getConditionId() {
@@ -174,15 +169,57 @@ public abstract class FormElement {
         }
     }
 
+    public final boolean isRendered() throws ConditionNotFoundException {
+        if (conditionId == null) {
+            return true;
+        } else {
+            return panel.getForm().getCondition(conditionId).evaluate();
+        }
+    }
+
+    // TRIGGER FUNCTIONS
     public List<Trigger> getTriggers() {
         return triggers;
     }
 
-    public String getDefaultValue() {
-        return defaultValue;
+    public List<String> getTriggerConditionIds() {
+        List<String> conditionIds = new LinkedList<String>();
+        for (Trigger t : triggers) {
+            conditionIds.add(t.getConditionId());
+        }
+        return conditionIds;
     }
 
+    public void addTrigger(Trigger trigger) {
+        this.triggers.add(trigger);
+    }
+
+    public void processTriggers() {
+        for (Trigger t : triggers) {
+            try {
+                if (panel.getForm().getCondition(t.getConditionId()).evaluate()) {
+                    panel.getForm().processTrigger(t.getTargetId(), t.getOperation(), t.getValue());
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(FormElement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        push();
+    }
+
+    // DATASHARE FUNCTIONS
     public abstract void sync(FormElement element);
+
+    private final void push() {
+        DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");
+        myShare.push(this);
+    }
+
+    private final void touch() {
+        DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");
+        myShare.touch(this);
+    }
 
     // For embedded and standalone export
     public abstract String getXml();

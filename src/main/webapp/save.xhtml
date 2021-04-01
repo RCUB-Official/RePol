@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/facelets/template.xhtml">
+            <ui:param name="page" value="save" />
+
+            <ui:define name="title">
+                Data Download/Upload
+            </ui:define>
+
+            <ui:define name="content">
+
+                <c:choose>
+                    <c:when test="#{dashboard.operational}">
+
+                        <div class="row spaced-top spaced-bottom">
+                            <c:if test="#{formController.form != null}">
+
+                                <f:metadata>
+                                    <f:viewParam name="document_id" value="#{formController.formId}" />
+                                </f:metadata>
+
+                                <h:form id="generate_reset_form">
+                                    <div class="col-lg-3 col-md-6 text-center action-tile">
+                                        <div class="mt-5">
+                                            <p:commandLink ajax="false" action="#{formController.form.generateDocument()}"
+                                                           disabled="#{!formController.form.complete}">
+                                                <f:param name="document_id" value="#{formController.form.id}"/>
+                                                <i class="fa fa-4x fa-cogs"/>
+                                                <h3 class="h4 mb-2">Get Document <br/>#{formController.form.label}</h3>
+                                            </p:commandLink>
+                                            <c:if test="#{!formController.form.complete}">
+                                                <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formController.form.id)}"/>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </c:if>
+
+                            <h:form id="data_form">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-6 text-center action-tile">
+                                        <div class="mt-5">
+                                            <p:commandLink id="save_data_btn" ajax="false" action="#{dataShare.downloadStandalone()}">
+                                                <f:param name="document_id" value="#{formController.form.id}"/>
+                                                <i class="fa fa-4x fa-save"/>
+                                                <h3 class="h4 mb-2">Download Data as XML</h3>
+                                            </p:commandLink>
+                                            <p class="text-muted mb-0">Download the data entered into above forms</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-6 text-center action-tile">
+                                        <div class="mt-5">
+                                            <p:commandLink id="reset_data_btn" update="@form" action="#{dataShare.reset()}"
+                                                           disabled="#{!dataShare.used}">
+                                                <i class="fa fa-4x fa-trash"/>
+                                                <h3 class="h4 mb-2">Reset Data</h3>
+                                            </p:commandLink>
+                                            <p class="text-muted mb-0">Reset data in all forms.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                        <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>
+                    </c:when>
+                    <c:otherwise>
+                        <h3>Malfunction!</h3>
+                    </c:otherwise>
+                </c:choose>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

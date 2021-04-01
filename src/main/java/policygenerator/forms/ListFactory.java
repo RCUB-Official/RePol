@@ -40,7 +40,7 @@ public class ListFactory extends XMLHandler {
                 if (subElements.item(i).getNodeName().equals("element")) {
                     String value = subElements.item(i).getAttributes().getNamedItem("value").getTextContent();
                     String humanReadableLabel = subElements.item(i).getTextContent();
-                    selectionList.add(new SelectionElement(forElement, humanReadableLabel, value));
+                    selectionList.add(new SelectionElement(forElement, humanReadableLabel != null ? humanReadableLabel : "", value));
                 }
             }
         }

@@ -44,11 +44,6 @@ h1 {
     margin-bottom: 4px;
 }
 
-#special_menu {
-    margin-top: 30px;
-    border-right: 1px #eee solid
-}
-
 #logo {
     color:#fff;
     font-weight:bold;
@@ -73,6 +68,7 @@ h1 {
 #content {
     padding-left:5%;
     padding-right:5%;
+    min-height:80vh;
 }
 
 #footer {
@@ -101,10 +97,9 @@ h1 {
 .dashboard {
     text-align:center;
     vertical-align: middle;
-    padding:20px;
-    margin:5px;
-    border: 1px solid #eee;
-    border-radius: 7px;
+    padding:15px;
+    border: 1px solid #fff;
+    border-radius: 9px;
 }
 
 .dashboard label {
@@ -207,11 +202,11 @@ a, a:hover {
     margin-left:15px;
 }
 
-.form-link {
+.form-header {
     font-size:1.1em;
     margin-bottom:10px;
     padding-top:10px;
-    border-bottom: 2px dotted #eee;
+    border-bottom: 1px solid #eee;
 }
 
 h4 {
@@ -294,8 +289,14 @@ h4 {
     max-height:40px;
 }
 
-.return-link {
-    margin-top:30px;
+.buttonized {
+    border: 1px solid #eee;
+    border-radius:10px;
+    padding:10px;
+    padding-top:15px;
+    padding-bottom:15px;
+    background:#fafafa;
+    text-align: center;
 }
 
 .footer-ec {
@@ -347,4 +348,29 @@ form-element-description-specs {
 .value-row {
     margin-bottom:7px;
     border-bottom:1px #f5f5f5 solid;
+}
+
+.spaced-bottom {
+    margin-bottom:30px;
+}
+
+.spaced-top {
+    margin-top:30px;
+}
+
+.ui-state-disabled {
+    background: none;
+}
+
+.float-right {
+    float:right;
+}
+
+.bool-button {
+    width:40px;
+    height:40px;
+    border-radius: 20px;
+}
+
+.selected {
 }

@@ -41,17 +41,13 @@ public class SelectMany extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
+    public void set(String value) {
         for (SelectionElement se : availableValues) {
-            if (se.getValue().equals(defaultValue)) {
-                try {
-                    se.select();
-                    this.defaultValue = defaultValue;
-                } catch (Exception ex) {
-                }
+            if (se.getValue().equals(value)) {
+                se.setSelected(true);
+                break;
             }
         }
-        touch();
     }
 
     @Override
@@ -67,23 +63,8 @@ public class SelectMany extends FormElement {
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) {
-    }
-
-    @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
         return true;
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        for (SelectionElement se : availableValues) {
-            if (se.getValue().equals(value)) {
-                se.setSelected(true);
-                break;
-            }
-        }
-        push();
     }
 
     @Override
@@ -103,7 +84,6 @@ public class SelectMany extends FormElement {
         for (SelectionElement se : availableValues) {
             se.setSelected(false);
         }
-        push();
     }
 
     @Override
@@ -120,24 +100,24 @@ public class SelectMany extends FormElement {
         clear();
         switch (element.getType()) {
             case TEXT:
-                setByTrigger(((Text) element).getValue());
+                set(((Text) element).getValue());
                 break;
             case ONELINE:
-                setByTrigger(((OneLine) element).getValue());
+                set(((OneLine) element).getValue());
                 break;
             case INTEGER:
-                setByTrigger(((IntegerInput) element).getValue() + "");
+                set(((IntegerInput) element).getValue() + "");
                 break;
             case DOUBLE:
-                setByTrigger(((DoubleInput) element).getValue() + "");
+                set(((DoubleInput) element).getValue() + "");
                 break;
             case DATE:
-                setByTrigger(((DateInput) element).getValue() + "");
+                set(((DateInput) element).getValue() + "");
                 break;
             case SELECTMANY:
                 List<String> values = ((SelectMany) element).getValues();
                 for (String value : values) {
-                    setByTrigger(value);
+                    set(value);
                 }
                 break;
         }

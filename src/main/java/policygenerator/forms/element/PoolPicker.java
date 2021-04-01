@@ -33,28 +33,22 @@ public class PoolPicker extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
+    public void set(String value) {
         boolean found = false;
         if (availableValues != null) {
             for (SelectionElement av : availableValues) {
-                if (av.getValue().equals(defaultValue)) {
+                if (av.getValue().equals(value)) {
                     found = true;
                     selectedValues.add(av);
                     availableValues.remove(av);
                     displayedList.remove(av);
-                    this.defaultValue = defaultValue;
                     break;
                 }
             }
         }
         if (!found) {
-            selectedValues.add(new SelectionElement(this, null, defaultValue));
+            selectedValues.add(new SelectionElement(this, null, value));
         }
-        touch();
-    }
-
-    @Override
-    public void setValidationRegex(String validationRegex) {
     }
 
     @Override
@@ -63,14 +57,8 @@ public class PoolPicker extends FormElement {
     }
 
     @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
         return true;
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        setDefaultValue(value);
-        touch();
     }
 
     @Override
@@ -173,28 +161,28 @@ public class PoolPicker extends FormElement {
         switch (element.getType()) {
             case POOLPICKER:
                 for (String v : ((PoolPicker) element).getValues()) {
-                    setByTrigger(v);
+                    set(v);
                 }
                 break;
             case ADDLIST:
                 for (String v : ((AddList) element).getValues()) {
-                    setByTrigger(v);
+                    set(v);
                 }
                 break;
             case TEXT:
-                setByTrigger(((Text) element).getValue());
+                set(((Text) element).getValue());
                 break;
             case ONELINE:
-                setByTrigger(((OneLine) element).getValue());
+                set(((OneLine) element).getValue());
                 break;
             case INTEGER:
-                setByTrigger(((IntegerInput) element).getValue() + "");
+                set(((IntegerInput) element).getValue() + "");
                 break;
             case DOUBLE:
-                setByTrigger(((DoubleInput) element).getValue() + "");
+                set(((DoubleInput) element).getValue() + "");
                 break;
             case DATE:
-                setByTrigger(((DateInput) element).getValue() + "");
+                set(((DateInput) element).getValue() + "");
                 break;
         }
     }

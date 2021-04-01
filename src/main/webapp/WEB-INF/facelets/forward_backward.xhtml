@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+        <ui:composition>
+            <div id="forwardBackward">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <c:choose>
+                            <c:when test="#{page == 'index'}"/>
+                            <c:when test="#{page == 'forms'}">
+                                <p:button icon="fa fa-fw fa-arrow-left" outcome="index"
+                                          value="Back to the start"/>
+                            </c:when>
+                            <c:when test="#{page == 'form'}">
+                                <p:button icon="fa fa-fw fa-arrow-left" outcome="forms"
+                                          value="Return to the list of forms">
+                                    <c:if test="#{formController.form != null}">
+                                        <f:param name="document_id" value="#{formController.formId}"/>
+                                    </c:if>
+                                </p:button>
+                            </c:when>
+                            <c:when test="#{page == 'form_specs'}">
+                                <p:button icon="fa fa-fw fa-arrow-left" outcome="forms"
+                                          value="Return to the list of forms">
+                                    <c:if test="#{formController.form != null}">
+                                        <f:param name="document_id" value="#{formController.formId}"/>
+                                    </c:if>
+                                </p:button>
+                            </c:when>
+                            <c:when test="#{page == 'save'}">
+                                <c:choose>
+                                    <c:when test="#{formController.form != null}">
+                                        <p:button icon="fa fa-fw fa-arrow-left" outcome="form"
+                                                  value="Return to enter data">
+                                            <f:param name="document_id" value="#{formController.form.id}"/>
+                                        </p:button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p:button icon="fa fa-fw fa-arrow-left" outcome="index"
+                                                  value="Back to the start"/>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:when>
+                        </c:choose>
+                    </p:toolbarGroup>
+
+                    <p:toolbarGroup>
+                        <c:choose>
+                            <c:when test="#{page == 'index'}"/>
+                            <c:when test="#{page == 'forms'}"/>
+                            <c:when test="#{page == 'form'}">
+                                <p:commandButton icon="fa fa-fw fa-refresh" action="#{formController.reset()}" update="@form"
+                                                 value="Reset form"/>
+                            </c:when>
+                            <c:when test="#{page == 'form_specs'}"/>
+
+                            <c:when test="#{page == 'save'}"/>
+                        </c:choose>
+                    </p:toolbarGroup>
+
+                    <p:toolbarGroup>
+                        <c:choose>
+                            <c:when test="#{page == 'index'}">
+                                <p:button icon="fa fa-fw fa-arrow-right" outcome="forms"
+                                          value="Select a form"/>
+                            </c:when>
+                            <c:when test="#{page == 'forms'}">
+                                <p:button icon="fa fa-fw fa-arrow-right" outcome="form"
+                                          value="Enter data">
+                                    <f:param name="document_id" value="#{formController.formId}"/>
+                                </p:button>
+                            </c:when>
+                            <c:when test="#{page == 'form'}">
+                                <p:button icon="fa fa-fw fa-arrow-right" outcome="save"
+                                          value="Generate document or save data">
+                                    <f:param name="document_id" value="#{formController.form.id}"/>
+                                </p:button>
+                            </c:when>
+                            <c:when test="#{page == 'form_specs'}">
+                                <p:button icon="fa fa-fw fa-arrow-right" outcome="save"
+                                          value="Generate document or save data">
+                                    <f:param name="document_id" value="#{formController.form.id}"/>
+                                </p:button>
+                            </c:when>
+                            <c:when test="#{page == 'save'}">
+                            </c:when>
+                        </c:choose>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </div>
+        </ui:composition>
+    </body>
+</html>

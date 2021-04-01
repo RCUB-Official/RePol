@@ -5,9 +5,6 @@
  */
 package policygenerator.forms.element;
 
-import policygenerator.forms.condition.exceptions.ConditionNotFoundException;
-import policygenerator.forms.element.exceptions.ElementNotFoundException;
-
 /**
  *
  * @author vasilije
@@ -39,7 +36,6 @@ public class SelectionElement {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
-        element.push();
     }
 
     @Override
@@ -51,7 +47,7 @@ public class SelectionElement {
         }
     }
 
-    public void select() throws ElementNotFoundException, ConditionNotFoundException {
+    public void select() {
         this.selected = true;
         if (element instanceof PoolPicker) {
             PoolPicker pp = (PoolPicker) element;
@@ -63,7 +59,7 @@ public class SelectionElement {
         element.processTriggers();
     }
 
-    public void deselect() throws ElementNotFoundException, ConditionNotFoundException {
+    public void deselect() {
         this.selected = false;
         if (element instanceof PoolPicker) {
             PoolPicker pp = (PoolPicker) element;

@@ -32,12 +32,12 @@ public class DateInput extends FormElement {
     }
 
     @Override
-    public void setDefaultValue(String defaultValue) {
+    public void set(String value) {
         try {
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            value = format.parse(defaultValue);
-            this.defaultValue = defaultValue;
+            this.value = format.parse(value);
         } catch (Exception ex) {
+            this.value = null;
         }
     }
 
@@ -47,17 +47,9 @@ public class DateInput extends FormElement {
     }
 
     @Override
-    public void setValidationRegex(String validationRegex) {
-    }
-
-    @Override
-    public boolean isValid() {
+    public boolean isRegexValid() {
+        //TODO: validacija nad toString()
         return true;
-    }
-
-    @Override
-    public void setByTrigger(String value) {
-        //TODO: implement
     }
 
     @Override

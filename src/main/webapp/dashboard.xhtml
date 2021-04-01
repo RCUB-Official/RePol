@@ -16,7 +16,17 @@
                 </c:if>
             </ui:define>
 
-            <ui:define name="special_menu"/>
+            <ui:define name="navigation">
+                <h:form id="navigationForm">
+                    <div class="card">
+                        <p:tabMenu activeIndex="2">
+                            <p:menuitem value="Start"  icon="fa fa-fw fa-upload" outcome="index"/>
+                            <p:menuitem value="Policy Forms"  icon="fa fa-fw fa-list" outcome="forms"/>
+                            <p:menuitem value="Dashboard"  icon="fa fa-fw fa-dashboard" outcome="dashboard"/>
+                        </p:tabMenu>
+                    </div>
+                </h:form>
+            </ui:define>
 
             <ui:define name="content">
                 <c:choose>
@@ -25,14 +35,14 @@
                             <div class="ui-g">
                                 <ui:repeat value="#{dashboard.monitorables}" var="monitorable" varStatus="iterator">
                                     <div class="ui-g-12 ui-md-3 dashboard #{monitorable.status.state}">
-                                        <label>#{monitorable.label}</label>
+                                        <label>#{monitorable.label}</label><br/>
                                         <p:commandButton ajax="false" value="#{monitorable.status.uninitialized ? 'Initialize' : 'Reload'}" icon="#{monitorable.status.uninitialized ? 'fa fa-start' : 'fa fa-refresh'}" action="dashboard?faces-redirect=true">
                                             <f:actionListener binding="#{monitorable.reload()}"/>
                                         </p:commandButton>
                                         <small>
                                             <p:commandButton type="button" title="Malfunction" id="malfunction" icon="fa fa-fw fa-warning" rendered="#{monitorable.status.malfunction}"/>
                                         </small>
-                                        <p:overlayPanel  id="exception" for="malfunction" hideEffect="fade">
+                                        <p:overlayPanel  id="exception" for="malfunction">
                                             #{monitorable.status.exception.message}
                                         </p:overlayPanel>
                                     </div>
