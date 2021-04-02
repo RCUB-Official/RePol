@@ -178,7 +178,7 @@
         </panel>
         
         <panel label="Curation">
-            <input type="selectmany" id="curation_levels" list-id="curation_levels" label="Curation levels" default="basic">
+            <input type="selectmany" id="curation_levels" list-id="curation_levels" label="Curation levels">
                 <description>Check all options that apply.</description>
             </input>
         </panel>

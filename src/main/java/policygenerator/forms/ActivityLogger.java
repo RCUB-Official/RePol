@@ -75,7 +75,7 @@ public class ActivityLogger implements Serializable {
     }
 
     public void resetValues() {
-        LOG.log(Level.INFO, "{0}: triggered a global data reset.", HEADER);
+        LOG.log(Level.INFO, "{0}: triggered a data reset.", HEADER);
     }
 
     @PreDestroy

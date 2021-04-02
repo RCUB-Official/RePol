@@ -17,40 +17,37 @@ and open the template in the editor.
                 <p:toolbar>
                     <p:toolbarGroup>
                         <c:choose>
-                            <c:when test="#{page == 'index'}"/>
+                            <c:when test="#{page == 'index'}">
+                                <p:link disabled="true"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
+                            </c:when>
                             <c:when test="#{page == 'forms'}">
-                                <p:button icon="fa fa-fw fa-arrow-left" outcome="index"
-                                          value="Back to the start"/>
+                                <p:link outcome="index"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
                             </c:when>
                             <c:when test="#{page == 'form'}">
-                                <p:button icon="fa fa-fw fa-arrow-left" outcome="forms"
-                                          value="Return to the list of forms">
-                                    <c:if test="#{formController.form != null}">
-                                        <f:param name="document_id" value="#{formController.formId}"/>
-                                    </c:if>
-                                </p:button>
+                                <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-left backward-link"/>
+                                    <f:param name="document_id" value="#{formController.formId}"/>
+                                </p:link>
                             </c:when>
                             <c:when test="#{page == 'form_specs'}">
-                                <p:button icon="fa fa-fw fa-arrow-left" outcome="forms"
-                                          value="Return to the list of forms">
-                                    <c:if test="#{formController.form != null}">
-                                        <f:param name="document_id" value="#{formController.formId}"/>
-                                    </c:if>
-                                </p:button>
+                                <p:link outcome="form"><icon class="fa fa-2x fa-arrow-left backward-link"/>
+                                    <f:param name="document_id" value="#{formController.formId}"/>
+                                </p:link>
                             </c:when>
                             <c:when test="#{page == 'save'}">
                                 <c:choose>
                                     <c:when test="#{formController.form != null}">
-                                        <p:button icon="fa fa-fw fa-arrow-left" outcome="form"
-                                                  value="Return to enter data">
+                                        <p:link outcome="form">
+                                            <icon class="fa fa-2x fa-arrow-left backward-link"/>
                                             <f:param name="document_id" value="#{formController.form.id}"/>
-                                        </p:button>
+                                        </p:link>
                                     </c:when>
                                     <c:otherwise>
-                                        <p:button icon="fa fa-fw fa-arrow-left" outcome="index"
-                                                  value="Back to the start"/>
+                                        <p:link outcome="index"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
                                     </c:otherwise>
                                 </c:choose>
+                            </c:when>
+                            <c:when test="#{page == 'tos'}">
+                                <p:link outcome="save"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
                             </c:when>
                         </c:choose>
                     </p:toolbarGroup>
@@ -63,7 +60,16 @@ and open the template in the editor.
                                 <p:commandButton icon="fa fa-fw fa-refresh" action="#{formController.reset()}" update="@form"
                                                  value="Reset form"/>
                             </c:when>
-                            <c:when test="#{page == 'form_specs'}"/>
+                            <c:when test="#{page == 'form_specs'}">
+                                <p:commandButton value="Download template" icon="fa fa-fw fa-download"
+                                                 ajax="false" action="#{formController.form.downloadTemplate()}">
+                                    <f:param name="document_id" value="#{formController.form.id}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Download configuration file" icon="fa fa-fw fa-download"
+                                                 ajax="false" action="#{formController.form.downloadConfig()}">
+                                    <f:param name="document_id" value="#{formController.form.id}"/>
+                                </p:commandButton>
+                            </c:when>
 
                             <c:when test="#{page == 'save'}"/>
                         </c:choose>
@@ -72,28 +78,28 @@ and open the template in the editor.
                     <p:toolbarGroup>
                         <c:choose>
                             <c:when test="#{page == 'index'}">
-                                <p:button icon="fa fa-fw fa-arrow-right" outcome="forms"
-                                          value="Select a form"/>
+                                <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
                             </c:when>
                             <c:when test="#{page == 'forms'}">
-                                <p:button icon="fa fa-fw fa-arrow-right" outcome="form"
-                                          value="Enter data">
+                                <p:link outcome="form"><icon class="fa fa-2x fa-arrow-right forward-link"/>
                                     <f:param name="document_id" value="#{formController.formId}"/>
-                                </p:button>
+                                </p:link>
                             </c:when>
                             <c:when test="#{page == 'form'}">
-                                <p:button icon="fa fa-fw fa-arrow-right" outcome="save"
-                                          value="Generate document or save data">
+                                <p:link outcome="save"><icon class="fa fa-2x fa-arrow-right forward-link"/>
                                     <f:param name="document_id" value="#{formController.form.id}"/>
-                                </p:button>
+                                </p:link>
                             </c:when>
                             <c:when test="#{page == 'form_specs'}">
-                                <p:button icon="fa fa-fw fa-arrow-right" outcome="save"
-                                          value="Generate document or save data">
+                                <p:link outcome="save"><icon class="fa fa-2x fa-arrow-right forward-link"/>
                                     <f:param name="document_id" value="#{formController.form.id}"/>
-                                </p:button>
+                                </p:link>
                             </c:when>
                             <c:when test="#{page == 'save'}">
+                                <p:link disabled="true"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
+                            </c:when>
+                            <c:when test="#{page == 'tos'}">
+                                <p:link disabled="true"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
                             </c:when>
                         </c:choose>
                     </p:toolbarGroup>

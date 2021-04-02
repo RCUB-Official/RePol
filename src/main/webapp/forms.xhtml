@@ -20,19 +20,21 @@
                         <h:form id="formSelectionForm">
                             <div class="forms spaced-bottom">
                                 <c:forEach items="#{formController.formHeaders}" var="formHeaderRow">
-                                    <div class="form-header">
+                                    <div class="form-header #{formController.formId == formHeaderRow.formId ? 'selected' : null}">
                                         <div class="row">
                                             <div class="col-lg-1">
-                                                <p:commandButton icon="fa fa-fw #{formController.formId == formHeaderRow.formId ? 'fa-circle' : 'fa-circle-o'}" action="#{formController.setFormId(formHeaderRow.formId)}"
-                                                                 update="@form navigationForm" value="&nbsp;" styleClass="bool-button"/>
+                                                <c:if test="#{formController.formHeaders.size() > 1}">
+                                                    <p:commandLink  action="#{formController.setFormId(formHeaderRow.formId)}"
+                                                                    update="@form navigationForm">
+                                                        <span class="fa fa-fw bool-button #{formController.formId == formHeaderRow.formId ? 'fa-circle' : 'fa-circle-o'}"/>
+                                                    </p:commandLink>
+                                                </c:if>
                                             </div>
                                             <div class="col-lg-7">
-                                                <h4 class="#{formController.formId == formHeaderRow.formId ? 'selected' : null}">
-                                                    #{formHeaderRow.label}
-                                                </h4>
+                                                <h4>#{formHeaderRow.label}</h4>
                                                 #{formHeaderRow.description}
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-3">
                                                 <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formHeaderRow.formId)}"
                                                                rendered="#{dataShare.getProgress(formHeaderRow.formId) > 0}"/>
                                             </div>
