@@ -33,6 +33,7 @@ public class ActivityLogger implements Serializable {
     private final String HEADER;
 
     Set<String> formSet = new HashSet<String>();
+    private String lastRequestedFormId = null;
 
     public ActivityLogger() {
         sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
@@ -52,6 +53,7 @@ public class ActivityLogger implements Serializable {
             LOG.log(Level.INFO, "{0}: opened the form \"{1}\".", new Object[]{HEADER, formId});
             formSet.add(formId);
         }
+        lastRequestedFormId = formId;
     }
 
     public void documentGenerated(String formId) {
@@ -82,4 +84,9 @@ public class ActivityLogger implements Serializable {
     public void endedSession() {
         LOG.log(Level.INFO, "{0}: ended a session.", HEADER);
     }
+
+    public String getLastRequestedFormId() {
+        return lastRequestedFormId;
+    }
+
 }

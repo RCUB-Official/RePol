@@ -55,28 +55,36 @@ and open the template in the editor.
                     <p:tabMenu id="navigationMenu" activeIndex="#{index}">
                         <p:menuitem value="Start"  icon="fa fa-fw fa-upload" outcome="index"/>
 
-                        <p:menuitem value="Select"  icon="fa fa-fw fa-list" outcome="forms">
-                            <c:if test="#{formController.form != null}">
-                                <f:param name="document_id" value="#{formController.formId}"/>
-                            </c:if>
+                        <p:menuitem value="Select"  icon="fa fa-fw fa-list" outcome="forms"/>
+
+
+                        <p:menuitem value="Enter Data"  icon="fa fa-fw fa-pencil" outcome="form" disabled="#{formController.form == null &amp;&amp; activityLogger.lastRequestedFormId == null}">
+                            <c:choose>
+                                <c:when test="#{formController.form != null}">
+                                    <f:param name="document_id" value="#{formController.form.id}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <f:param name="document_id" value="#{activityLogger.lastRequestedFormId}"/>
+                                </c:otherwise>
+                            </c:choose>
                         </p:menuitem>
 
 
-                        <p:menuitem value="Enter Data"  icon="fa fa-fw fa-pencil" outcome="form" disabled="#{formController.form == null}">
-                            <f:param name="document_id" value="#{formController.form.id}"/>
-                        </p:menuitem>
-
-
-                        <c:if test="#{request.requestURI.endsWith('form_specs.xhtml')}">
+                        <c:if test="#{page == 'form_specs'}">
                             <p:menuitem value="#{formController.form.label}"  icon="fa fa-fw fa-eye">
                                 <f:param name="document_id" value="#{param.document_id}"/>
                             </p:menuitem>
                         </c:if>
 
                         <p:menuitem value="Get Results"  icon="fa fa-fw fa-download" outcome="save" disabled="#{!dataShare.used}">
-                            <c:if test="#{formController.form != null}">
-                                <f:param name="document_id" value="#{param.document_id}"/>
-                            </c:if>
+                            <c:choose>
+                                <c:when test="#{formController.form != null}">
+                                    <f:param name="document_id" value="#{formController.form.id}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <f:param name="document_id" value="#{activityLogger.lastRequestedFormId}"/>
+                                </c:otherwise>
+                            </c:choose>
                         </p:menuitem>
 
                         <c:if test="#{page == 'tos'}">

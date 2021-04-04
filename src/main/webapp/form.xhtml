@@ -46,6 +46,7 @@
                             </div>
 
                             <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formController.form.id)}"/>
+                            <h:outputText value="#{formController.form.userSetFieldCount} fields set out of #{formController.form.relevantFieldCount} relevant"/>
 
                             <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
                                 <p:panel header="#{panel.label}" styleClass="form-panel" rendered="#{panel.rendered}">

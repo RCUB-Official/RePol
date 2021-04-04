@@ -86,10 +86,10 @@ public class DataShare implements Serializable {
         used = true;
     }
 
-    public synchronized void sync(FormElement element) {
+    public synchronized void requestSync(FormElement element) {
         if (latestValues.containsKey(element.getId())) {
             if (element != latestValues.get(element.getId())) {
-                element.sync(latestValues.get(element.getId()));
+                element.syncElement(latestValues.get(element.getId()));
             }
         }
         used = true;

@@ -54,6 +54,8 @@ public abstract class FormElement {
     protected String validationRegex;
     protected String validationMessage;
 
+    private boolean userSet;
+
     FormElement(Panel panel, Type type, String id, boolean mandatory, String label, String conditionId) {
         this.panel = panel;
         this.type = type;
@@ -71,6 +73,8 @@ public abstract class FormElement {
 
         validationRegex = null;
         validationMessage = null;
+
+        userSet = false;
     }
 
     public final Type getType() {
@@ -126,6 +130,7 @@ public abstract class FormElement {
 
     public final void setByTrigger(String value) {
         set(value);
+        userSet = true;
         push();
     }
 
@@ -139,6 +144,10 @@ public abstract class FormElement {
     public abstract boolean isEmpty();
 
     public abstract boolean isRegexValid();
+
+    public final boolean isUserSet() {
+        return userSet;
+    }
 
     public final boolean isValid() {
         return (!mandatory || !isEmpty()) && (validationRegex == null || isRegexValid());
@@ -204,12 +213,17 @@ public abstract class FormElement {
                 Logger.getLogger(FormElement.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        userSet = true;
         push();
     }
 
     // DATASHARE FUNCTIONS
-    public abstract void sync(FormElement element);
+    protected abstract void sync(FormElement element);
+
+    public void syncElement(FormElement element) {
+        sync(element);
+        userSet = true;
+    }
 
     private final void push() {
         DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");

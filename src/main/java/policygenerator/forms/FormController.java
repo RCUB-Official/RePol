@@ -52,9 +52,13 @@ public class FormController implements Serializable {
             errorMessage = ex.getMessage();
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if (formId == null && !getFormHeaders().isEmpty()) {
-            formId = getFormHeaders().get(0).getFormId();
+
+        if (form == null) {
+            formId = ((ActivityLogger) Utilities.getObject("#{activityLogger}")).getLastRequestedFormId();
+
+            if (formId == null && !getFormHeaders().isEmpty()) {
+                formId = getFormHeaders().get(0).getFormId();
+            }
         }
     }
 

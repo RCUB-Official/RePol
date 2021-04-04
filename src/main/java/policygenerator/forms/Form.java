@@ -306,7 +306,7 @@ public final class Form {
         DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");
         for (Panel p : panels) {
             for (FormElement fe : p.getElements()) {
-                myShare.sync(fe);
+                myShare.requestSync(fe);
             }
         }
     }
@@ -342,5 +342,31 @@ public final class Form {
             }
         }
         return complete;
+    }
+
+    public int getRelevantFieldCount() throws ConditionNotFoundException {
+        int count = 0;
+
+        for (Panel p : this.panels) {
+            for (FormElement fe : p.getElements()) {
+                if (fe.getType() != Type.SEPARATOR && fe.isRendered()) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int getUserSetFieldCount() throws ConditionNotFoundException {
+        int count = 0;
+
+        for (Panel p : this.panels) {
+            for (FormElement fe : p.getElements()) {
+                if (fe.getType() != Type.SEPARATOR && fe.isRendered() && fe.isUserSet()) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
