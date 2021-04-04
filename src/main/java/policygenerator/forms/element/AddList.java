@@ -128,11 +128,26 @@ public class AddList extends FormElement {
                     set(se.getValue());
                 }
                 break;
+            case SELECTONE:
+                set(((SelectOne) element).getValue());
+                break;
             case ONELINE:
                 set(((OneLine) element).getValue());
                 break;
             case TEXT:
                 set(((Text) element).getValue());
+                break;
+            case INTEGER:
+                set(((IntegerInput) element).getValue() + "");
+                break;
+            case DOUBLE:
+                set(((DoubleInput) element).getValue() + "");
+                break;
+            case DATE:
+                set(((DateInput) element).getValue() + "");
+                break;
+            case BOOLEAN:
+                set(((BooleanCheckbox) element).isValue() ? "true" : "false");
                 break;
         }
     }

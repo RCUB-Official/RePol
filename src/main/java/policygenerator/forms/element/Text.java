@@ -70,21 +70,47 @@ public class Text extends FormElement {
 
     @Override
     public void sync(FormElement element) {
+        String merged = "";
+
         switch (element.getType()) {
             case TEXT:
-                this.value = ((Text) element).getValue();
+                set(((Text) element).getValue());
                 break;
             case ONELINE:
-                this.value = ((OneLine) element).getValue();
+                set(((OneLine) element).getValue());
                 break;
             case INTEGER:
-                this.value = ((IntegerInput) element).getValue() + "";
+                set(((IntegerInput) element).getValue() + "");
                 break;
             case DOUBLE:
-                this.value = ((DoubleInput) element).getValue() + "";
+                set(((DoubleInput) element).getValue() + "");
                 break;
             case DATE:
-                this.value = ((DateInput) element).getValue() + "";
+                set(((DateInput) element).getValue() + "");
+                break;
+            case BOOLEAN:
+                set(((BooleanCheckbox) element).isValue() ? "true" : "false");
+                break;
+            case SELECTONE:
+                set(((SelectOne) element).getValue());
+                break;
+            case ADDLIST:
+                for (String v : ((AddList) element).getValues()) {
+                    merged += ((!merged.equals("")) ? ", " : "") + v;
+                }
+                set(merged);
+                break;
+            case SELECTMANY:
+                for (String v : ((SelectMany) element).getValues()) {
+                    merged += ((!merged.equals("")) ? ", " : "") + v;
+                }
+                set(merged);
+                break;
+            case POOLPICKER:
+                for (String v : ((PoolPicker) element).getValues()) {
+                    merged += ((!merged.equals("")) ? ", " : "") + v;
+                }
+                set(merged);
                 break;
         }
     }

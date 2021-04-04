@@ -48,13 +48,13 @@ public class IntegerInput extends FormElement {
 
     @Override
     public boolean match(String value) {
-        boolean trigger;
+        boolean match;
         try {
-            trigger = (this.value == Integer.parseInt(value));
+            match = (this.value == Integer.parseInt(value));
         } catch (Exception ex) {
-            trigger = false;
+            match = false;
         }
-        return trigger;
+        return match;
     }
 
     @Override
@@ -74,6 +74,15 @@ public class IntegerInput extends FormElement {
                 break;
             case DOUBLE:
                 this.value = (int) Math.round(((DoubleInput) element).getValue());
+                break;
+            case ONELINE:
+                set(((OneLine) element).getValue());
+                break;
+            case TEXT:
+                set(((Text) element).getValue());
+                break;
+            case SELECTONE:
+                set(((SelectOne) element).getValue());
                 break;
         }
     }

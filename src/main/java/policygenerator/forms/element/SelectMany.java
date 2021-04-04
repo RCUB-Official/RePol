@@ -114,9 +114,16 @@ public class SelectMany extends FormElement {
             case DATE:
                 set(((DateInput) element).getValue() + "");
                 break;
+            case SELECTONE:
+                set(((SelectOne) element).getValue());
+                break;
             case SELECTMANY:
-                List<String> values = ((SelectMany) element).getValues();
-                for (String value : values) {
+                for (String value : ((SelectMany) element).getValues()) {
+                    set(value);
+                }
+                break;
+            case POOLPICKER:
+                for (String value : ((PoolPicker) element).getValues()) {
                     set(value);
                 }
                 break;

@@ -318,16 +318,17 @@
     <form id="test" label="Second Form">
         <description>Testing data share.</description>
         
-                <panel label="General Information">
-                    <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
-                        <description>
-                            Just do the testing.
-                        </description>
-                    </input>
-                    <input type="oneline" id="repo_url" label="Repository URL" mandatory="true"/>
-                    <input type="oneline" id="some_url" label="Some URL"/>
-                </panel>
-            </form>
-    -->
-    
+        <panel label="General Information">
+            <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
+                <description>
+                    Just do the testing.
+                </description>
+            </input>
+            <input type="oneline" id="repo_url" label="Repository URL" mandatory="true"/>
+            <input type="oneline" id="some_url" label="Some URL"/>
+            <input type="oneline" id="principal_languages" label="Testing PoolPicker Sync"/>
+        </panel>
+    </form>
+-->
+
 </forms>

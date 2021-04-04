@@ -43,18 +43,18 @@ public class DoubleInput extends FormElement {
     @Override
     public boolean isRegexValid() {
         //TODO: validacija nad toString()
-        return true;    
+        return true;
     }
 
     @Override
     public boolean match(String value) {
-        boolean trigger;
+        boolean match;
         try {
-            trigger = (this.value == Double.parseDouble(value));
+            match = (this.value == Double.parseDouble(value));
         } catch (Exception ex) {
-            trigger = false;
+            match = false;
         }
-        return trigger;
+        return match;
     }
 
     @Override
@@ -74,6 +74,15 @@ public class DoubleInput extends FormElement {
                 break;
             case INTEGER:
                 this.value = (double) ((IntegerInput) element).getValue();
+                break;
+            case ONELINE:
+                set(((OneLine) element).getValue());
+                break;
+            case TEXT:
+                set(((Text) element).getValue());
+                break;
+            case SELECTONE:
+                set(((SelectOne) element).getValue());
                 break;
         }
     }

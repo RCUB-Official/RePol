@@ -169,6 +169,14 @@ public class PoolPicker extends FormElement {
                     set(v);
                 }
                 break;
+            case SELECTMANY:
+                for (String v : ((SelectMany) element).getValues()) {
+                    set(v);
+                }
+                break;
+            case SELECTONE:
+                set(((SelectOne) element).getValue());
+                break;
             case TEXT:
                 set(((Text) element).getValue());
                 break;

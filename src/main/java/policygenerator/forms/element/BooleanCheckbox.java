@@ -68,6 +68,16 @@ public class BooleanCheckbox extends FormElement {
             case TEXT:
                 this.value = "true".equalsIgnoreCase(((Text) element).getValue());
                 break;
+            case SELECTONE:
+                this.value = "true".equalsIgnoreCase(((SelectOne) element).getValue());
+                break;
+            case INTEGER:   //C-like logic
+                this.value = (((IntegerInput) element).getValue() != 0);
+                break;
+            case DOUBLE:    //Also C-like logic
+                this.value = (((DoubleInput) element).getValue() != 0);
+                break;
+
         }
     }
 

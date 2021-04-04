@@ -72,6 +72,15 @@ public class DateInput extends FormElement {
             case DATE:
                 this.value = ((DateInput) element).getValue();
                 break;
+            case ONELINE:
+                set(((OneLine) element).getValue());
+                break;
+            case TEXT:
+                set(((Text) element).getValue());
+                break;
+            case SELECTONE:
+                set(((SelectOne) element).getValue());
+                break;
         }
     }
 
