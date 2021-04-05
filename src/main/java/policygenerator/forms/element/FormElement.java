@@ -133,6 +133,12 @@ public abstract class FormElement {
         userSet = true;
         push();
     }
+    
+    public final void clearByTrigger() {
+        clear();
+        userSet = true;
+        push();
+    }
 
     public final void resetToDefault() {
         clear();

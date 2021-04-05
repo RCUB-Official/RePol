@@ -325,10 +325,16 @@
                 </description>
             </input>
             <input type="oneline" id="repo_url" label="Repository URL" mandatory="true"/>
-            <input type="oneline" id="some_url" label="Some URL"/>
-            <input type="oneline" id="principal_languages" label="Testing PoolPicker Sync"/>
+            <input type="oneline" id="some_url" label="Some URL">
+                <trigger condition="trigger_test" target="principal_languages" operation="reset"/>
+            </input>
+            <input type="oneline" id="principal_languages" label="Testing PoolPicker Sync" default="srpski"/>
         </panel>
-    </form>
--->
+        
+            <condition id="trigger_test">
+                <match id="some_url" value="trigger value"/>
+            </condition>
+        </form>
+    -->
 
 </forms>

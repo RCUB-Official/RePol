@@ -235,6 +235,9 @@ public class FormFactory extends XMLHandler {
                     case "remove":
                         operation = Operation.REMOVE;
                         break;
+                    case "reset":
+                        operation = Operation.RESET;
+                        break;
                     default:
                         throw new UnknownTriggerOperation(parsedOperation);
                 }

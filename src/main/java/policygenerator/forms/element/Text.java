@@ -5,6 +5,7 @@
  */
 package policygenerator.forms.element;
 
+import framework.settings.RepolSettings;
 import framework.utilities.Utilities;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,6 +71,8 @@ public class Text extends FormElement {
 
     @Override
     public void sync(FormElement element) {
+
+        String listDelimiter = RepolSettings.getInstance().getListDelimiter();
         String merged = "";
 
         switch (element.getType()) {
@@ -96,19 +99,19 @@ public class Text extends FormElement {
                 break;
             case ADDLIST:
                 for (String v : ((AddList) element).getValues()) {
-                    merged += ((!merged.equals("")) ? ", " : "") + v;
+                    merged += ((!merged.equals("")) ? listDelimiter : "") + v;
                 }
                 set(merged);
                 break;
             case SELECTMANY:
                 for (String v : ((SelectMany) element).getValues()) {
-                    merged += ((!merged.equals("")) ? ", " : "") + v;
+                    merged += ((!merged.equals("")) ? listDelimiter : "") + v;
                 }
                 set(merged);
                 break;
             case POOLPICKER:
                 for (String v : ((PoolPicker) element).getValues()) {
-                    merged += ((!merged.equals("")) ? ", " : "") + v;
+                    merged += ((!merged.equals("")) ? listDelimiter : "") + v;
                 }
                 set(merged);
                 break;

@@ -34,6 +34,7 @@ public final class RepolSettings implements Monitorable {
     private String repolUrl;
 
     private boolean useSafeDefaults;
+    private String listDelimiter;
 
     private Status status;
 
@@ -61,6 +62,7 @@ public final class RepolSettings implements Monitorable {
             repolVersion = myProperties.getProperty(prefix + ".version");
             repolUrl = myProperties.getProperty(prefix + ".url");
             useSafeDefaults = "true".equals(myProperties.getProperty(prefix + ".useSafeDefaults"));
+            listDelimiter = myProperties.getProperty(prefix + ".listDelimiter", ";");
             //intField = Integer.parseInt(myProperties.getProperty(prefix + ".intField"));
             status = new Status(State.operational, null);
         } catch (Exception ex) {
@@ -121,6 +123,10 @@ public final class RepolSettings implements Monitorable {
 
     public boolean isUseSafeDefaults() {
         return useSafeDefaults;
+    }
+
+    public String getListDelimiter() {
+        return listDelimiter;
     }
 
 }

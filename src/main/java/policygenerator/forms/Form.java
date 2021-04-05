@@ -155,7 +155,10 @@ public final class Form {
                 fe.remove(targetValue);
                 break;
             case CLEAR:
-                fe.clear();
+                fe.clearByTrigger();
+                break;
+            case RESET:
+                fe.resetToDefault();
                 break;
         }
     }

@@ -14,7 +14,8 @@ public final class Trigger {
     public enum Operation {
         SET,
         CLEAR,
-        REMOVE
+        REMOVE,
+        RESET
     }
 
     private final String conditionId;
@@ -57,6 +58,9 @@ public final class Trigger {
                 break;
             case REMOVE:
                 expression = "remove(" + targetId + ", \"" + value + "\")";
+                break;
+            case RESET:
+                expression = "reset(" + targetId + ")";
                 break;
         }
         return expression;

@@ -5,6 +5,7 @@
  */
 package policygenerator.forms.element;
 
+import framework.settings.RepolSettings;
 import framework.utilities.Utilities;
 import java.util.LinkedList;
 import java.util.List;
@@ -158,6 +159,10 @@ public class PoolPicker extends FormElement {
     @Override
     public void sync(FormElement element) {
         clear();
+
+        String listDelimiter = RepolSettings.getInstance().getListDelimiter();
+        String obtainedValue;
+        
         switch (element.getType()) {
             case POOLPICKER:
                 for (String v : ((PoolPicker) element).getValues()) {
@@ -177,11 +182,25 @@ public class PoolPicker extends FormElement {
             case SELECTONE:
                 set(((SelectOne) element).getValue());
                 break;
-            case TEXT:
-                set(((Text) element).getValue());
-                break;
             case ONELINE:
-                set(((OneLine) element).getValue());
+                obtainedValue = ((OneLine) element).getValue();
+                if (obtainedValue.contains(listDelimiter)) {
+                    for (String val : obtainedValue.split(listDelimiter)) {
+                        set(val);
+                    }
+                } else {
+                    set(obtainedValue);
+                }
+                break;
+            case TEXT:
+                obtainedValue = ((Text) element).getValue();
+                if (obtainedValue.contains(listDelimiter)) {
+                    for (String val : obtainedValue.split(listDelimiter)) {
+                        set(val);
+                    }
+                } else {
+                    set(obtainedValue);
+                }
                 break;
             case INTEGER:
                 set(((IntegerInput) element).getValue() + "");

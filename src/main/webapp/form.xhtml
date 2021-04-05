@@ -56,7 +56,7 @@
                                                 <div class="form-separator"/>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'ONELINE'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <div class="row">
                                                         <div class="col-lg-4">
                                                             <p:outputLabel for="oneline#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
@@ -78,7 +78,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'TEXT'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <div class="row">
                                                         <div class="col-lg-3">
                                                             <p:outputLabel for="text#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"/>
@@ -99,7 +99,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'BOOLEAN'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <div class="row">
                                                         <div class="col-lg-4">
                                                             <p:outputLabel for="boolean#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
@@ -120,7 +120,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'INTEGER'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <div class="row">
                                                         <div class="col-lg-4">
                                                             <p:outputLabel for="integer#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
@@ -141,7 +141,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'DOUBLE'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <div class="row">
                                                         <div class="col-lg-4">
                                                             <p:outputLabel for="double#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
@@ -162,7 +162,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'DATE'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <div class="row">
                                                         <div class="col-lg-4">
                                                             <p:outputLabel for="date#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
@@ -184,7 +184,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'ADDLIST'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element  #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <p:outputLabel for="addlist#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
                                                                    styleClass="form-input-element-label"/>
                                                     <h:panelGroup id="addlist#{panelIterator.count}_#{elementIterator.count}">
@@ -209,7 +209,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'POOLPICKER'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element  #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <p:outputLabel for="poolpicker#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
                                                                    styleClass="form-input-element-label"/>
                                                     <h:panelGroup id="poolpicker#{panelIterator.count}_#{elementIterator.count}">
@@ -252,7 +252,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'SELECTONE'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element  #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <div class="row">
                                                         <div class="col-lg-4">
                                                             <p:outputLabel for="selectone#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
@@ -275,7 +275,7 @@
                                                 </h:panelGroup>
                                             </c:when>
                                             <c:when test="#{formElement.type == 'SELECTMANY'}">
-                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element" rendered="#{formElement.rendered}">
+                                                <h:panelGroup id="input#{panelIterator.count}_#{elementIterator.count}" styleClass="form-input-element big-form-input-element  #{formElement.userSet ? 'user-set' : null}" rendered="#{formElement.rendered}">
                                                     <p:outputLabel for="selectmany#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
                                                                    styleClass="form-input-element-label"/>
                                                     <h:panelGroup id="selectmany#{panelIterator.count}_#{elementIterator.count}">
