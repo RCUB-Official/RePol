@@ -133,7 +133,7 @@ public abstract class FormElement {
         userSet = true;
         push();
     }
-    
+
     public final void clearByTrigger() {
         clear();
         userSet = true;
@@ -232,12 +232,12 @@ public abstract class FormElement {
     }
 
     private final void push() {
-        DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");
+        DataShare myShare = DataShare.getDataShare();
         myShare.push(this);
     }
 
     private final void touch() {
-        DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");
+        DataShare myShare = DataShare.getDataShare();
         myShare.touch(this);
     }
 

@@ -45,9 +45,6 @@
                                 </p:link>
                             </div>
 
-                            <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formController.form.id)}"/>
-                            <h:outputText value="#{formController.form.userSetFieldCount} fields set out of #{formController.form.relevantFieldCount} relevant"/>
-
                             <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
                                 <p:panel header="#{panel.label}" styleClass="form-panel" rendered="#{panel.rendered}">
                                     <c:forEach items="#{panel.elements}" var="formElement" varStatus="elementIterator">
@@ -300,6 +297,10 @@
                                     </c:forEach>
                                 </p:panel>
                             </c:forEach>
+                            <div class="progressCount">
+                                <h:outputText value="#{formController.form.userSetFieldCount} fields set out of #{formController.form.relevantFieldCount} relevant"/>
+                                <h:outputText rendered="#{dataShare.getMandatoryTotalCount(formController.form.id) != 0}" value=", #{dataShare.getMandatorySetCount(formController.form.id)} set out of #{dataShare.getMandatoryTotalCount(formController.form.id)} mandatory"/>
+                            </div>
 
                             <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>
                         </c:when>

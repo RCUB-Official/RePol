@@ -89,4 +89,8 @@ public class ActivityLogger implements Serializable {
         return lastRequestedFormId;
     }
 
+    public void setLastRequestedFormId(String lastRequestedFormId) {
+        this.lastRequestedFormId = lastRequestedFormId;
+    }
+
 }

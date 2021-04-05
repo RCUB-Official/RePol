@@ -6,6 +6,7 @@
 package policygenerator.forms;
 
 import framework.utilities.HttpUtilities;
+import framework.utilities.Utilities;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
@@ -69,6 +70,10 @@ public class DataShare implements Serializable {
         used = false;
     }
 
+    public static DataShare getDataShare() {
+        return (DataShare) Utilities.getObject("#{dataShare}");
+    }
+
     public void reset() {
         init();
         ActivityLogger.getActivityLogger().resetValues();
@@ -127,6 +132,15 @@ public class DataShare implements Serializable {
             }
 
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xml)));
+
+            Node ed = document.getElementsByTagName("embedded-data").item(0);
+            String formId;
+            try {
+                formId = ed.getAttributes().getNamedItem("form").getTextContent();
+            } catch (Exception ex) {
+                formId = null;
+            }
+
             NodeList fieldNodes = document.getElementsByTagName("field");
             for (int i = 0; i < fieldNodes.getLength(); i++) {
                 Node fNode = fieldNodes.item(i);
@@ -208,6 +222,12 @@ public class DataShare implements Serializable {
 
             used = true;
             ActivityLogger.getActivityLogger().uploadedDocument();
+
+            if (formId != null) {
+                if (FormController.getFormController().validateFormId(formId)) {
+                    ActivityLogger.getActivityLogger().setLastRequestedFormId(formId);
+                }
+            }
         } catch (Exception ex) {
             Logger.getLogger(DataShare.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -242,6 +262,30 @@ public class DataShare implements Serializable {
         } else {
             return 0;
         }
+    }
+
+    public int getMandatorySetCount(String formId) {
+        int count = 0;
+        if (mandatoryFieldIds.containsKey(formId)) {
+            for (String mfid : mandatoryFieldIds.get(formId)) {
+                if (latestValues.containsKey(mfid)) {
+                    if (!latestValues.get(mfid).isEmpty()) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
+    public int getMandatoryTotalCount(String formId) {
+        int count = 0;
+        if (mandatoryFieldIds.containsKey(formId)) {
+            for (String mfid : mandatoryFieldIds.get(formId)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public boolean isUsed() {

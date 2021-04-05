@@ -174,7 +174,7 @@ a, a:hover {
     margin-bottom:5px;
     border-bottom:1px solid #eee;
     font-size:0.85em;
-    background:#f7f7f7;
+    /* background:#f7f7f7; */
 }
 
 .user-set {
@@ -388,13 +388,20 @@ form-element-description-specs {
 }
 
 .forward-link {
-    margin-right:10px;
     padding-left:10px;
     padding-right:5px;
 }
 
 .backward-link {
-    margin-left:10px;
     padding-right:10px;
     padding-left:5px;
+}
+
+.progressCount {
+    margin:20px;
+    font-size:1.2em;
+}
+
+.slightly-bigger {
+    font-size:16px;
 }

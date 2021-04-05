@@ -12,97 +12,96 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <body>
         <ui:composition>
-            <div id="forwardBackward">
-                <p:toolbar>
-                    <p:toolbarGroup>
-                        <c:choose>
-                            <c:when test="#{page == 'index'}">
-                                <p:link disabled="true"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
-                            </c:when>
-                            <c:when test="#{page == 'forms'}">
-                                <p:link outcome="index"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
-                            </c:when>
-                            <c:when test="#{page == 'form'}">
-                                <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-left backward-link"/>
-                                    <f:param name="document_id" value="#{formController.formId}"/>
-                                </p:link>
-                            </c:when>
-                            <c:when test="#{page == 'form_specs'}">
-                                <p:link outcome="form"><icon class="fa fa-2x fa-arrow-left backward-link"/>
-                                    <f:param name="document_id" value="#{formController.formId}"/>
-                                </p:link>
-                            </c:when>
-                            <c:when test="#{page == 'save'}">
-                                <c:choose>
-                                    <c:when test="#{formController.form != null}">
-                                        <p:link outcome="form">
-                                            <icon class="fa fa-2x fa-arrow-left backward-link"/>
-                                            <f:param name="document_id" value="#{formController.form.id}"/>
-                                        </p:link>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <p:link outcome="index"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:when>
-                            <c:when test="#{page == 'tos'}">
-                                <p:link outcome="save"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
-                            </c:when>
-                        </c:choose>
-                    </p:toolbarGroup>
+            <div id="forwardBackward" class="row">
+                <div class="col-lg-12">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <c:choose>
+                                <c:when test="#{page == 'index'}">
+                                    <p:link disabled="true"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
+                                </c:when>
+                                <c:when test="#{page == 'forms'}">
+                                    <p:link outcome="index"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
+                                </c:when>
+                                <c:when test="#{page == 'form'}">
+                                    <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-left backward-link"/>
+                                        <f:param name="document_id" value="#{formController.formId}"/>
+                                    </p:link>
+                                </c:when>
+                                <c:when test="#{page == 'form_specs'}">
+                                    <p:link outcome="form"><icon class="fa fa-2x fa-arrow-left backward-link"/>
+                                        <f:param name="document_id" value="#{formController.formId}"/>
+                                    </p:link>
+                                </c:when>
+                                <c:when test="#{page == 'save'}">
+                                    <c:choose>
+                                        <c:when test="#{formController.form != null}">
+                                            <p:link outcome="form">
+                                                <icon class="fa fa-2x fa-arrow-left backward-link"/>
+                                                <f:param name="document_id" value="#{formController.form.id}"/>
+                                            </p:link>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p:link outcome="index"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                                <c:when test="#{page == 'tos'}">
+                                    <p:link outcome="save"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
+                                </c:when>
+                            </c:choose>
+                        </p:toolbarGroup>
 
-                    <p:toolbarGroup>
-                        <c:choose>
-                            <c:when test="#{page == 'index'}"/>
-                            <c:when test="#{page == 'forms'}"/>
-                            <c:when test="#{page == 'form'}">
-                                <p:commandButton icon="fa fa-fw fa-refresh" action="#{formController.reset()}" update="@form"
-                                                 value="Reset form"/>
-                            </c:when>
-                            <c:when test="#{page == 'form_specs'}">
-                                <p:commandButton value="Download template" icon="fa fa-fw fa-download"
-                                                 ajax="false" action="#{formController.form.downloadTemplate()}">
-                                    <f:param name="document_id" value="#{formController.form.id}"/>
-                                </p:commandButton>
-                                <p:commandButton value="Download configuration file" icon="fa fa-fw fa-download"
-                                                 ajax="false" action="#{formController.form.downloadConfig()}">
-                                    <f:param name="document_id" value="#{formController.form.id}"/>
-                                </p:commandButton>
-                            </c:when>
+                        <p:toolbarGroup>
+                            <c:choose>
+                                <c:when test="#{page == 'index'}"/>
+                                <c:when test="#{page == 'forms'}"/>
+                                <c:when test="#{page == 'form'}"/>
+                                <c:when test="#{page == 'form_specs'}">
+                                    <p:commandButton value="Download template" icon="fa fa-fw fa-download"
+                                                     ajax="false" action="#{formController.form.downloadTemplate()}">
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Download configuration file" icon="fa fa-fw fa-download"
+                                                     ajax="false" action="#{formController.form.downloadConfig()}">
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                    </p:commandButton>
+                                </c:when>
 
-                            <c:when test="#{page == 'save'}"/>
-                        </c:choose>
-                    </p:toolbarGroup>
+                                <c:when test="#{page == 'save'}"/>
+                            </c:choose>
+                        </p:toolbarGroup>
 
-                    <p:toolbarGroup>
-                        <c:choose>
-                            <c:when test="#{page == 'index'}">
-                                <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
-                            </c:when>
-                            <c:when test="#{page == 'forms'}">
-                                <p:link outcome="form"><icon class="fa fa-2x fa-arrow-right forward-link"/>
-                                    <f:param name="document_id" value="#{formController.formId}"/>
-                                </p:link>
-                            </c:when>
-                            <c:when test="#{page == 'form'}">
-                                <p:link outcome="save"><icon class="fa fa-2x fa-arrow-right forward-link"/>
-                                    <f:param name="document_id" value="#{formController.form.id}"/>
-                                </p:link>
-                            </c:when>
-                            <c:when test="#{page == 'form_specs'}">
-                                <p:link outcome="save"><icon class="fa fa-2x fa-arrow-right forward-link"/>
-                                    <f:param name="document_id" value="#{formController.form.id}"/>
-                                </p:link>
-                            </c:when>
-                            <c:when test="#{page == 'save'}">
-                                <p:link disabled="true"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
-                            </c:when>
-                            <c:when test="#{page == 'tos'}">
-                                <p:link disabled="true"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
-                            </c:when>
-                        </c:choose>
-                    </p:toolbarGroup>
-                </p:toolbar>
+                        <p:toolbarGroup>
+                            <c:choose>
+                                <c:when test="#{page == 'index'}">
+                                    <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
+                                </c:when>
+                                <c:when test="#{page == 'forms'}">
+                                    <p:link outcome="form"><icon class="fa fa-2x fa-arrow-right forward-link"/>
+                                        <f:param name="document_id" value="#{formController.formId}"/>
+                                    </p:link>
+                                </c:when>
+                                <c:when test="#{page == 'form'}">
+                                    <p:link outcome="save"><icon class="fa fa-2x fa-arrow-right forward-link"/>
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                    </p:link>
+                                </c:when>
+                                <c:when test="#{page == 'form_specs'}">
+                                    <p:link outcome="save"><icon class="fa fa-2x fa-arrow-right forward-link"/>
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                    </p:link>
+                                </c:when>
+                                <c:when test="#{page == 'save'}">
+                                    <p:link disabled="true"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
+                                </c:when>
+                                <c:when test="#{page == 'tos'}">
+                                    <p:link disabled="true"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
+                                </c:when>
+                            </c:choose>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </div>
             </div>
         </ui:composition>
     </body>

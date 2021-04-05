@@ -33,11 +33,11 @@
                                                            disabled="#{!formController.form.complete}">
                                                 <f:param name="document_id" value="#{formController.form.id}"/>
                                                 <i class="fa fa-4x fa-cogs"/>
-                                                <h3 class="h4 mb-2">Get Document <br/>#{formController.form.label}</h3>
+                                                <h3 class="h4 mb-2">Get Document</h3>
                                             </p:commandLink>
-                                            <c:if test="#{!formController.form.complete}">
-                                                <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formController.form.id)}"/>
-                                            </c:if>
+                                            <p class="text-muted mb-0">
+                                                <span class="slightly-bigger">#{formController.form.label}</span><br/>
+                                                #{dataShare.getMandatorySetCount(formController.form.id)} field(s) set out of #{dataShare.getMandatoryTotalCount(formController.form.id)} mandatory</p>
                                         </div>
                                     </div>
                                 </h:form>
@@ -61,9 +61,9 @@
                                             <p:commandLink id="reset_data_btn" update="@form" action="#{dataShare.reset()}"
                                                            disabled="#{!dataShare.used}">
                                                 <i class="fa fa-4x fa-trash"/>
-                                                <h3 class="h4 mb-2">Reset Data</h3>
+                                                <h3 class="h4 mb-2">Clear Data</h3>
                                             </p:commandLink>
-                                            <p class="text-muted mb-0">Reset data in all forms.</p>
+                                            <p class="text-muted mb-0">Clear data in all forms</p>
                                         </div>
                                     </div>
                                 </div>

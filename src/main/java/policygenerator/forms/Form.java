@@ -196,7 +196,7 @@ public final class Form {
 
     public String getXml() throws ConditionNotFoundException {
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
-        xml += "<embedded-data>";
+        xml += "<embedded-data form=\"" + id + "\">";
         for (Panel p : panels) {
             for (FormElement fe : p.getElements()) {
                 xml += "\n\t" + fe.getXml();
@@ -306,7 +306,7 @@ public final class Form {
     }
 
     public void sync() throws ConditionNotFoundException {
-        DataShare myShare = (DataShare) Utilities.getObject("#{dataShare}");
+        DataShare myShare = DataShare.getDataShare();
         for (Panel p : panels) {
             for (FormElement fe : p.getElements()) {
                 myShare.requestSync(fe);

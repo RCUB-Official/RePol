@@ -54,7 +54,7 @@ public class FormController implements Serializable {
         }
 
         if (form == null) {
-            formId = ((ActivityLogger) Utilities.getObject("#{activityLogger}")).getLastRequestedFormId();
+            formId = ActivityLogger.getActivityLogger().getLastRequestedFormId();
 
             if (formId == null && !getFormHeaders().isEmpty()) {
                 formId = getFormHeaders().get(0).getFormId();
@@ -62,8 +62,12 @@ public class FormController implements Serializable {
         }
     }
 
+    public static FormController getFormController() {
+        return (FormController) Utilities.getObject("#{formController}");
+    }
+
     public void reset() {
-        DataShare ds = (DataShare) Utilities.getObject("#{dataShare}");
+        DataShare ds = DataShare.getDataShare();
         if (ds != null) {
             ds.reset();
         }
@@ -88,6 +92,17 @@ public class FormController implements Serializable {
 
     public void setFormId(String formId) {
         this.formId = formId;
+    }
+
+    public boolean validateFormId(String formId) {
+        boolean valid = false;
+        for (FormHeader fh : getFormHeaders()) {
+            if (fh.getFormId().equals(formId)) {
+                valid = true;
+                break;
+            }
+        }
+        return valid;
     }
 
 }

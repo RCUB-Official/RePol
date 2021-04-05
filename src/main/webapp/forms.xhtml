@@ -35,8 +35,7 @@
                                                 #{formHeaderRow.description}
                                             </div>
                                             <div class="col-lg-3">
-                                                <p:progressBar labelTemplate="{value}%" value="#{dataShare.getProgress(formHeaderRow.formId)}"
-                                                               rendered="#{dataShare.getProgress(formHeaderRow.formId) > 0}"/>
+                                                <h:outputText rendered="#{dataShare.getMandatoryTotalCount(formHeaderRow.formId) != 0}" value="#{dataShare.getMandatorySetCount(formHeaderRow.formId)} field(s) set out of #{dataShare.getMandatoryTotalCount(formHeaderRow.formId)} mandatory"/>
                                             </div>
                                         </div>
                                     </div>
