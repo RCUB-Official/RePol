@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/facelets/template.xhtml">
+            <ui:param name="page" value="upload" />
+
+            <ui:define name="title">
+                Data Download/Upload
+            </ui:define>
+
+            <ui:define name="content">
+                <c:choose>
+                    <c:when test="#{dashboard.operational}">
+
+                        <h:form id="upload_form" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-lg-12 form-element-description spaced-bottom">If you wish to edit an existing policy generated using RePol, upload the previously generated document or a standalone XML</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <h:inputFile value="#{dataShare.rawfile}"/>
+                                </div>
+                                <div class="col-lg-2">
+                                    <p:commandButton ajax="false" value="Upload" icon="fa fa-fw fa-upload"
+                                                     action="#{dataShare.uploadFile()}"/>
+                                </div>
+                                <div class="col-lg-2">
+                                    <p:commandButton update="@form navigationForm" value="Clear Data" icon="fa fa-fw fa-trash" action="#{dataShare.reset()}"
+                                                     disabled="#{!dataShare.used}"/>
+                                </div>
+                            </div>
+                            <div class="spaced-bottom"/>
+                            
+                            <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>
+                        </h:form>
+
+                    </c:when>
+                    <c:otherwise>
+                        <h3>Malfunction!</h3>
+                    </c:otherwise>
+                </c:choose>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

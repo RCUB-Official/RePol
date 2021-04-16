@@ -17,11 +17,15 @@ and open the template in the editor.
                     <p:toolbar>
                         <p:toolbarGroup>
                             <c:choose>
+                                
                                 <c:when test="#{page == 'index'}">
                                     <p:link disabled="true"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
                                 </c:when>
-                                <c:when test="#{page == 'forms'}">
+                                <c:when test="#{page == 'upload'}">
                                     <p:link outcome="index"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
+                                </c:when>
+                                <c:when test="#{page == 'forms'}">
+                                    <p:link outcome="upload"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
                                 </c:when>
                                 <c:when test="#{page == 'form'}">
                                     <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-left backward-link"/>
@@ -55,6 +59,7 @@ and open the template in the editor.
                         <p:toolbarGroup>
                             <c:choose>
                                 <c:when test="#{page == 'index'}"/>
+                                <c:when test="#{page == 'upload'}"/>
                                 <c:when test="#{page == 'forms'}"/>
                                 <c:when test="#{page == 'form'}"/>
                                 <c:when test="#{page == 'form_specs'}">
@@ -75,6 +80,9 @@ and open the template in the editor.
                         <p:toolbarGroup>
                             <c:choose>
                                 <c:when test="#{page == 'index'}">
+                                    <p:link outcome="upload"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
+                                </c:when>
+                                <c:when test="#{page == 'upload'}">
                                     <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
                                 </c:when>
                                 <c:when test="#{page == 'forms'}">

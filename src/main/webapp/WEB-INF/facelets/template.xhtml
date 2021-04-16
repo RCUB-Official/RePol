@@ -31,30 +31,10 @@ and open the template in the editor.
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
                     <h:link id="logo" class="navbar-brand" outcome="index">
                         <h:graphicImage id="repol-logo" styleClass="header-img" library="images" name="repol.png"/>
                         <div id="logo-text">Repository Policy Generator</div>
                     </h:link>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <ui:insert name="default_menu">
-                            <ui:include src="default_menu.xhtml"/>
-                        </ui:insert>
-                    </ul>
-
-                    <div id="rcub-logo" class="nav navbar-nav navbar-right">
-                        <a href="http://rcub.bg.ac.rs" target="_blank">
-                            <h:graphicImage styleClass="footer-img" library="images" name="rcub_logo.png" />
-                        </a>
-                    </div>
                 </div>
             </div>
         </nav>

@@ -19,20 +19,23 @@ and open the template in the editor.
                     <c:when test="#{page == 'index'}">
                         <c:set var="index" value="0"/>
                     </c:when>
-                    <c:when test="#{page == 'forms'}">
+                    <c:when test="#{page == 'upload'}">
                         <c:set var="index" value="1"/>
                     </c:when>
-                    <c:when test="#{page == 'form'}">
+                    <c:when test="#{page == 'forms'}">
                         <c:set var="index" value="2"/>
                     </c:when>
-                    <c:when test="#{page == 'form_specs'}">
+                    <c:when test="#{page == 'form'}">
                         <c:set var="index" value="3"/>
+                    </c:when>
+                    <c:when test="#{page == 'form_specs'}">
+                        <c:set var="index" value="4"/>
                     </c:when>
                     <c:when test="#{page == 'save'}">
-                        <c:set var="index" value="3"/>
+                        <c:set var="index" value="4"/>
                     </c:when>
                     <c:when test="#{page == 'tos'}">
-                        <c:set var="index" value="4"/>
+                        <c:set var="index" value="5"/>
                     </c:when>
                     <c:otherwise>
                         <c:set var="index" value="0"/>
@@ -53,10 +56,11 @@ and open the template in the editor.
 
                 <div class="card">
                     <p:tabMenu id="navigationMenu" activeIndex="#{index}">
-                        <p:menuitem value="Start"  icon="fa fa-fw fa-upload" outcome="index"/>
+                        <p:menuitem value="Start"  icon="fa fa-fw fa-flag" outcome="index"/>
+
+                        <p:menuitem value="Upload"  icon="fa fa-fw fa-upload" outcome="upload"/>
 
                         <p:menuitem value="Select"  icon="fa fa-fw fa-list" outcome="forms"/>
-
 
                         <p:menuitem value="Enter Data"  icon="fa fa-fw fa-pencil" outcome="form" disabled="#{formController.form == null &amp;&amp; activityLogger.lastRequestedFormId == null}">
                             <c:choose>
