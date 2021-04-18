@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms;
 
 import framework.utilities.Utilities;
@@ -14,13 +9,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-/**
- *
- * @author vasilije
- */
 @ManagedBean(name = "formController", eager = false)
 @ViewScoped
 public class FormController implements Serializable {
+
+    private static final Logger LOG = Logger.getLogger(FormController.class.getName());
+
+    private final DataShare dataShare;
 
     String formId = null;
 
@@ -30,6 +25,8 @@ public class FormController implements Serializable {
     public FormController() {
         form = null;
         errorMessage = null;
+
+        dataShare = DataShare.getDataShare();
     }
 
     @PostConstruct
@@ -38,7 +35,7 @@ public class FormController implements Serializable {
             if (formId == null) {
                 formId = (String) Utilities.getObject("#{param.document_id}");
             }
-            form = FormFactory.getInstance().getForm(formId);
+            form = FormFactory.getInstance().getForm(this, formId);
             if (form != null) {
                 form.test();
                 form.sync();
@@ -50,7 +47,7 @@ public class FormController implements Serializable {
         } catch (Exception ex) {
             form = null;
             errorMessage = ex.getMessage();
-            Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
 
         if (form == null) {
@@ -66,20 +63,16 @@ public class FormController implements Serializable {
         return (FormController) Utilities.getObject("#{formController}");
     }
 
-    public void reset() {
-        DataShare ds = DataShare.getDataShare();
-        if (ds != null) {
-            ds.reset();
-        }
-        init();
-    }
-
     public List<FormHeader> getFormHeaders() {
         return FormFactory.getInstance().getFormHeaders();
     }
 
     public Form getForm() {
         return form;
+    }
+
+    public DataShare getDataShare() {
+        return dataShare;
     }
 
     public String getErrorMessage() {
@@ -93,16 +86,4 @@ public class FormController implements Serializable {
     public void setFormId(String formId) {
         this.formId = formId;
     }
-
-    public boolean validateFormId(String formId) {
-        boolean valid = false;
-        for (FormHeader fh : getFormHeaders()) {
-            if (fh.getFormId().equals(formId)) {
-                valid = true;
-                break;
-            }
-        }
-        return valid;
-    }
-
 }

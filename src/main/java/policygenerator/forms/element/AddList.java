@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
 import framework.settings.RepolSettings;
@@ -14,22 +9,19 @@ import java.util.regex.Pattern;
 import policygenerator.forms.condition.exceptions.ConditionNotFoundException;
 import policygenerator.forms.element.exceptions.ElementNotFoundException;
 
-/**
- *
- * @author vasilije
- */
 public class AddList extends FormElement {
 
     private final List<String> values;
     private String toBeAdded;
 
-    public AddList(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.ADDLIST, id, mandatory, label, conditionId);
-        this.values = new LinkedList<String>();
+    public AddList(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+        super(panel, Type.ADDLIST, id, mandatory, label, conditionId, validationRegex, validationMessage);
+        this.values = new LinkedList<>();
         this.toBeAdded = "";
     }
 
     public void add() throws ElementNotFoundException, ConditionNotFoundException {
+        // TODO: if regex valid
         set(toBeAdded);
         toBeAdded = "";
         processTriggers();

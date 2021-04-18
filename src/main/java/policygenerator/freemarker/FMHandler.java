@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.freemarker;
 
 import framework.diagnostics.Monitorable;
@@ -18,19 +13,16 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author vasilije
- */
 public class FMHandler implements Monitorable {
 
     private static final FMHandler INSTANCE = new FMHandler();
+    private static final Logger LOG = Logger.getLogger(FMHandler.class.getName());
 
     private Configuration configuration;
     private File[] templateFiles;
 
-    private final boolean VITAL = true;
-    private final String LABEL = "FreeMarker";
+    private final boolean vital = true;
+    private final String label = "FreeMarker";
     private Status status;
 
     private FMHandler() {
@@ -57,7 +49,7 @@ public class FMHandler implements Monitorable {
 
             status = new Status(State.operational, null);
         } catch (Exception ex) {
-            Logger.getLogger(FMHandler.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
             status = new Status(State.malfunction, ex);
         }
 
@@ -82,12 +74,12 @@ public class FMHandler implements Monitorable {
 
     @Override
     public String getLabel() {
-        return LABEL;
+        return label;
     }
 
     @Override
     public boolean isVital() {
-        return VITAL;
+        return vital;
     }
 
     public Configuration getConfiguration() {
@@ -105,7 +97,7 @@ public class FMHandler implements Monitorable {
         return exists;
     }
 
-    public InputStream getInputStream(String filename) throws FileNotFoundException {
+    public static InputStream getInputStream(String filename) throws FileNotFoundException {
         File file = new File(RepolSettings.getInstance().getTemplatePath() + "/" + filename + ".ftlh");
         return new FileInputStream(file);
     }

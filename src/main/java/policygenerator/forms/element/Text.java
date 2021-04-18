@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
 import framework.settings.RepolSettings;
@@ -10,16 +5,12 @@ import framework.utilities.Utilities;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author vasilije
- */
 public class Text extends FormElement {
 
     private String value;
 
-    public Text(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.TEXT, id, mandatory, label, conditionId);
+    public Text(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+        super(panel, Type.TEXT, id, mandatory, label, conditionId, validationRegex, validationMessage);
         this.value = "";
     }
 

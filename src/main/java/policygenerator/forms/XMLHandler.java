@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms;
 
 import framework.diagnostics.Monitorable;
@@ -15,28 +10,29 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import policygenerator.forms.condition.exceptions.MissingAttributeException;
 
-/**
- *
- * @author vasilije
- */
 abstract class XMLHandler implements Monitorable {
+
+    private static final Logger LOG = Logger.getLogger(XMLHandler.class.getName());
 
     protected Document xmlDoc;
 
-    protected final boolean VITAL;
-    protected final String LABEL;
+    private final boolean vital;
+    private final String label;
 
     protected final String docPath;
 
     protected Status status;
 
-    public XMLHandler(boolean VITAL, String LABEL, String docPath) {
-        this.VITAL = VITAL;
-        this.LABEL = LABEL;
+    public XMLHandler(boolean vital, String label, String docPath) {
+        this.vital = vital;
+        this.label = label;
         this.docPath = docPath;
         this.status = new Status(Status.State.uninitialized, null);
     }
+
+    protected abstract void initializeProcedure() throws MissingAttributeException;
 
     @Override
     public synchronized void initialize() {
@@ -46,14 +42,20 @@ abstract class XMLHandler implements Monitorable {
             DocumentBuilder db = dbf.newDocumentBuilder();
             xmlDoc = db.parse(is);
 
+            initializeProcedure();
+
             status = new Status(Status.State.operational, null);
         } catch (Exception ex) {
-            Logger.getLogger(XMLHandler.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
     }
 
+    protected abstract void shutdownProcedure();
+
     @Override
     public synchronized void shutdown() {
+        shutdownProcedure();
+
         status = new Status(Status.State.uninitialized, null);
     }
 
@@ -82,12 +84,12 @@ abstract class XMLHandler implements Monitorable {
 
     @Override
     public String getLabel() {
-        return LABEL;
+        return label;
     }
 
     @Override
     public boolean isVital() {
-        return VITAL;
+        return vital;
     }
 
     public InputStream getStream() {

@@ -1,22 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms;
 
-import policygenerator.forms.element.exceptions.UnknownTypeInputException;
 import java.util.LinkedList;
 import java.util.List;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import policygenerator.forms.element.*;
 
-/**
- *
- * @author vasilije
- */
-public class ListFactory extends XMLHandler {
+public final class ListFactory extends XMLHandler {
 
     private static final ListFactory INSTANCE = new ListFactory();
 
@@ -28,19 +18,29 @@ public class ListFactory extends XMLHandler {
         return INSTANCE;
     }
 
-    public List<SelectionElement> getSelectionList(FormElement forElement, String listId) throws UnknownTypeInputException {
+    @Override
+    public void initializeProcedure() {
+        // Do nothing for now
+    }
+
+    @Override
+    public void shutdownProcedure() {
+        // Do nothing for now
+    }
+
+    public List<SelectionElement> getSelectionList(String listId) {
         List<SelectionElement> selectionList = null;
 
         Node listNode = getNode("list", listId);
         if (listNode != null) {
-            selectionList = new LinkedList<SelectionElement>();
+            selectionList = new LinkedList<>();
 
             NodeList subElements = listNode.getChildNodes();
             for (int i = 0; i < subElements.getLength(); i++) {
                 if (subElements.item(i).getNodeName().equals("element")) {
                     String value = subElements.item(i).getAttributes().getNamedItem("value").getTextContent();
                     String humanReadableLabel = subElements.item(i).getTextContent();
-                    selectionList.add(new SelectionElement(forElement, humanReadableLabel != null ? humanReadableLabel : "", value));
+                    selectionList.add(new SelectionElement(humanReadableLabel != null ? humanReadableLabel : "", value));
                 }
             }
         }

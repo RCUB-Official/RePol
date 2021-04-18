@@ -12,7 +12,7 @@ package policygenerator.forms.element;
 public class Separator extends FormElement {
 
     public Separator() {
-        super(null, Type.SEPARATOR, null, false, null, null);
+        super(null, Type.SEPARATOR, null, false, null, null, null, null);
     }
 
     @Override

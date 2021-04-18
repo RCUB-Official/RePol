@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
-/**
- *
- * @author vasilije
- */
 public class BooleanCheckbox extends FormElement {
 
     private boolean value;
 
     public BooleanCheckbox(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.BOOLEAN, id, mandatory, label, conditionId);
+        super(panel, Type.BOOLEAN, id, mandatory, label, conditionId, null, null);
         this.value = false;
         this.defaultValue = "false";
     }
@@ -77,7 +68,6 @@ public class BooleanCheckbox extends FormElement {
             case DOUBLE:    //Also C-like logic
                 this.value = (((DoubleInput) element).getValue() != 0);
                 break;
-
         }
     }
 

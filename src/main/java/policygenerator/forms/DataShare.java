@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms;
 
 import framework.utilities.HttpUtilities;
@@ -12,7 +7,6 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,8 +15,9 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.servlet.http.Part;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.file.UploadedFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -34,29 +29,20 @@ import policygenerator.forms.element.DoubleInput;
 import policygenerator.forms.element.FormElement;
 import policygenerator.forms.element.IntegerInput;
 import policygenerator.forms.element.OneLine;
-import policygenerator.forms.element.PoolPicker;
-import policygenerator.forms.element.SelectMany;
-import policygenerator.forms.element.SelectOne;
-import policygenerator.forms.element.SelectionElement;
 import policygenerator.forms.element.Text;
 
-/**
- *
- * @author vasilije
- */
 @SessionScoped
 @ManagedBean(name = "dataShare", eager = true)
 public class DataShare implements Serializable {
 
     private final Map<String, FormElement> latestValues;
     private final Map<String, List<String>> mandatoryFieldIds;
-    private Part rawfile;
 
     private boolean used;
 
     public DataShare() {
-        latestValues = new HashMap<String, FormElement>();
-        mandatoryFieldIds = new HashMap<String, List<String>>();
+        latestValues = new HashMap<>();
+        mandatoryFieldIds = new HashMap<>();
     }
 
     @PostConstruct
@@ -116,9 +102,10 @@ public class DataShare implements Serializable {
         ActivityLogger.getActivityLogger().downloadedStandalone();
     }
 
-    public void uploadFile() {
+    public void uploadFile(FileUploadEvent event) {
+        UploadedFile file = event.getFile();
         try {
-            String fileContent = new Scanner(rawfile.getInputStream()).useDelimiter("\\A").next();
+            String fileContent = new Scanner(file.getInputStream()).useDelimiter("\\A").next();
             String xml;
 
             String beginSeparator = "<!--EMBEDDED_BEGIN\n";
@@ -152,10 +139,10 @@ public class DataShare implements Serializable {
 
                 switch (type) {
                     case "oneline":
-                        element = new OneLine(null, id, false, null, null);
+                        element = new OneLine(null, id, false, null, null, null, null);
                         break;
                     case "text":
-                        element = new Text(null, id, false, null, null);
+                        element = new Text(null, id, false, null, null, null, null);
                         break;
                     case "boolean":
                         element = new BooleanCheckbox(null, id, false, null, null);
@@ -170,16 +157,16 @@ public class DataShare implements Serializable {
                         element = new DateInput(null, id, false, null, null);
                         break;
                     case "addlist":
-                        element = new AddList(null, id, false, null, null);
+                        element = new AddList(null, id, false, null, null, null, null);
                         break;
-                    case "selectone":
-                        element = new SelectOne(null, id, false, null, null);
+                    case "selectone":   // AddList can serve as a dummy for any list-like FormElement
+                        element = new AddList(null, id, false, null, null, null, null);
                         break;
                     case "selectmany":
-                        element = new SelectMany(null, id, false, null, null);
+                        element = new AddList(null, id, false, null, null, null, null);
                         break;
                     case "poolpicker":
-                        element = new PoolPicker(null, id, false, null, null);
+                        element = new AddList(null, id, false, null, null, null, null);
                         break;
                     default:
                         element = null;
@@ -187,32 +174,11 @@ public class DataShare implements Serializable {
                 }
 
                 if (element != null) {
-                    List<SelectionElement> list = new LinkedList<SelectionElement>();
 
                     NodeList valueNodes = fNode.getChildNodes();
                     for (int k = 0; k < valueNodes.getLength(); k++) {
                         if (valueNodes.item(k).getNodeName().equals("value")) {
-                            if (type.equals("selectone") || type.equals("selectmany")) { // Form the list first
-                                SelectionElement se = new SelectionElement(element, null, valueNodes.item(k).getTextContent());
-                                list.add(se);
-                            } else { // Set directly
-                                element.setByTrigger(valueNodes.item(k).getTextContent());
-                            }
-                        }
-                    }
-
-                    // Handling SELECTONE and SELECTMANY
-                    if (type.equals("selectone") || type.equals("selectmany")) {
-                        if (type.equals("selectone")) {
-                            ((SelectOne) element).setAvailableValues(list);
-                        }
-                        if (type.equals("selectmany")) {
-                            ((SelectMany) element).setAvailableValues(list);
-                        }
-                        for (int k = 0; k < valueNodes.getLength(); k++) {
-                            if (valueNodes.item(k).getNodeName().equals("value")) {
-                                element.setByTrigger(valueNodes.item(k).getTextContent());
-                            }
+                            element.setByUpload(valueNodes.item(k).getTextContent());
                         }
                     }
 
@@ -224,21 +190,13 @@ public class DataShare implements Serializable {
             ActivityLogger.getActivityLogger().uploadedDocument();
 
             if (formId != null) {
-                if (FormController.getFormController().validateFormId(formId)) {
+                if (FormFactory.getInstance().validateFormId(formId)) {
                     ActivityLogger.getActivityLogger().setLastRequestedFormId(formId);
                 }
             }
         } catch (Exception ex) {
             Logger.getLogger(DataShare.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public Part getRawfile() {
-        return rawfile;
-    }
-
-    public void setRawfile(Part rawfile) {
-        this.rawfile = rawfile;
     }
 
     public int getProgress(String formId) {

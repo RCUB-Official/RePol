@@ -1,35 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
 import framework.settings.RepolSettings;
 import framework.utilities.Utilities;
 import java.util.LinkedList;
 import java.util.List;
+import policygenerator.forms.ListFactory;
 import policygenerator.forms.condition.exceptions.ConditionNotFoundException;
 import policygenerator.forms.element.exceptions.ElementNotFoundException;
+import policygenerator.forms.element.exceptions.MisconfiguredSelectionList;
 
-/**
- *
- * @author vasilije
- */
 public class PoolPicker extends FormElement {
 
-    private List<SelectionElement> availableValues;
+    private final List<SelectionElement> availableValues;
     private final List<SelectionElement> displayedList;
     private final List<SelectionElement> selectedValues;
     private String toBeAdded;
 
-    public PoolPicker(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.POOLPICKER, id, mandatory, label, conditionId);
+    public PoolPicker(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage, String listId) throws MisconfiguredSelectionList {
+        super(panel, Type.POOLPICKER, id, mandatory, label, conditionId, validationRegex, validationMessage);
+        availableValues = new LinkedList<>();
 
-        this.availableValues = null;
+        List<SelectionElement> fetchedList = ListFactory.getInstance().getSelectionList(listId);
 
-        this.displayedList = new LinkedList<SelectionElement>();
-        this.selectedValues = new LinkedList<SelectionElement>();
+        if (fetchedList != null) {
+            for (SelectionElement se : fetchedList) {
+                availableValues.add(new SelectionElement(this, se.getLabel(), se.getValue()));
+            }
+        } else if (listId != null) {
+            throw new MisconfiguredSelectionList(listId);
+        }
+
+        this.displayedList = new LinkedList<>();
+        this.displayedList.addAll(availableValues);
+
+        this.selectedValues = new LinkedList<>();
         this.toBeAdded = "";
     }
 
@@ -90,6 +94,8 @@ public class PoolPicker extends FormElement {
     }
 
     public void addNew() throws ElementNotFoundException, ConditionNotFoundException {
+        // TODO: Validation Regex
+
         selectedValues.add(new SelectionElement(this, null, toBeAdded));
         reload();
         toBeAdded = "";
@@ -102,11 +108,6 @@ public class PoolPicker extends FormElement {
 
     public void setToBeAdded(String toBeAdded) {
         this.toBeAdded = toBeAdded;
-    }
-
-    public void setAvailableValues(List<SelectionElement> availableValues) {
-        this.availableValues = availableValues;
-        this.displayedList.addAll(availableValues);
     }
 
     public List<SelectionElement> getAvailableValues() {
@@ -122,7 +123,7 @@ public class PoolPicker extends FormElement {
     }
 
     public List<String> getValues() {
-        List<String> values = new LinkedList<String>();
+        List<String> values = new LinkedList<>();
         for (SelectionElement se : selectedValues) {
             values.add(se.getValue());
         }
@@ -162,7 +163,7 @@ public class PoolPicker extends FormElement {
 
         String listDelimiter = RepolSettings.getInstance().getListDelimiter();
         String obtainedValue;
-        
+
         switch (element.getType()) {
             case POOLPICKER:
                 for (String v : ((PoolPicker) element).getValues()) {

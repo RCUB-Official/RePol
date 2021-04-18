@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
-/**
- *
- * @author vasilije
- */
 public class IntegerInput extends FormElement {
 
     private Integer value;
 
     public IntegerInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.INTEGER, id, mandatory, label, conditionId);
+        super(panel, Type.INTEGER, id, mandatory, label, conditionId, null, null);  // TODO: regex validation
         this.value = null;
     }
 
@@ -42,7 +33,7 @@ public class IntegerInput extends FormElement {
 
     @Override
     public boolean isRegexValid() {
-        //TODO: validacija nad toString()
+        // TODO: regex validation toString()
         return true;
     }
 

@@ -25,6 +25,7 @@ public class Composite extends Condition {
         AND,
         OR
     }
+    private static final Logger LOG = Logger.getLogger(Composite.class.getName());
 
     private final Operator operator;
     private final List<Condition> subConditions;
@@ -89,7 +90,7 @@ public class Composite extends Condition {
                 break;
             default:
                 value = false;
-                Logger.getLogger(Composite.class.getName()).log(Level.WARNING, "Condition has no operator defined.");
+                LOG.log(Level.WARNING, "Condition has no operator defined.");
         }
         if (!inverted) {
             return value;

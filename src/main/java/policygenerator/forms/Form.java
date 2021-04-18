@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms;
 
 import framework.EventHandler;
 import framework.settings.RepolSettings;
 import framework.utilities.HttpUtilities;
-import framework.utilities.Utilities;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
@@ -35,12 +29,9 @@ import policygenerator.forms.element.exceptions.ElementNotFoundException;
 import policygenerator.forms.element.exceptions.IdentifierCollision;
 import policygenerator.freemarker.FMHandler;
 
-/**
- *
- * @author vasilije
- */
 public final class Form {
 
+    private final FormController myController;
     private final String id;
     private String label;
     private String description;
@@ -53,24 +44,31 @@ public final class Form {
 
     private final List<FormElement> needValidation;
 
-    public Form(String id) {
+    public Form(FormController myController, String id) {
+
+        this.myController = myController;
         this.id = id;
+
         this.label = null;
         this.description = null;
 
-        this.panels = new LinkedList<Panel>();
-        this.elementMap = new HashMap<String, FormElement>();
+        this.panels = new LinkedList<>();
+        this.elementMap = new HashMap<>();
 
-        this.conditions = new LinkedList<Condition>();
-        this.conditionMap = new HashMap<String, Condition>();
+        this.conditions = new LinkedList<>();
+        this.conditionMap = new HashMap<>();
 
-        needValidation = new LinkedList<FormElement>();
+        needValidation = new LinkedList<>();
 
         ActivityLogger.getActivityLogger().openedForm(id);
     }
 
     public String getId() {
         return id;
+    }
+
+    public FormController getController() {
+        return myController;
     }
 
     public String getLabel() {
@@ -94,7 +92,7 @@ public final class Form {
     }
 
     public List<Panel> getPanels() throws ConditionNotFoundException {
-        List<Panel> list = new LinkedList<Panel>();
+        List<Panel> list = new LinkedList<>();
         list.addAll(panels);
         return list;
     }
@@ -306,10 +304,9 @@ public final class Form {
     }
 
     public void sync() throws ConditionNotFoundException {
-        DataShare myShare = DataShare.getDataShare();
         for (Panel p : panels) {
             for (FormElement fe : p.getElements()) {
-                myShare.requestSync(fe);
+                myController.getDataShare().requestSync(fe);
             }
         }
     }
@@ -336,10 +333,10 @@ public final class Form {
         }
     }
 
-    public boolean isComplete() {
+    public boolean isComplete() throws ConditionNotFoundException {
         boolean complete = true;
         for (FormElement fe : needValidation) {
-            if (fe.isEmpty()) {
+            if (fe.isEmpty() && fe.isRendered()) {
                 complete = false;
                 break;
             }
@@ -351,9 +348,11 @@ public final class Form {
         int count = 0;
 
         for (Panel p : this.panels) {
-            for (FormElement fe : p.getElements()) {
-                if (fe.getType() != Type.SEPARATOR && fe.isRendered()) {
-                    count++;
+            if (p.isRendered()) {
+                for (FormElement fe : p.getElements()) {
+                    if (fe.getType() != Type.SEPARATOR && fe.isRendered()) {
+                        count++;
+                    }
                 }
             }
         }
@@ -364,9 +363,11 @@ public final class Form {
         int count = 0;
 
         for (Panel p : this.panels) {
-            for (FormElement fe : p.getElements()) {
-                if (fe.getType() != Type.SEPARATOR && fe.isRendered() && fe.isUserSet()) {
-                    count++;
+            if (p.isRendered()) {
+                for (FormElement fe : p.getElements()) {
+                    if (fe.getType() != Type.SEPARATOR && fe.isRendered() && fe.isUserSet()) {
+                        count++;
+                    }
                 }
             }
         }

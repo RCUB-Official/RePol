@@ -18,8 +18,8 @@ public class OneLine extends FormElement {
 
     private String value;
 
-    public OneLine(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.ONELINE, id, mandatory, label, conditionId);
+    public OneLine(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+        super(panel, Type.ONELINE, id, mandatory, label, conditionId, validationRegex, validationMessage);
         this.value = "";
     }
 

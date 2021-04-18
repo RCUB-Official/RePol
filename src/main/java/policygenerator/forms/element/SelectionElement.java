@@ -1,20 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
-/**
- *
- * @author vasilije
- */
 public class SelectionElement {
 
     private final FormElement element;
     private final String label;
     private final String value;
     private boolean selected = false;
+
+    public SelectionElement(String label, String value) {
+        this.element = null;
+        this.label = label;
+        this.value = value;
+    }
 
     public SelectionElement(FormElement element, String label, String value) {
         this.element = element;

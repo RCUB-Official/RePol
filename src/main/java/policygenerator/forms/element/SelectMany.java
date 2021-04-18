@@ -1,38 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
 import framework.settings.RepolSettings;
 import framework.utilities.Utilities;
 import java.util.LinkedList;
 import java.util.List;
+import policygenerator.forms.ListFactory;
+import policygenerator.forms.element.exceptions.MisconfiguredSelectionList;
 
-/**
- *
- * @author vasilije
- */
 public class SelectMany extends FormElement {
 
-    private List<SelectionElement> availableValues;
+    private final List<SelectionElement> availableValues;
 
-    public SelectMany(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.SELECTMANY, id, mandatory, label, conditionId);
-        this.availableValues = null;
+    public SelectMany(Panel panel, String id, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
+        super(panel, Type.SELECTMANY, id, mandatory, label, conditionId, null, null);
+        availableValues = new LinkedList<>();
+
+        List<SelectionElement> fetchedList = ListFactory.getInstance().getSelectionList(listId);
+
+        if (fetchedList != null) {
+            for (SelectionElement se : fetchedList) {
+                availableValues.add(new SelectionElement(this, se.getLabel(), se.getValue()));
+            }
+        } else if (listId != null) {
+            throw new MisconfiguredSelectionList(listId);
+        }
     }
 
     public List<SelectionElement> getAvailableValues() {
         return availableValues;
     }
 
-    public void setAvailableValues(List<SelectionElement> availableValues) {
-        this.availableValues = availableValues;
-    }
-
     public List<String> getValues() {
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
         for (SelectionElement se : availableValues) {
             if (se.isSelected()) {
                 list.add(se.getValue());
@@ -138,6 +137,11 @@ public class SelectMany extends FormElement {
                 break;
             case SELECTMANY:
                 for (String value : ((SelectMany) element).getValues()) {
+                    set(value);
+                }
+                break;
+            case ADDLIST:
+                for (String value : ((AddList) element).getValues()) {
                     set(value);
                 }
                 break;

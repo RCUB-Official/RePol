@@ -14,7 +14,7 @@ public class DoubleInput extends FormElement {
     private Double value;
 
     public DoubleInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.DOUBLE, id, mandatory, label, conditionId);
+        super(panel, Type.DOUBLE, id, mandatory, label, conditionId, null, null); // TODO: regex validation
         this.value = null;
     }
 
@@ -42,7 +42,7 @@ public class DoubleInput extends FormElement {
 
     @Override
     public boolean isRegexValid() {
-        //TODO: validacija nad toString()
+        // TODO: regex validate toString()
         return true;
     }
 

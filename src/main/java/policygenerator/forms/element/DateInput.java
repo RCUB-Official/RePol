@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
 import java.text.DateFormat;
@@ -10,16 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- *
- * @author vasilije
- */
 public class DateInput extends FormElement {
 
     private Date value;
 
     public DateInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.DATE, id, mandatory, label, conditionId);
+        super(panel, Type.DATE, id, mandatory, label, conditionId, null, null); // TODO: regex validation
         this.value = new Date(System.currentTimeMillis());
     }
 
@@ -48,7 +39,7 @@ public class DateInput extends FormElement {
 
     @Override
     public boolean isRegexValid() {
-        //TODO: validacija nad toString()
+        // TODO: regex validation toString()
         return true;
     }
 

@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
-import framework.utilities.Utilities;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import policygenerator.forms.DataShare;
 import policygenerator.forms.Trigger;
 import policygenerator.forms.condition.Condition;
 import policygenerator.forms.condition.exceptions.ConditionNotFoundException;
@@ -32,6 +25,8 @@ public abstract class FormElement {
         POOLPICKER,
         SEPARATOR,
     }
+
+    private static final Logger LOG = Logger.getLogger(FormElement.class.getName());
 
     private final Panel panel;
 
@@ -56,7 +51,7 @@ public abstract class FormElement {
 
     private boolean userSet;
 
-    FormElement(Panel panel, Type type, String id, boolean mandatory, String label, String conditionId) {
+    FormElement(Panel panel, Type type, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
         this.panel = panel;
         this.type = type;
         this.id = id;
@@ -64,15 +59,15 @@ public abstract class FormElement {
         this.label = label;
         this.conditionId = conditionId;
 
+        this.validationRegex = validationRegex;
+        this.validationMessage = validationMessage;
+
         this.tooltip = null;
         this.description = null;
 
-        triggers = new LinkedList<Trigger>();
-        conditions = new HashMap<String, Condition>();
+        triggers = new LinkedList<>();
+        conditions = new HashMap<>();
         defaultValue = null;
-
-        validationRegex = null;
-        validationMessage = null;
 
         userSet = false;
     }
@@ -128,6 +123,11 @@ public abstract class FormElement {
         touch();
     }
 
+    public final void setByUpload(String value) {
+        set(value);
+        userSet = true;
+    }
+
     public final void setByTrigger(String value) {
         set(value);
         userSet = true;
@@ -163,8 +163,12 @@ public abstract class FormElement {
         return mandatory;
     }
 
-    public void setValidationRegex(String validationRegex) {
-        this.validationRegex = validationRegex;
+    public String getValidationRegex() {
+        return validationRegex;
+    }
+
+    public String getValidationMessage() {
+        return validationMessage;
     }
 
     // CONDITION FUNCTIONS
@@ -186,7 +190,7 @@ public abstract class FormElement {
 
     public final boolean isRendered() throws ConditionNotFoundException {
         if (conditionId == null) {
-            return true;
+            return panel.isRendered();
         } else {
             return panel.getForm().getCondition(conditionId).evaluate();
         }
@@ -198,7 +202,7 @@ public abstract class FormElement {
     }
 
     public List<String> getTriggerConditionIds() {
-        List<String> conditionIds = new LinkedList<String>();
+        List<String> conditionIds = new LinkedList<>();
         for (Trigger t : triggers) {
             conditionIds.add(t.getConditionId());
         }
@@ -216,7 +220,7 @@ public abstract class FormElement {
                     panel.getForm().processTrigger(t.getTargetId(), t.getOperation(), t.getValue());
                 }
             } catch (Exception ex) {
-                Logger.getLogger(FormElement.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.log(Level.SEVERE, null, ex);
             }
         }
         userSet = true;
@@ -231,14 +235,16 @@ public abstract class FormElement {
         userSet = true;
     }
 
-    private final void push() {
-        DataShare myShare = DataShare.getDataShare();
-        myShare.push(this);
+    private void push() {
+        if (panel != null) {
+            panel.getForm().getController().getDataShare().push(this);
+        }
     }
 
-    private final void touch() {
-        DataShare myShare = DataShare.getDataShare();
-        myShare.touch(this);
+    private void touch() {
+        if (panel != null) {
+            panel.getForm().getController().getDataShare().touch(this);
+        }
     }
 
     // For embedded and standalone export

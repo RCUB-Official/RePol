@@ -1,26 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package policygenerator.forms.element;
 
 import framework.utilities.Utilities;
+import java.util.LinkedList;
 import java.util.List;
+import policygenerator.forms.ListFactory;
+import policygenerator.forms.element.exceptions.MisconfiguredSelectionList;
 
-/**
- *
- * @author vasilije
- */
 public class SelectOne extends FormElement {
 
-    private List<SelectionElement> availableValues;
+    private final List<SelectionElement> availableValues;
     private String value;
 
-    public SelectOne(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.SELECTONE, id, mandatory, label, conditionId);
-        this.availableValues = null;
-        this.value = null;
+    public SelectOne(Panel panel, String id, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
+        super(panel, Type.SELECTONE, id, mandatory, label, conditionId, null, null);
+        availableValues = new LinkedList<>();
+
+        List<SelectionElement> fetchedList = ListFactory.getInstance().getSelectionList(listId);
+
+        if (fetchedList != null) {
+            for (SelectionElement se : fetchedList) {
+                availableValues.add(new SelectionElement(this, se.getLabel(), se.getValue()));
+            }
+        } else if (listId != null) {
+            throw new MisconfiguredSelectionList(listId);
+        }
+
+        if (!availableValues.isEmpty()) {
+            this.value = availableValues.get(0).getValue();
+        } else {
+            this.value = null;
+        }
     }
 
     public String getValue() {
@@ -39,10 +48,6 @@ public class SelectOne extends FormElement {
                 break;
             }
         }
-    }
-
-    public void setAvailableValues(List<SelectionElement> availableValues) {
-        this.availableValues = availableValues;
     }
 
     public List<SelectionElement> getAvailableValues() {
