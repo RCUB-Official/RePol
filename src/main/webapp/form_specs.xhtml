@@ -66,10 +66,9 @@
                                         <h:panelGroup rendered="#{formElement.type == 'DATE'}">
                                             <h:panelGroup rendered="#{!formElement.isEmpty()}">
                                                 <span class="default-value">
-                                                    <h:outputText value="#{formElement.value}" rendered="#{formElement.defaultValue != null}">
+                                                    <h:outputText value="#{formElement.defaultValue}" rendered="#{formElement.defaultValue != null}">
                                                         <f:convertDateTime pattern="yyyy-MM-dd" />
                                                     </h:outputText>
-                                                    <h:outputText value="current date" rendered="#{formElement.defaultValue == null}"/>
                                                 </span>
                                             </h:panelGroup>
                                         </h:panelGroup>

@@ -1,38 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package framework;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-/**
- *
- * @author vasilije
- */
 public class EventHandler {
 
-    public static void log(String message, Level level) {
-        Logger.getLogger(EventHandler.class.getName()).log(level, message);
+    public static void alertUserInfo(String message, String details) {
+        alert(FacesMessage.SEVERITY_INFO, message, details);
     }
 
-    //Alerts
-    public static void alertUserInfo(String message, String details) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, details));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-    }
-    
     public static void alertUserFatal(String message, String details) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, message, details));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        alert(FacesMessage.SEVERITY_FATAL, message, details);
     }
 
     public static void alertUserError(String message, String details) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, details));
+        alert(FacesMessage.SEVERITY_ERROR, message, details);
+    }
+
+    private static void alert(FacesMessage.Severity level, String message, String details) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(level, message, details));
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
     }
 }

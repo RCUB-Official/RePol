@@ -53,7 +53,7 @@
             <input type="boolean" id="include_cc_explainer" label="Include Creative Commons licenses explainer" default="true">
                 <description>Check to include a customized explanation of the CC licenses mentioned in the policy.</description>
             </input>
-            <input type="date" id="policy_date" label="Date of the policy document"/>
+            <input type="date" id="policy_date" label="Date of the policy document" default="current_date"/>
         </panel>
         
         <panel label="Metadata">
@@ -314,27 +314,27 @@
         
     </form>
     
-<!--
-    <form id="test" label="Second Form">
-        <description>Testing data share.</description>
-        
-        <panel label="General Information">
-            <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
-                <description>
-                    Just do the testing.
-                </description>
-            </input>
-            <input type="oneline" id="repo_url" label="Repository URL" mandatory="true"/>
-            <input type="oneline" id="some_url" label="Some URL">
-                <trigger condition="trigger_test" target="principal_languages" operation="reset"/>
-            </input>
-            <input type="oneline" id="principal_languages" label="Testing PoolPicker Sync" default="srpski"/>
-        </panel>
-        
-            <condition id="trigger_test">
-                <match id="some_url" value="trigger value"/>
-            </condition>
-        </form>
+    <!--
+        <form id="test" label="Second Form">
+            <description>Testing data share.</description>
+            
+            <panel label="General Information">
+                <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
+                    <description>
+                        Just do the testing.
+                    </description>
+                </input>
+                <input type="oneline" id="repo_url" label="Repository URL" mandatory="true"/>
+                <input type="oneline" id="some_url" label="Some URL">
+                    <trigger condition="trigger_test" target="principal_languages" operation="reset"/>
+                </input>
+                <input type="oneline" id="principal_languages" label="Testing PoolPicker Sync" default="srpski"/>
+            </panel>
+            
+                <condition id="trigger_test">
+                    <match id="some_url" value="trigger value"/>
+                </condition>
+            </form>
     -->
 
 </forms>

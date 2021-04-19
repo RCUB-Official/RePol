@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FMHandler implements Monitorable {
+public final class FMHandler implements Monitorable {
 
     private static final FMHandler INSTANCE = new FMHandler();
     private static final Logger LOG = Logger.getLogger(FMHandler.class.getName());
