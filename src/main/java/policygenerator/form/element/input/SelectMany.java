@@ -161,10 +161,18 @@ public final class SelectMany extends FormElement {
     }
 
     @Override
-    public String getXml() {
+    public String getXml(boolean includeFormId) {
         String xml;
+
+        String formId;
+        if (getForm() != null && includeFormId) {
+            formId = " form=\"" + getForm().getId() + "\"";
+        } else {
+            formId = "";
+        }
+
         if (!availableValues.isEmpty()) {
-            xml = "<field type=\"selectmany\" id=\"" + getId() + "\">";
+            xml = "<field type=\"selectmany\" id=\"" + getId() + "\"" + formId + ">";
             for (SelectionElement av : availableValues) {
                 if (av.isSelected()) {
                     xml += "<value>" + XMLUtilities.xmlEscape(av.getValue()) + "</value>";

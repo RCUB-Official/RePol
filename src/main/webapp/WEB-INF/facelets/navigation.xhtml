@@ -27,9 +27,6 @@
                     <c:when test="#{page == 'save'}">
                         <c:set var="index" value="3"/>
                     </c:when>
-                    <c:when test="#{page == 'tos'}">
-                        <c:set var="index" value="4"/>
-                    </c:when>
                     <c:otherwise>
                         <c:set var="index" value="0"/>
                     </c:otherwise>
@@ -49,17 +46,18 @@
 
                 <div class="card">
                     <p:tabMenu id="navigationMenu" activeIndex="#{index}">
+
                         <p:menuitem value="Upload"  icon="fa fa-fw fa-upload" outcome="upload"/>
 
                         <p:menuitem value="Select"  icon="fa fa-fw fa-list" outcome="forms"/>
 
-                        <p:menuitem value="Enter Data"  icon="fa fa-fw fa-pencil" outcome="form" disabled="#{formController.form == null &amp;&amp; activityLogger.lastRequestedFormId == null}">
+                        <p:menuitem value="Enter Data"  icon="fa fa-fw fa-pencil" outcome="form" disabled="#{formController.form == null &amp;&amp; sessionController.activityLogger.lastRequestedFormId == null}">
                             <c:choose>
                                 <c:when test="#{formController.form != null}">
                                     <f:param name="document_id" value="#{formController.form.id}"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <f:param name="document_id" value="#{activityLogger.lastRequestedFormId}"/>
+                                    <f:param name="document_id" value="#{sessionController.activityLogger.lastRequestedFormId}"/>
                                 </c:otherwise>
                             </c:choose>
                         </p:menuitem>
@@ -71,21 +69,16 @@
                             </p:menuitem>
                         </c:if>
 
-                        <p:menuitem value="Get Results"  icon="fa fa-fw fa-download" outcome="save" disabled="#{!dataShare.used}">
+                        <p:menuitem value="Get Results"  icon="fa fa-fw fa-download" outcome="save" disabled="#{!sessionController.used}">
                             <c:choose>
                                 <c:when test="#{formController.form != null}">
                                     <f:param name="document_id" value="#{formController.form.id}"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <f:param name="document_id" value="#{activityLogger.lastRequestedFormId}"/>
+                                    <f:param name="document_id" value="#{sessionController.activityLogger.lastRequestedFormId}"/>
                                 </c:otherwise>
                             </c:choose>
                         </p:menuitem>
-
-                        <c:if test="#{page == 'tos'}">
-                            <p:menuitem value="Privacy and Terms of Use"  icon="fa fa-fw fa-legal"/>
-                        </c:if>
-
                     </p:tabMenu>
 
                     <p:sticky target="navigationMenu"/>

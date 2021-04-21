@@ -24,7 +24,7 @@
                                 </c:when>
                                 <c:when test="#{page == 'form'}">
                                     <p:link outcome="forms"><icon class="fa fa-2x fa-arrow-left backward-link"/>
-                                        <f:param name="document_id" value="#{formController.formId}"/>
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
                                     </p:link>
                                 </c:when>
                                 <c:when test="#{page == 'form_specs'}">
@@ -44,9 +44,6 @@
                                             <p:link outcome="index"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
                                         </c:otherwise>
                                     </c:choose>
-                                </c:when>
-                                <c:when test="#{page == 'tos'}">
-                                    <p:link outcome="save"><icon class="fa fa-2x fa-arrow-left backward-link"/></p:link>
                                 </c:when>
                             </c:choose>
                         </p:toolbarGroup>
@@ -96,9 +93,6 @@
                                     </p:link>
                                 </c:when>
                                 <c:when test="#{page == 'save'}">
-                                    <p:link disabled="true"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
-                                </c:when>
-                                <c:when test="#{page == 'tos'}">
                                     <p:link disabled="true"><icon class="fa fa-2x fa-arrow-right forward-link"/></p:link>
                                 </c:when>
                             </c:choose>

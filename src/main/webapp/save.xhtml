@@ -19,56 +19,63 @@
                 <c:choose>
                     <c:when test="#{dashboard.operational}">
 
-                        <div class="row spaced-top spaced-bottom">
-                            <c:if test="#{formController.form != null}">
-
-                                <f:metadata>
-                                    <f:viewParam name="document_id" value="#{formController.formId}" />
-                                </f:metadata>
-
-                                <h:form id="generate_reset_form">
+                        <h:form id="saveForm">
+                            <div class="row spaced-top spaced-bottom">
+                                <c:if test="#{formController.form != null}">
+                                    <f:metadata>
+                                        <f:viewParam name="document_id" value="#{formController.formId}" />
+                                    </f:metadata>
                                     <div class="col-lg-3 col-md-6 text-center action-tile">
                                         <div class="mt-5">
                                             <p:commandLink ajax="false" action="#{formController.form.generateDocument()}"
-                                                           disabled="#{!formController.form.complete}">
+                                                           disabled="#{!formController.form.complete || !sessionController.used}">
                                                 <f:param name="document_id" value="#{formController.form.id}"/>
                                                 <i class="fa fa-4x fa-cogs"/>
                                                 <h3 class="h4 mb-2">Get Document</h3>
                                             </p:commandLink>
                                             <p class="text-muted mb-0">
                                                 <span class="slightly-bigger">#{formController.form.label}</span><br/>
-                                                #{dataShare.getMandatorySetCount(formController.form.id)} field(s) set out of #{dataShare.getMandatoryTotalCount(formController.form.id)} mandatory</p>
+                                                <c:if test="#{!formController.form.complete}">
+                                                    #{formController.form.mandatoryFieldSetCount} field(s) set out of #{formController.form.mandatoryFieldCount} mandatory
+                                                </c:if>
+                                            </p>
                                         </div>
                                     </div>
-                                </h:form>
-                            </c:if>
-
-                            <h:form id="data_form">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6 text-center action-tile">
-                                        <div class="mt-5">
-                                            <p:commandLink id="save_data_btn" ajax="false" action="#{dataShare.downloadStandalone()}">
-                                                <f:param name="document_id" value="#{formController.form.id}"/>
-                                                <i class="fa fa-4x fa-save"/>
-                                                <h3 class="h4 mb-2">Download Data as XML</h3>
-                                            </p:commandLink>
-                                            <p class="text-muted mb-0">Download the data entered into above forms</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-6 text-center action-tile">
-                                        <div class="mt-5">
-                                            <p:commandLink id="reset_data_btn" update="@all" action="#{dataShare.reset()}"
-                                                           disabled="#{!dataShare.used}">
-                                                <i class="fa fa-4x fa-trash"/>
-                                                <h3 class="h4 mb-2">Clear Data</h3>
-                                            </p:commandLink>
-                                            <p class="text-muted mb-0">Clear data in all forms</p>
-                                        </div>
+                                </c:if>
+                                <div class="col-lg-3 col-md-6 text-center action-tile">
+                                    <div class="mt-5">
+                                        <p:commandLink id="save_data_btn" ajax="false" action="#{sessionController.downloadData()}"
+                                                       disabled="#{!sessionController.used}">
+                                            <f:param name="document_id" value="#{formController.form.id}"/>
+                                            <i class="fa fa-4x fa-save"/>
+                                            <h3 class="h4 mb-2">Get Data as XML</h3>
+                                        </p:commandLink>
+                                        <p class="text-muted mb-0">Download the data from all forms</p>
                                     </div>
                                 </div>
-                            </h:form>
-                        </div>
+
+                                <div class="col-lg-3 col-md-6 text-center action-tile">
+                                    <div class="mt-5">
+                                        <p:commandLink id="reset_data_btn" update="@all" action="#{sessionController.reset()}"
+                                                       disabled="#{!sessionController.used}">
+                                            <i class="fa fa-4x fa-trash"/>
+                                            <h3 class="h4 mb-2">Clear Data</h3>
+                                        </p:commandLink>
+                                        <p class="text-muted mb-0">Clear data in all forms</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 text-center action-tile">
+                                    <div class="mt-5">
+                                        <p:link outcome="index">
+                                            <i class="fa fa-4x fa-home"/>
+                                            <h3 class="h4 mb-2">Home</h3>
+                                        </p:link>
+                                        <p class="text-muted mb-0">Go to home page</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
                         <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>
                     </c:when>
                     <c:otherwise>

@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import policygenerator.form.Trigger;
+import policygenerator.form.Form;
+import policygenerator.form.trigger.Trigger;
 import policygenerator.form.condition.Condition;
 import policygenerator.form.condition.exceptions.ConditionNotFoundException;
 
@@ -71,6 +72,14 @@ public abstract class FormElement {
         defaultValue = null;
 
         userSet = false;
+    }
+
+    public final Form getForm() {
+        if (panel != null) {
+            return panel.getForm();
+        } else {
+            return null;
+        }
     }
 
     public final Type getType() {
@@ -158,8 +167,12 @@ public abstract class FormElement {
         return userSet;
     }
 
-    public final boolean isValid() {
-        return (!mandatory || !isEmpty()) && (validationRegex == null || isRegexValid());
+    public final void setUserSet() {
+        userSet = true;
+    }
+
+    public final boolean isValid() throws ConditionNotFoundException {
+        return ((!mandatory || !isEmpty()) && (validationRegex == null || isRegexValid())) || !isRendered();
     }
 
     public final boolean isMandatory() {
@@ -231,7 +244,7 @@ public abstract class FormElement {
     }
 
     // DATASHARE FUNCTIONS
-    protected abstract void sync(FormElement element);
+    public abstract void sync(FormElement element);
 
     public void syncElement(FormElement element) {
         sync(element);
@@ -239,18 +252,18 @@ public abstract class FormElement {
     }
 
     private void push() {
-        if (panel != null) {
-            panel.getForm().getController().getDataShare().push(this);
+        if (panel != null) {    // Can be null if dummy element
+            panel.getForm().getSessionController().push(this);
         }
     }
 
     private void touch() {
-        if (panel != null) {
-            panel.getForm().getController().getDataShare().touch(this);
+        if (panel != null) {    // Can be null if dummy element
+            panel.getForm().getSessionController().touch(this);
         }
     }
 
     // For embedded and standalone export
-    public abstract String getXml();
+    public abstract String getXml(boolean includeFormId);
 
 }

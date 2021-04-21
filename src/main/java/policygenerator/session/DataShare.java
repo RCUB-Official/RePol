@@ -1,20 +1,18 @@
-package policygenerator.form;
+package policygenerator.session;
 
 import framework.utilities.HttpUtilities;
-import framework.utilities.Utilities;
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.StringReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
@@ -25,52 +23,33 @@ import org.xml.sax.InputSource;
 import policygenerator.form.element.input.FormElement;
 import policygenerator.form.element.input.FormElementFactory;
 
-@SessionScoped
-@ManagedBean(name = "dataShare", eager = true)
-public final class DataShare implements Serializable {
+public final class DataShare {
 
     private static final Logger LOG = Logger.getLogger(DataShare.class.getName());
 
-    private final Map<String, FormElement> latestValues;
-    private final Map<String, List<String>> mandatoryFieldIds;
+    private final Map<String, FormElement> latestValues = new HashMap<>();
 
-    private boolean used;
-
-    public DataShare() {
-        latestValues = new HashMap<>();
-        mandatoryFieldIds = new HashMap<>();
-    }
-
-    @PostConstruct
-    public void init() {
-        latestValues.clear();
-        mandatoryFieldIds.clear();
-        for (FormHeader fh : FormFactory.getInstance().getFormHeaders()) {
-            mandatoryFieldIds.put(fh.getFormId(), fh.getMandatoryFieldIds());
-        }
-
-        used = false;
-    }
-
-    public static DataShare getDataShare() {
-        return (DataShare) Utilities.getObject("#{dataShare}");
+    DataShare() {
     }
 
     public void reset() {
-        init();
-        ActivityLogger.getActivityLogger().resetValues();
+        latestValues.clear();
     }
 
     public synchronized void push(FormElement element) {
+        FormElement old = latestValues.get(element.getId());
         latestValues.put(element.getId(), element);
-        used = true;
+
+        if (element != old && old != null) {
+            old.syncElement(element);
+        }
+
     }
 
     public synchronized void touch(FormElement element) {
         if (!latestValues.containsKey(element.getId())) {
             latestValues.put(element.getId(), element);
         }
-        used = true;
     }
 
     public synchronized void requestSync(FormElement element) {
@@ -79,26 +58,26 @@ public final class DataShare implements Serializable {
                 element.syncElement(latestValues.get(element.getId()));
             }
         }
-        used = true;
     }
 
-    public void downloadStandalone() throws IOException {
+    public void downloadData() throws IOException {
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
         xml += "<embedded-data>";
 
         Iterator<String> iterator = latestValues.keySet().iterator();
         while (iterator.hasNext()) {
             String key = iterator.next();
-            xml += "\n\t" + latestValues.get(key).getXml();
+            xml += "\n\t" + latestValues.get(key).getXml(true);
         }
         xml += "\n</embedded-data>";
 
         HttpUtilities.sendFileToClient(xml, "PolGen-Export-" + System.currentTimeMillis() + ".xml");
-
-        ActivityLogger.getActivityLogger().downloadedStandalone();
     }
 
-    public void uploadFile(FileUploadEvent event) {
+    public List<String> processUpload(FileUploadEvent event) {
+
+        List<String> affectedFormIds = new LinkedList<>();
+
         UploadedFile file = event.getFile();
         try {
             String fileContent = new Scanner(file.getInputStream()).useDelimiter("\\A").next();
@@ -117,12 +96,14 @@ public final class DataShare implements Serializable {
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xml)));
 
             Node ed = document.getElementsByTagName("embedded-data").item(0);
-            String formId;
+
             try {
-                formId = ed.getAttributes().getNamedItem("form").getTextContent();
-            } catch (Exception ex) {
-                formId = null;
+                String formId = ed.getAttributes().getNamedItem("form").getTextContent();
+                affectedFormIds.add(formId);   // Uploaded generated document
+            } catch (Exception ex) {    // In case there is no form id specified
             }
+
+            Set<String> detectedForms = new HashSet<>();
 
             NodeList fieldNodes = document.getElementsByTagName("field");
             for (int i = 0; i < fieldNodes.getLength(); i++) {
@@ -131,9 +112,16 @@ public final class DataShare implements Serializable {
                 String type = fNode.getAttributes().getNamedItem("type").getTextContent();
                 String id = fNode.getAttributes().getNamedItem("id").getTextContent();
 
+                try {
+                    String formId = fNode.getAttributes().getNamedItem("form").getTextContent();
+                    detectedForms.add(formId);
+                } catch (Exception ex) {
+                }
+
                 FormElement element = FormElementFactory.getDummyElement(type, id);
                 if (element != null) {
 
+                    // Iterating through values of the read element from the uploaded file
                     NodeList valueNodes = fNode.getChildNodes();
                     for (int k = 0; k < valueNodes.getLength(); k++) {
                         if (valueNodes.item(k).getNodeName().equals("value")) {
@@ -141,72 +129,21 @@ public final class DataShare implements Serializable {
                         }
                     }
 
-                    latestValues.put(id, element);
+                    if (latestValues.containsKey(id)) { // If it already exists, just sync it with the dummy
+                        latestValues.get(id).sync(element);
+                    } else {    // if not, put the dummy into the map
+                        latestValues.put(id, element);
+                    }
                 }
             }
 
-            used = true;
-            ActivityLogger.getActivityLogger().uploadedDocument();
+            affectedFormIds.addAll(detectedForms);
 
-            if (formId != null) {
-                if (FormFactory.getInstance().validateFormId(formId)) {
-                    ActivityLogger.getActivityLogger().setLastRequestedFormId(formId);
-                }
-            }
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, null, ex);
         }
-    }
 
-    public int getProgress(String formId) {
-        if (mandatoryFieldIds.containsKey(formId)) {
-            int completed = 0;
-
-            for (String mfid : mandatoryFieldIds.get(formId)) {
-                if (latestValues.containsKey(mfid)) {
-                    if (!latestValues.get(mfid).isEmpty()) {
-                        completed++;
-                    }
-                }
-            }
-
-            int total = mandatoryFieldIds.get(formId).size();
-            if (total == 0) {
-                return 100;
-            } else {
-                return 100 * completed / total;
-            }
-        } else {
-            return 0;
-        }
-    }
-
-    public int getMandatorySetCount(String formId) {
-        int count = 0;
-        if (mandatoryFieldIds.containsKey(formId)) {
-            for (String mfid : mandatoryFieldIds.get(formId)) {
-                if (latestValues.containsKey(mfid)) {
-                    if (!latestValues.get(mfid).isEmpty()) {
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
-    }
-
-    public int getMandatoryTotalCount(String formId) {
-        int count = 0;
-        if (mandatoryFieldIds.containsKey(formId)) {
-            for (String mfid : mandatoryFieldIds.get(formId)) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public boolean isUsed() {
-        return used;
+        return affectedFormIds;
     }
 
 }

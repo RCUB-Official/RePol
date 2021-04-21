@@ -17,6 +17,7 @@ import policygenerator.form.element.PanelFactory;
 import policygenerator.form.element.exceptions.ElementNotFoundException;
 import policygenerator.form.element.exceptions.IdentifierCollision;
 import policygenerator.form.element.exceptions.UnknownTriggerOperation;
+import policygenerator.session.SessionController;
 
 public class FormFactory extends XMLHandler {
 
@@ -44,24 +45,14 @@ public class FormFactory extends XMLHandler {
 
             NodeList subnodes = forms.item(i).getChildNodes();
 
-            List<String> mandatoryFieldIds = new LinkedList<>();
-
             for (int k = 0; k < subnodes.getLength(); k++) {
                 if (subnodes.item(k).getNodeName().equals("description")) {
                     description = subnodes.item(k).getTextContent();
-                } else if (subnodes.item(k).getNodeName().equals("panel")) {
-                    NodeList elementNodes = subnodes.item(k).getChildNodes();
-                    for (int j = 0; j < elementNodes.getLength(); j++) {
-                        Node elementNode = elementNodes.item(j);
-                        if (elementNode.getNodeName().equals("input")) {
-                            if ("true".equals(XMLUtilities.getAttributeValue(elementNode, "mandatory"))) {
-                                mandatoryFieldIds.add(XMLUtilities.getRequiredAttributeValue(elementNode, "id"));
-                            }
-                        }
-                    }
+                    break;
                 }
             }
-            headers.add(new FormHeader(formId, label, description, mandatoryFieldIds));
+
+            headers.add(new FormHeader(formId, label, description));
         }
     }
 
@@ -85,9 +76,9 @@ public class FormFactory extends XMLHandler {
         return valid;
     }
 
-    protected Form getForm(FormController controller, String id) throws UnknownTypeInputException, MisconfiguredSelectionList,
+    public Form getForm(SessionController sessionController, String id) throws UnknownTypeInputException, MisconfiguredSelectionList,
             UnknownOperatorException, ElementNotFoundException, IdentifierCollision, ConditionNotFoundException,
-            UnknownTriggerOperation, MissingAttributeException {
+            UnknownTriggerOperation, MissingAttributeException, FormNotFoundException {
 
         Form form = null;
 
@@ -95,7 +86,7 @@ public class FormFactory extends XMLHandler {
         if (formNode != null) {
             String label = XMLUtilities.getAttributeValue(formNode, "label");
 
-            form = new Form(controller, id);
+            form = new Form(sessionController, id);
 
             form.setLabel(label);
 
@@ -130,7 +121,11 @@ public class FormFactory extends XMLHandler {
                 String conditionId = XMLUtilities.getRequiredAttributeValue(cn, "id");
                 form.addCondition(new Composite(form, conditionId, cn));
             }
+        } else {
+            throw new FormNotFoundException(id);
         }
+
+        form.test();    // Factory tested
 
         return form;
     }

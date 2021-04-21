@@ -45,7 +45,7 @@ public final class Separator extends FormElement {
     }
 
     @Override
-    public String getXml() {
+    public String getXml(boolean includeFormId) {
         return "";
     }
 

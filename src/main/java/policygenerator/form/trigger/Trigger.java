@@ -1,4 +1,4 @@
-package policygenerator.form;
+package policygenerator.form.trigger;
 
 public final class Trigger {
 
