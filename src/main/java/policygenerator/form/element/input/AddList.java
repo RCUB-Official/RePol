@@ -171,10 +171,18 @@ public final class AddList extends FormElement {
     }
 
     @Override
-    public String getXml() {
+    public String getXml(boolean includeFormId) {
         String xml;
+
+        String formId;
+        if (getForm() != null && includeFormId) {
+            formId = " form=\"" + getForm().getId() + "\"";
+        } else {
+            formId = "";
+        }
+
         if (!values.isEmpty()) {
-            xml = "<field type=\"addlist\" id=\"" + getId() + "\">";
+            xml = "<field type=\"addlist\" id=\"" + getId() + "\"" + formId + ">";
             for (String value : values) {
                 xml += "<value>" + XMLUtilities.xmlEscape(value) + "</value>";
             }

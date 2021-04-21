@@ -1,4 +1,4 @@
-package framework.access;
+package policygenerator.session;
 
 import framework.EventHandler;
 import framework.settings.RepolSettings;

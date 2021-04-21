@@ -13,9 +13,10 @@ public final class RepolSettings extends Settings {
 
     private boolean useSafeDefaults;
     private String listDelimiter;
+    private int formCacheSize;
 
     private RepolSettings() {
-        super("/config/settings.cfg", "RePol Settings", "repol", true);
+        super("/config/repol.properties", "RePol Settings", "repol", true);
     }
 
     public static RepolSettings getInstance() {
@@ -30,6 +31,7 @@ public final class RepolSettings extends Settings {
         repolUrl = properties.getProperty(prefix + ".url");
         useSafeDefaults = "true".equals(properties.getProperty(prefix + ".useSafeDefaults"));
         listDelimiter = properties.getProperty(prefix + ".listDelimiter", ";");
+        formCacheSize = Integer.parseInt(properties.getProperty(prefix + ".FormCacheSize", "10"));
     }
 
     public String getTemplatePath() {
@@ -54,6 +56,10 @@ public final class RepolSettings extends Settings {
 
     public String getListDelimiter() {
         return listDelimiter;
+    }
+
+    public int getFormCacheSize() {
+        return formCacheSize;
     }
 
 }

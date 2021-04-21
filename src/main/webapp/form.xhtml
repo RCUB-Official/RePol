@@ -13,7 +13,7 @@
             <ui:define name="title">
                 <c:choose>
                     <c:when test="#{formController.form.validTemplate}">
-                        RePol - Enter Data
+                        #{formController.form.label}
                     </c:when>
                     <c:otherwise>
                         RePol - Error
@@ -22,27 +22,23 @@
             </ui:define>
 
             <ui:define name="content">
+                <style>
+                    #footer {
+                        position:relative;
+                    }
+                </style>
 
                 <h:form id="form_itself">
                     <c:choose>
                         <c:when test="#{formController.form.validTemplate}">
-                            <f:metadata>
-                                <f:viewParam name="document_id" value="#{formController.formId}" />
-                            </f:metadata>
-
-                            <h:panelGroup styleClass="submission-time">
-                                <h:outputText id="current_time" value="#{formController.form.currentTime}">
-                                    <f:convertDateTime pattern="YYYY-MM-dd HH:mm"/>
-                                </h:outputText>
-                                <p:poll update="current_time" interval="10"/>
-                            </h:panelGroup>
-                            <h3>#{formController.form.label}</h3>
-
-                            <div class="form-description"><h:outputText value="#{formController.form.description}" escape="false"/>
-                                <p:link outcome="form_specs" styleClass="float-right">
-                                    <f:param name="document_id" value="#{formController.form.id}"/>
-                                    <span class="fa fa-fw fa-eye"/> Inspect form
-                                </p:link>
+                            <div class="row">
+                                <div class="col-lg-10"/>
+                                <h:panelGroup styleClass="col-lg-2 submission-time">
+                                    <h:outputText id="current_time" value="#{formController.form.currentTime}">
+                                        <f:convertDateTime pattern="YYYY-MM-dd HH:mm"/>
+                                    </h:outputText>
+                                    <p:poll update="current_time" interval="10"/>
+                                </h:panelGroup>
                             </div>
 
                             <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
@@ -297,9 +293,19 @@
                                     </c:forEach>
                                 </p:panel>
                             </c:forEach>
-                            <div class="progressCount">
-                                <h:outputText value="#{formController.form.userSetFieldCount} fields set out of #{formController.form.relevantFieldCount} relevant"/>
-                                <h:outputText rendered="#{dataShare.getMandatoryTotalCount(formController.form.id) != 0}" value=", #{dataShare.getMandatorySetCount(formController.form.id)} set out of #{dataShare.getMandatoryTotalCount(formController.form.id)} mandatory"/>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <h:outputText value="#{formController.form.userSetFieldCount} fields set out of #{formController.form.relevantFieldCount} relevant"/>
+                                    <c:if test="#{formController.form.mandatoryFieldCount > 0}">
+                                        <h:outputText value=", #{formController.form.mandatoryFieldSetCount} set out of #{formController.form.mandatoryFieldCount} mandatory"/>
+                                    </c:if>
+                                </div>
+                                <div class="col-lg-3">
+                                    <p:link outcome="form_specs" styleClass="float-right">
+                                        <f:param name="document_id" value="#{formController.form.id}"/>
+                                        <span class="fa fa-fw fa-eye"/> Inspect form definition
+                                    </p:link>
+                                </div>
                             </div>
 
                             <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>

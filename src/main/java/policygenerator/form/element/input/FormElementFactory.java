@@ -7,7 +7,7 @@ import framework.utilities.xml.MissingAttributeException;
 import java.util.List;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import policygenerator.form.Trigger;
+import policygenerator.form.trigger.Trigger;
 import policygenerator.form.element.exceptions.MisconfiguredSelectionList;
 import policygenerator.form.element.exceptions.UnknownTriggerOperation;
 import policygenerator.form.element.exceptions.UnknownTypeInputException;

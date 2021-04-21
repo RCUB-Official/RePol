@@ -3,6 +3,7 @@ package policygenerator.form;
 import policygenerator.form.element.input.*;
 import policygenerator.form.element.Panel;
 import framework.EventHandler;
+import framework.cache.Cacheable;
 import framework.settings.RepolSettings;
 import framework.utilities.HttpUtilities;
 import freemarker.template.Template;
@@ -21,19 +22,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import policygenerator.form.Trigger.Operation;
+import policygenerator.form.trigger.Trigger.Operation;
 import policygenerator.form.condition.Condition;
 import policygenerator.form.element.input.FormElement.Type;
 import policygenerator.form.condition.exceptions.ConditionNotFoundException;
 import policygenerator.form.element.exceptions.ElementNotFoundException;
 import policygenerator.form.element.exceptions.IdentifierCollision;
 import policygenerator.freemarker.FMHandler;
+import policygenerator.session.SessionController;
 
-public final class Form {
+public final class Form implements Cacheable {
 
     private static final Logger LOG = Logger.getLogger(Form.class.getName());
 
-    private final FormController myController;
+    private final SessionController mySessionController;
+
     private final String id;
     private String label;
     private String description;
@@ -46,9 +49,9 @@ public final class Form {
 
     private final List<FormElement> needValidation;
 
-    public Form(FormController myController, String id) {
+    public Form(SessionController sessionController, String id) {
 
-        this.myController = myController;
+        this.mySessionController = sessionController;
         this.id = id;
 
         this.label = null;
@@ -61,16 +64,15 @@ public final class Form {
         this.conditionMap = new HashMap<>();
 
         needValidation = new LinkedList<>();
-
-        ActivityLogger.getActivityLogger().openedForm(id);
     }
 
+    public SessionController getSessionController() {
+        return mySessionController;
+    }
+
+    @Override
     public String getId() {
         return id;
-    }
-
-    public FormController getController() {
-        return myController;
     }
 
     public String getLabel() {
@@ -89,7 +91,7 @@ public final class Form {
         return description;
     }
 
-    protected void setDescription(String description) {
+    void setDescription(String description) {
         this.description = description;
     }
 
@@ -120,7 +122,7 @@ public final class Form {
                     }
                     elementMap.put(elementId, fe);
 
-                    if (fe.isMandatory()) {
+                    if (fe.isMandatory() || fe.getValidationRegex() != null) {
                         needValidation.add(fe);
                     }
                 }
@@ -158,7 +160,7 @@ public final class Form {
         }
     }
 
-    protected void test() throws ConditionNotFoundException {
+    void test() throws ConditionNotFoundException {
         for (Panel p : panels) {
             p.isRendered();
             for (FormElement fe : p.getElements()) {
@@ -198,7 +200,7 @@ public final class Form {
         xml += "<embedded-data form=\"" + id + "\">";
         for (Panel p : panels) {
             for (FormElement fe : p.getElements()) {
-                xml += "\n\t" + fe.getXml();
+                xml += "\n\t" + fe.getXml(false);
             }
         }
         xml += "\n</embedded-data>";
@@ -255,22 +257,21 @@ public final class Form {
                 fc.responseComplete();
             }
 
-            ActivityLogger.getActivityLogger().documentGenerated(id);
+            mySessionController.getActivityLogger().documentGenerated(id);
         }
     }
 
     public void sync() throws ConditionNotFoundException {
-        for (Panel p : panels) {
-            for (FormElement fe : p.getElements()) {
-                myController.getDataShare().requestSync(fe);
-            }
+        for (FormElement fe : elementMap.values()) {
+            mySessionController.requestSync(fe);
         }
     }
 
     public void downloadTemplate() {
         try (InputStream is = FMHandler.getInstance().getInputStream(id)) {
             HttpUtilities.sendFileToClient(is, "text/plain", id + ".ftlh");
-            ActivityLogger.getActivityLogger().downloadedTemplate(id);
+
+            mySessionController.getActivityLogger().downloadedTemplate(id);
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, null, ex);
         }
@@ -279,16 +280,19 @@ public final class Form {
     public void downloadConfig() {
         try (InputStream is = FormFactory.getInstance().getStream()) {
             HttpUtilities.sendFileToClient(is, "application/xml", "template-forms.xml");
-            ActivityLogger.getActivityLogger().downloadedConfig();
+
+            mySessionController.getActivityLogger().downloadedConfig();
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, null, ex);
         }
     }
 
+    // FORM STATS
+    // Completion
     public boolean isComplete() throws ConditionNotFoundException {
         boolean complete = true;
         for (FormElement fe : needValidation) {
-            if (fe.isEmpty() && fe.isRendered()) {
+            if (!fe.isValid()) {
                 complete = false;
                 break;
             }
@@ -296,16 +300,33 @@ public final class Form {
         return complete;
     }
 
+    // Mandatory
+    public int getMandatoryFieldCount() throws ConditionNotFoundException {
+        int count = 0;
+        for (FormElement fe : needValidation) {
+            if (fe.isMandatory() && fe.isRendered()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getMandatoryFieldSetCount() throws ConditionNotFoundException {
+        int count = 0;
+        for (FormElement fe : needValidation) {
+            if (fe.isValid() && fe.isMandatory()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Relevant
     public int getRelevantFieldCount() throws ConditionNotFoundException {
         int count = 0;
-
-        for (Panel p : this.panels) {
-            if (p.isRendered()) {
-                for (FormElement fe : p.getElements()) {
-                    if (fe.getType() != Type.SEPARATOR && fe.isRendered()) {
-                        count++;
-                    }
-                }
+        for (FormElement fe : elementMap.values()) {
+            if (fe.getType() != Type.SEPARATOR && fe.isRendered()) {
+                count++;
             }
         }
         return count;
@@ -313,16 +334,19 @@ public final class Form {
 
     public int getUserSetFieldCount() throws ConditionNotFoundException {
         int count = 0;
-
-        for (Panel p : this.panels) {
-            if (p.isRendered()) {
-                for (FormElement fe : p.getElements()) {
-                    if (fe.getType() != Type.SEPARATOR && fe.isRendered() && fe.isUserSet()) {
-                        count++;
-                    }
-                }
+        for (FormElement fe : elementMap.values()) {
+            if (fe.getType() != Type.SEPARATOR && fe.isRendered() && fe.isUserSet()) {
+                count++;
             }
         }
         return count;
+    }
+
+    public void userSetAll() throws ConditionNotFoundException {  // When user moves forward ahead of the form
+        for (FormElement fe : elementMap.values()) {
+            if (fe.isRendered()) {
+                fe.setUserSet();
+            }
+        }
     }
 }

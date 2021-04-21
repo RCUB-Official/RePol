@@ -3,23 +3,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:body>
         <ui:composition template="/WEB-INF/facelets/template.xhtml">
             <ui:param name="page" value="index" />
 
-            <ui:define name="title">
-                Data Download/Upload
-            </ui:define>
-            
             <ui:define name="navigation"/>
-
             <ui:define name="content">
+                <style>
+                    .title {
+                        border-bottom:none;
+                        padding-bottom:0px;
+                        padding-top:0px;
+                    }
+                    .about-repol {
+                        padding-bottom:80px;
+                    }
+                </style>
+
                 <c:choose>
                     <c:when test="#{dashboard.operational}">
 
-                        <div class="spaced-bottom">
-                            <h3>RePol Usage</h3>
+                        <div class="text-center">
+                            <p:link outcome="upload">
+                                <i class="fa fa-4x fa-play-circle"/>
+                                <h3 class="h4 mb-2">Create Policy</h3>
+                            </p:link>
+                        </div>
+
+                        <div class="about-repol">
+                            <h3>About RePol</h3>
+                            <p><p:link value="Privacy Policy and Terms of Use" outcome="tos"/></p>
                             <p>A trustworthy repository should have a transparent policy, informing users about the roles, responsibilities, rights and procedures aimed at ensuring that their deposited data are preserved and disseminated in line with the FAIR principles. RePol uses a lightweight online form to guide you through the process of defining a repository policy. By choosing options in the form, you choose sets of predefined policy clauses formulated in line with the current best practice. The resulting policy document may be downloaded, additionally customized, and integrated into your repository.</p>
                             <ul>
                                 <li><strong>Access, data entry and document creation</strong> &ndash; You can access RePol through a web browser, without any authentication. Data entry starts with the selection of a form for a document that is to be generated. Once all fields in the form are properly filled, the document can be generated. The same fields are shared across several forms.</li>
@@ -29,9 +44,6 @@
                             </ul>
                             <p>More information about RePol is available at <a target="_blank" href="https://wiki.ni4os.eu/index.php/RePol">NI4OS-Europe Wiki</a>.</p>
                         </div>
-
-                        <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>
-
                     </c:when>
                     <c:otherwise>
                         <h3>Malfunction!</h3>

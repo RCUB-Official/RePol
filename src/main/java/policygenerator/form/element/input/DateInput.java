@@ -87,8 +87,15 @@ public final class DateInput extends FormElement {
     }
 
     @Override
-    public String getXml() {
-        return "<field type=\"date\" id=\"" + getId() + "\"><value>" + value + "</value></field>";
+    public String getXml(boolean includeFormId) {
+        String formId;
+        if (getForm() != null && includeFormId) {
+            formId = " form=\"" + getForm().getId() + "\"";
+        } else {
+            formId = "";
+        }
+
+        return "<field type=\"date\" id=\"" + getId() + "\"" + formId + "><value>" + value + "</value></field>";
     }
 
 }

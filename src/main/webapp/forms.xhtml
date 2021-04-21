@@ -32,11 +32,17 @@
                                             </div>
                                             <div class="col-lg-7">
                                                 <h4>#{formHeaderRow.label}</h4>
-                                                #{formHeaderRow.description}
+                                                <h:outputText value="#{formHeaderRow.description}" escape="false"/>
                                             </div>
-                                            <div class="col-lg-3">
-                                                <h:outputText rendered="#{dataShare.getMandatoryTotalCount(formHeaderRow.formId) != 0}" value="#{dataShare.getMandatorySetCount(formHeaderRow.formId)} field(s) set out of #{dataShare.getMandatoryTotalCount(formHeaderRow.formId)} mandatory"/>
-                                            </div>
+                                            <c:set var="cachedForm" value="#{sessionController.getCachedForm(formHeaderRow.formId)}"/>
+                                            <c:if test="#{cachedForm != null}">
+                                                <div class="col-lg-3">
+                                                    <c:if test="#{cachedForm.mandatoryFieldCount > 0}">
+                                                        <h:outputText value="#{cachedForm.mandatoryFieldSetCount} field(s) set out of #{cachedForm.mandatoryFieldCount} mandatory"/><br/>
+                                                    </c:if>
+                                                    <h:outputText value="#{cachedForm.userSetFieldCount} field(s) set out of #{cachedForm.relevantFieldCount} relevant"/>
+                                                </div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </c:forEach>

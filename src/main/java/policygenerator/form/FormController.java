@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import policygenerator.session.SessionController;
 
 @ManagedBean(name = "formController", eager = false)
 @ViewScoped
@@ -15,7 +17,8 @@ public class FormController implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(FormController.class.getName());
 
-    private final DataShare dataShare;
+    private final SessionController sessionController;
+    private final List<FormHeader> formHeaders;
 
     String formId = null;
 
@@ -23,60 +26,52 @@ public class FormController implements Serializable {
     private String errorMessage;
 
     public FormController() {
+        sessionController = SessionController.getSessionController();
+        formHeaders = FormFactory.getInstance().getFormHeaders();
+
         form = null;
         errorMessage = null;
-
-        dataShare = DataShare.getDataShare();
     }
 
     @PostConstruct
     public void init() {
         try {
-            if (formId == null) {
+            if (formId == null) {   // Check if there is a GET parameter
                 formId = (String) Utilities.getObject("#{param.document_id}");
             }
-            form = FormFactory.getInstance().getForm(this, formId);
-            if (form != null) {
-                form.test();
+
+            if (formId != null) {   // If there is a GET parameter, get the from from the sessionController
+                form = sessionController.getForm(formId);
                 form.sync();
 
-                errorMessage = null;
-            } else {
-                errorMessage = "Form not found!";
+            } else {    // Form selection mode
+                formId = sessionController.getActivityLogger().getLastRequestedFormId(); // Get last form used from sessionController
+
+                if (!formHeaders.isEmpty()) {
+                    if (formId == null) {
+                        formId = formHeaders.get(0).getFormId();
+                    }
+                }
             }
+
         } catch (Exception ex) {
-            form = null;
             errorMessage = ex.getMessage();
             LOG.log(Level.SEVERE, null, ex);
         }
-
-        if (form == null) {
-            formId = ActivityLogger.getActivityLogger().getLastRequestedFormId();
-
-            if (formId == null && !getFormHeaders().isEmpty()) {
-                formId = getFormHeaders().get(0).getFormId();
-            }
-        }
     }
 
-    public static FormController getFormController() {
-        return (FormController) Utilities.getObject("#{formController}");
-    }
-
-    public List<FormHeader> getFormHeaders() {
-        return FormFactory.getInstance().getFormHeaders();
-    }
-
+    // Form already selected
     public Form getForm() {
         return form;
     }
 
-    public DataShare getDataShare() {
-        return dataShare;
-    }
-
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    // Form selection mode
+    public List<FormHeader> getFormHeaders() {
+        return formHeaders;
     }
 
     public String getFormId() {
@@ -84,6 +79,7 @@ public class FormController implements Serializable {
     }
 
     public void setFormId(String formId) {
+        sessionController.getActivityLogger().setLastRequestedFormId(formId);
         this.formId = formId;
     }
 }
