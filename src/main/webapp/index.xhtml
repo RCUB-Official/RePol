@@ -17,9 +17,6 @@
                         padding-bottom:0px;
                         padding-top:0px;
                     }
-                    .about-repol {
-                        padding-bottom:80px;
-                    }
                 </style>
 
                 <c:choose>
@@ -32,18 +29,16 @@
                             </p:link>
                         </div>
 
-                        <div class="about-repol">
-                            <h3>About RePol</h3>
-                            <p><p:link value="Privacy Policy and Terms of Use" outcome="tos"/></p>
-                            <p>A trustworthy repository should have a transparent policy, informing users about the roles, responsibilities, rights and procedures aimed at ensuring that their deposited data are preserved and disseminated in line with the FAIR principles. RePol uses a lightweight online form to guide you through the process of defining a repository policy. By choosing options in the form, you choose sets of predefined policy clauses formulated in line with the current best practice. The resulting policy document may be downloaded, additionally customized, and integrated into your repository.</p>
-                            <ul>
-                                <li><strong>Access, data entry and document creation</strong> &ndash; You can access RePol through a web browser, without any authentication. Data entry starts with the selection of a form for a document that is to be generated. Once all fields in the form are properly filled, the document can be generated. The same fields are shared across several forms.</li>
-                                <li><strong>Editing of generated documents</strong> &ndash; The generated HTML document is a draft that must be read and edited before it is considered final. The sections that must be revised are clearly marked. If you want to re-upload and re-use the document in RePol, please refrain from deleting or altering the portion between tags because that is where the machine-readable data is stored.</li>
-                                <li><strong>Saving all forms</strong> &ndash; At any time, you can download an XML (standalone) file containing all entered data &ndash; the latest values of the input elements, from all forms at once. Each generated document also contains its data in a machine-readable format.</li>
-                                <li><strong>Later changes of data and documents</strong> &ndash; Both standalone XML exports and generated documents can be re-uploaded to the RePol and their data parsed to fill the appropriate input elements in all forms that have them, allowing to update the data or the same data to be re-used in other templates or newer versions of the existing ones. All user-made customisations of the earlier created text will have to be repeated in the new document.</li>
-                            </ul>
-                            <p>More information about RePol is available at <a target="_blank" href="https://wiki.ni4os.eu/index.php/RePol">NI4OS-Europe Wiki</a>.</p>
-                        </div>
+                        <h3>About RePol</h3>
+                        <p><p:link value="Privacy Policy and Terms of Use" outcome="tos"/></p>
+                        <p>A trustworthy repository should have a transparent policy, informing users about the roles, responsibilities, rights and procedures aimed at ensuring that their deposited data are preserved and disseminated in line with the FAIR principles. RePol uses a lightweight online form to guide you through the process of defining a repository policy. By choosing options in the form, you choose sets of predefined policy clauses formulated in line with the current best practice. The resulting policy document may be downloaded, additionally customized, and integrated into your repository.</p>
+                        <ul>
+                            <li><strong>Access, data entry and document creation</strong> &ndash; You can access RePol through a web browser, without any authentication. Data entry starts with the selection of a form for a document that is to be generated. Once all fields in the form are properly filled, the document can be generated. The same fields are shared across several forms.</li>
+                            <li><strong>Editing of generated documents</strong> &ndash; The generated HTML document is a draft that must be read and edited before it is considered final. The sections that must be revised are clearly marked. If you want to re-upload and re-use the document in RePol, please refrain from deleting or altering the portion between tags because that is where the machine-readable data is stored.</li>
+                            <li><strong>Saving all forms</strong> &ndash; At any time, you can download an XML (standalone) file containing all entered data &ndash; the latest values of the input elements, from all forms at once. Each generated document also contains its data in a machine-readable format.</li>
+                            <li><strong>Later changes of data and documents</strong> &ndash; Both standalone XML exports and generated documents can be re-uploaded to the RePol and their data parsed to fill the appropriate input elements in all forms that have them, allowing to update the data or the same data to be re-used in other templates or newer versions of the existing ones. All user-made customisations of the earlier created text will have to be repeated in the new document.</li>
+                        </ul>
+                        <p>More information about RePol is available at <a target="_blank" href="https://wiki.ni4os.eu/index.php/RePol">NI4OS-Europe Wiki</a>.</p>
                     </c:when>
                     <c:otherwise>
                         <h3>Malfunction!</h3>

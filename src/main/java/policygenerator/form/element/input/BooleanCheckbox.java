@@ -6,12 +6,13 @@ public final class BooleanCheckbox extends FormElement {
 
     private boolean value;
 
-    protected BooleanCheckbox(Panel panel, String id, boolean mandatory, String label, String conditionId) {
+    BooleanCheckbox(Panel panel, String id, boolean mandatory, String label, String conditionId) {
         super(panel, Type.BOOLEAN, id, mandatory, label, conditionId, null, null);
         this.value = false;
         this.defaultValue = "false";
     }
 
+    // Getter and setter for UI interaction
     public boolean isValue() {
         return value;
     }
@@ -20,9 +21,15 @@ public final class BooleanCheckbox extends FormElement {
         this.value = value;
     }
 
+    // getValue() and getSafeValue() for FreeMarker
     @Override
     public Boolean getValue() {
-        return isValue();
+        return value;
+    }
+
+    @Override
+    public Boolean getSafeValue() {     // Primitive boolean type is never null
+        return value;
     }
 
     @Override

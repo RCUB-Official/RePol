@@ -1,28 +1,34 @@
 package policygenerator.form.element.input;
 
-import framework.settings.RepolSettings;
 import policygenerator.form.element.Panel;
 
 public final class DoubleInput extends FormElement {
 
     private Double value;
 
-    protected DoubleInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
+    DoubleInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
         super(panel, Type.DOUBLE, id, mandatory, label, conditionId, null, null); // TODO: regex validation
         this.value = null;
     }
 
-    @Override
+    // Getter and setter for UI interaction
+    @Override   // Also for FreeMarker
     public Double getValue() {
-        if (value == null && RepolSettings.getInstance().isUseSafeDefaults()) {
-            return 0.0;
-        } else {
-            return value;
-        }
+        return value;
     }
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    // Safe value
+    @Override
+    public Double getSafeValue() {
+        if (value == null) {    // Returns 0 if (value == null)
+            return 0.0;
+        } else {
+            return value;
+        }
     }
 
     @Override

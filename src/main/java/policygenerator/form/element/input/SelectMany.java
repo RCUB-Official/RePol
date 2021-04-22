@@ -13,7 +13,7 @@ public final class SelectMany extends FormElement {
 
     private final List<SelectionElement> availableValues;
 
-    protected SelectMany(Panel panel, String id, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
+    SelectMany(Panel panel, String id, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
         super(panel, Type.SELECTMANY, id, mandatory, label, conditionId, null, null);
         availableValues = new LinkedList<>();
 
@@ -44,6 +44,11 @@ public final class SelectMany extends FormElement {
 
     @Override
     public List<String> getValue() {
+        return getValues();
+    }
+
+    @Override   // List is never empty
+    public List<String> getSafeValue() {
         return getValues();
     }
 

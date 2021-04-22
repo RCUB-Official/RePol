@@ -18,7 +18,7 @@ public final class PoolPicker extends FormElement {
     private final List<SelectionElement> selectedValues;
     private String toBeAdded;
 
-    protected PoolPicker(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage, String listId) throws MisconfiguredSelectionList {
+    PoolPicker(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage, String listId) throws MisconfiguredSelectionList {
         super(panel, Type.POOLPICKER, id, mandatory, label, conditionId, validationRegex, validationMessage);
         availableValues = new LinkedList<>();
 
@@ -134,6 +134,11 @@ public final class PoolPicker extends FormElement {
 
     @Override
     public List<String> getValue() {
+        return getValues();
+    }
+
+    @Override   // List is never null
+    public List<String> getSafeValue() {
         return getValues();
     }
 

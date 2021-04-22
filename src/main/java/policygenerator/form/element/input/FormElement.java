@@ -121,6 +121,8 @@ public abstract class FormElement {
     //VALUE FUNCTIONS
     public abstract Object getValue();  // For FreeMarker model
 
+    public abstract Object getSafeValue(); // Get a non-null value that will not crash FreeMarker
+
     public abstract void set(String value);
 
     public abstract void clear();

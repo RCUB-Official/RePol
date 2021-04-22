@@ -10,7 +10,7 @@ public final class OneLine extends FormElement {
 
     private String value;
 
-    protected OneLine(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+    OneLine(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
         super(panel, Type.ONELINE, id, mandatory, label, conditionId, validationRegex, validationMessage);
         this.value = "";
     }
@@ -22,6 +22,15 @@ public final class OneLine extends FormElement {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public String getSafeValue() {  // Initialized to an empty String in constructor
+        if (value == null) {    // just in case if null was passed to the setter
+            return "";
+        } else {
+            return value;
+        }
     }
 
     @Override

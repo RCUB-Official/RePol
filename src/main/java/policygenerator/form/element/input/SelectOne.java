@@ -1,6 +1,5 @@
 package policygenerator.form.element.input;
 
-import framework.settings.RepolSettings;
 import policygenerator.form.element.SelectionElement;
 import policygenerator.form.element.Panel;
 import framework.utilities.xml.XMLUtilities;
@@ -14,7 +13,7 @@ public final class SelectOne extends FormElement {
     private final List<SelectionElement> availableValues;
     private String value;
 
-    protected SelectOne(Panel panel, String id, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
+    SelectOne(Panel panel, String id, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
         super(panel, Type.SELECTONE, id, mandatory, label, conditionId, null, null);
         availableValues = new LinkedList<>();
 
@@ -35,17 +34,23 @@ public final class SelectOne extends FormElement {
         }
     }
 
-    @Override
+    // Getter and setter for UI interaction
+    @Override   // Also for FreeMarker
     public String getValue() {
-        if (value == null && RepolSettings.getInstance().isUseSafeDefaults()) {
-            return "";
-        } else {
-            return value;
-        }
+        return value;
     }
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public String getSafeValue() {
+        if (value == null) {    // Returns empty String if (value == null)
+            return "";
+        } else {
+            return value;
+        }
     }
 
     @Override
@@ -122,7 +127,7 @@ public final class SelectOne extends FormElement {
             } else {
                 formId = "";
             }
-            
+
             return "<field type=\"oneline\" id=\"" + getId() + "\"" + formId + "><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
         } else {
             return "";

@@ -14,6 +14,11 @@ public final class Separator extends FormElement {
     }
 
     @Override
+    public Object getSafeValue() {  // Same as getValue()
+        throw new UnsupportedOperationException("Separator has no value.");
+    }
+
+    @Override
     public boolean isEmpty() { // Always empty
         return true;
     }

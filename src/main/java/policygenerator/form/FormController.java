@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import policygenerator.session.SessionController;
@@ -47,10 +46,8 @@ public class FormController implements Serializable {
             } else {    // Form selection mode
                 formId = sessionController.getActivityLogger().getLastRequestedFormId(); // Get last form used from sessionController
 
-                if (!formHeaders.isEmpty()) {
-                    if (formId == null) {
-                        formId = formHeaders.get(0).getFormId();
-                    }
+                if (formId == null && !formHeaders.isEmpty()) { // If it is still null, select the first header
+                    formId = formHeaders.get(0).getFormId();
                 }
             }
 

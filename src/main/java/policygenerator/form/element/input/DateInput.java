@@ -1,6 +1,5 @@
 package policygenerator.form.element.input;
 
-import framework.settings.RepolSettings;
 import policygenerator.form.element.Panel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,22 +10,29 @@ public final class DateInput extends FormElement {
 
     private Date value;
 
-    protected DateInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
+    DateInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
         super(panel, Type.DATE, id, mandatory, label, conditionId, null, null); // TODO: regex validation
         this.value = new Date(System.currentTimeMillis());
     }
 
-    @Override
+    // Getter and setter for UI interaction
+    @Override   // Also for FreeMarker
     public Date getValue() {
-        if (value == null && RepolSettings.getInstance().isUseSafeDefaults()) {
-            return new Date(0);
-        } else {
-            return value;
-        }
+        return value;
     }
 
     public void setValue(Date value) {
         this.value = value;
+    }
+
+    // Safe value
+    @Override
+    public Date getSafeValue() {    // returns 1970-01-01 if (value == null)
+        if (value == null) {
+            return new Date(0);
+        } else {
+            return value;
+        }
     }
 
     @Override

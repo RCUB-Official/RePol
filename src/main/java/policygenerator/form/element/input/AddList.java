@@ -13,12 +13,11 @@ import policygenerator.form.element.exceptions.ElementNotFoundException;
 
 public final class AddList extends FormElement {
 
-    private final List<String> values;
+    private final List<String> values = new LinkedList<>();
     private String toBeAdded;
 
-    protected AddList(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+    AddList(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
         super(panel, Type.ADDLIST, id, mandatory, label, conditionId, validationRegex, validationMessage);
-        this.values = new LinkedList<>();
         this.toBeAdded = "";
     }
 
@@ -35,7 +34,12 @@ public final class AddList extends FormElement {
 
     @Override
     public List<String> getValue() {
-        return getValues();
+        return values;
+    }
+
+    @Override
+    public List<String> getSafeValue() {    // Empty list is never null
+        return values;
     }
 
     public String getToBeAdded() {

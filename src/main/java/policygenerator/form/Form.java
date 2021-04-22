@@ -227,9 +227,12 @@ public final class Form implements Cacheable {
 
         for (FormElement fe : elements) {
             if (fe.getType() != Type.SEPARATOR) {
-
                 if (fe.isValid()) {
-                    model.put(fe.getId(), fe.getValue());
+                    if (settings.isUseSafeDefaults()) { // Making sure no null values are passed to FreeMarker
+                        model.put(fe.getId(), fe.getSafeValue());
+                    } else {
+                        model.put(fe.getId(), fe.getValue());
+                    }
                 } else {
                     EventHandler.alertUserError("Invalid input", fe.getLabel());
                     valid = false;

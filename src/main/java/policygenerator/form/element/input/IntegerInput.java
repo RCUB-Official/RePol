@@ -1,28 +1,33 @@
 package policygenerator.form.element.input;
 
-import framework.settings.RepolSettings;
 import policygenerator.form.element.Panel;
 
 public final class IntegerInput extends FormElement {
 
     private Integer value;
 
-    protected IntegerInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
+    IntegerInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
         super(panel, Type.INTEGER, id, mandatory, label, conditionId, null, null);  // TODO: regex validation
         this.value = null;
     }
 
-    @Override
+    // Getter and setter for UI interaction
+    @Override   // Also for FreeMarker
     public Integer getValue() {
-        if (value == null && RepolSettings.getInstance().isUseSafeDefaults()) {
-            return 0;
-        } else {
-            return value;
-        }
+        return value;
     }
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    @Override
+    public Integer getSafeValue() {
+        if (value == null) {    // Returns 0 if (value == null)
+            return 0;
+        } else {
+            return value;
+        }
     }
 
     @Override
