@@ -43,10 +43,10 @@ public abstract class FormElement {
 
     private final String conditionId;
 
-    List<Trigger> triggers;
-    Map<String, Condition> conditions;
+    private final List<Trigger> triggers;
+    private final Map<String, Condition> conditions;
 
-    protected String defaultValue;
+    protected final List<String> defaultValues;
 
     protected String validationRegex;
     protected String validationMessage;
@@ -69,7 +69,7 @@ public abstract class FormElement {
 
         triggers = new LinkedList<>();
         conditions = new HashMap<>();
-        defaultValue = null;
+        defaultValues = new LinkedList<>();
 
         userSet = false;
     }
@@ -102,7 +102,7 @@ public abstract class FormElement {
         return tooltip;
     }
 
-    public void setTooltip(String tooltip) {
+    void setTooltip(String tooltip) {
         this.tooltip = tooltip;
     }
 
@@ -110,12 +110,20 @@ public abstract class FormElement {
         return description;
     }
 
-    public void setDescription(String description) {
+    void setDescription(String description) {
         this.description = description;
     }
 
     public String getDefaultValue() {
-        return defaultValue;
+        if (!defaultValues.isEmpty()) {
+            return defaultValues.get(defaultValues.size() - 1);
+        } else {
+            return null;
+        }
+    }
+
+    public List<String> getDefaultValues() {
+        return defaultValues;
     }
 
     //VALUE FUNCTIONS
@@ -123,16 +131,16 @@ public abstract class FormElement {
 
     public abstract Object getSafeValue(); // Get a non-null value that will not crash FreeMarker
 
-    public abstract void set(String value);
+    protected abstract void set(String value);
 
-    public abstract void clear();
+    protected abstract void clear();
 
     public abstract void remove(String value);
 
     public abstract boolean match(String value);
 
-    public final void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
+    final void setDefaultValue(String defaultValue) {
+        this.defaultValues.add(defaultValue);
         set(defaultValue);
         touch();
     }
@@ -156,7 +164,9 @@ public abstract class FormElement {
 
     public final void resetToDefault() {
         clear();
-        set(defaultValue);
+        for (String dv : defaultValues) {
+            set(dv);
+        }
         push();
     }
 

@@ -32,6 +32,10 @@ public final class SelectMany extends FormElement {
         return availableValues;
     }
 
+    public List<SelectionElement> getAllPossibleValues() {
+        return availableValues;
+    }
+
     public List<String> getValues() {
         List<String> list = new LinkedList<>();
         for (SelectionElement se : availableValues) {

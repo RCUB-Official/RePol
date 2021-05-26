@@ -32,6 +32,16 @@ public final class AddList extends FormElement {
         return values;
     }
 
+    public List<SelectionElement> getAllPossibleValues() {
+        List<SelectionElement> possibleValues = new LinkedList<>();
+
+        for (String dv : defaultValues) {
+            possibleValues.add(new SelectionElement(this, null, dv));
+        }
+
+        return possibleValues;
+    }
+
     @Override
     public List<String> getValue() {
         return values;

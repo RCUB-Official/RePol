@@ -79,47 +79,61 @@
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{formElement.type == 'POOLPICKER' || formElement.type == 'SELECTONE'
                                                                   || formElement.type == 'SELECTMANY' || formElement.type == 'ADDLIST'}">
-                                            <p:repeat value="#{formElement.availableValues}" var="avRow">
-                                                <div class="value-row #{avRow.value == formElement.defaultValue ? 'default-value' : null}"><h:panelGroup rendered="#{not empty avRow.label}">#{avRow} - </h:panelGroup><b>&quot;#{avRow.value}&quot;</b></div>
+                                            <p:repeat value="#{formElement.allPossibleValues}" var="avRow">
+                                                <div class="value-row #{avRow.defaultValue ? 'default-value' : null}"><h:panelGroup rendered="#{not empty avRow.label}">#{avRow} - </h:panelGroup><b>&quot;#{avRow.value}&quot;</b></div>
                                             </p:repeat>
                                         </h:panelGroup>
                                     </p:column>
                                 </p:dataTable>
                             </c:forEach>
 
-                            <h3>Conditions</h3>
+                            <c:choose>
+                                <c:when test="#{formController.form.hasConditions}">
+                                    <h4>Conditions</h4>
 
-                            <p:dataTable value="#{formController.form.conditions}" var="conditionRow"
-                                         styleClass="spec-element-table">
-                                <p:column headerText="Condition ID" width="30%">
-                                    #{conditionRow.id}
-                                </p:column>
-                                <p:column headerText="Expression">
-                                    #{conditionRow}
-                                </p:column>
-                            </p:dataTable>
+                                    <p:dataTable value="#{formController.form.conditions}" var="conditionRow"
+                                                 styleClass="spec-element-table">
+                                        <p:column headerText="Condition ID" width="30%">
+                                            #{conditionRow.id}
+                                        </p:column>
+                                        <p:column headerText="Expression">
+                                            #{conditionRow}
+                                        </p:column>
+                                    </p:dataTable>
+                                </c:when>
+                                <c:otherwise>
+                                    <h4>No conditions defined for this form.</h4>
+                                </c:otherwise>
+                            </c:choose>
 
-                            <h4>Triggers</h4>
+                            <c:choose>
+                                <c:when test="#{formController.form.hasTriggers}">
+                                    <h4>Triggers</h4>
 
-                            <c:forEach items="#{formController.form.panels}" var="panelRow" varStatus="panelIterator">
-                                <c:forEach items="#{panelRow.elements}" var="elementRow" varStatus="elementIterator">
-                                    <c:if test="#{not empty elementRow.triggers}">
-                                        <div class="form-element-triggers">
-                                            <b>#{elementRow.id}</b>
+                                    <c:forEach items="#{formController.form.panels}" var="panelRow" varStatus="panelIterator">
+                                        <c:forEach items="#{panelRow.elements}" var="elementRow" varStatus="elementIterator">
                                             <c:if test="#{not empty elementRow.triggers}">
-                                                <div class="triggers-summary">
-                                                    <c:forEach items="#{elementRow.triggers}" var="triggerRow" varStatus="triggerIterator">
-                                                        <c:if test="#{triggerIterator.count == 1 || elementRow.triggers[triggerIterator.index - 1].conditionId != triggerRow.conditionId}">
-                                                            <div class="trigger-condition">if (#{triggerRow.conditionId})</div>
-                                                        </c:if>
-                                                        <div class="trigger-itself">#{triggerRow}</div>
-                                                    </c:forEach>
+                                                <div class="form-element-triggers">
+                                                    <b>#{elementRow.id}</b>
+                                                    <c:if test="#{not empty elementRow.triggers}">
+                                                        <div class="triggers-summary">
+                                                            <c:forEach items="#{elementRow.triggers}" var="triggerRow" varStatus="triggerIterator">
+                                                                <c:if test="#{triggerIterator.count == 1 || elementRow.triggers[triggerIterator.index - 1].conditionId != triggerRow.conditionId}">
+                                                                    <div class="trigger-condition">if (#{triggerRow.conditionId})</div>
+                                                                </c:if>
+                                                                <div class="trigger-itself">#{triggerRow}</div>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </c:if>
                                                 </div>
                                             </c:if>
-                                        </div>
-                                    </c:if>
-                                </c:forEach>
-                            </c:forEach>
+                                        </c:forEach>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <h4>No triggers defined for this form.</h4>
+                                </c:otherwise>
+                            </c:choose>
 
                             <ui:include src="WEB-INF/facelets/forward_backward.xhtml"/>
 

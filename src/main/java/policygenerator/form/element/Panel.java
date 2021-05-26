@@ -10,10 +10,11 @@ public final class Panel {
 
     private final Form form;
     private final String label;
+    private String description;
     private final String conditionId;
     private final List<FormElement> elements;
 
-    protected Panel(Form form, String label, String conditionId) {
+    Panel(Form form, String label, String conditionId) {
         this.form = form;
         this.label = label;
         this.conditionId = conditionId;
@@ -24,7 +25,15 @@ public final class Panel {
         return label;
     }
 
-    public void addElements(List<FormElement> elements) {
+    public String getDescription() {
+        return description;
+    }
+
+    void setDescription(String description) {
+        this.description = description;
+    }
+
+    void addElements(List<FormElement> elements) {
         this.elements.clear();
         this.elements.addAll(elements);
     }

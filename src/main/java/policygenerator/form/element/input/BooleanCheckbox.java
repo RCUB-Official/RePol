@@ -9,7 +9,7 @@ public final class BooleanCheckbox extends FormElement {
     BooleanCheckbox(Panel panel, String id, boolean mandatory, String label, String conditionId) {
         super(panel, Type.BOOLEAN, id, mandatory, label, conditionId, null, null);
         this.value = false;
-        this.defaultValue = "false";
+        defaultValues.add("false");
     }
 
     // Getter and setter for UI interaction

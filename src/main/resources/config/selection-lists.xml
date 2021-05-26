@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <lists>
+    <!-- Repository Policy -->
     <list id="owner_types">
         <element value="department">Department</element>
         <element value="faculty">Faculty (school of an university)</element>
@@ -134,8 +135,60 @@
     <list id="collected_data_list">
         <element value="IP address">IP address or Internet domain of the accessor</element>
         <element value="HTTP referer">HTTP header field 'Referer' with the webpage from which the resource was linked</element>
-        <element value="the type of browser and operating system">Type of browser and operating system browser and OS</element>
+        <element value="type of browser and operating system">Type of device, browser and operating system and screen size</element>
         <element value="date and time">Date and time</element>
         <element value="pages visited">Pages visited</element>
+    </list>
+    
+    <!-- Privacy Policy -->
+    <list id="legal_basis_list">
+        <element value="contract">Contract</element>
+        <element value="legal obligation">Legal obligation</element>
+        <element value="legitimate interest">Legitimate interest</element>
+        <element value="consent">Consent</element>
+    </list>
+    
+    <list id="compliance_list">
+        <element value="GDPR">GDPR</element>
+        <element value="national legislation">National legislation</element>
+        <element value="other">Other</element>
+    </list>
+    
+    <list id="collection_methods_list">
+        <element value="use of the service">Use of the service</element>
+        <element value="from identity provider">From identity provider</element>
+        <element value="registration form">Registration form</element>
+        <element value="feedback form">Feedback form</element>
+        <element value="newsletter">Newsletter</element>
+        <element value="services in subdomains">Services in subdomains</element>
+        <element value="third-party services">Third-party services</element>
+    </list>
+    
+    <list id="identity_providers_data_list">
+        <element value="person’s name (first name and surname)">Person’s name (first name and surname)</element>
+        <element value="personal email">Personal email</element>
+        <element value="person’s organisation">Person’s organisation</element>
+        <element value="affiliation in broad categories such as student, faculty, staff, etc.">Affiliation in broad categories such as student, faculty, staff, etc.</element>
+        <element value="entitlement - Indication of rights to specific resources">Entitlement - Indication of rights to specific resources</element>
+        <element value="home organisation">Home organisation</element>
+        <element value="computer system login name or Person’s identifier with">Computer system login name or Person’s identifier with</element>
+        <element value="person’s interinstitutional or national educational identifier">Person’s interinstitutional or national educational identifier</element>
+        <element value="institutional email">Institutional email</element>
+        <element value="preferred language">Preferred language</element>
+        <element value="organisational unit">Organisational unit</element>
+        <element value="office telephone number">Office telephone number</element>
+        <element value="compliance with specific standards for identity assurance">Compliance with specific standards for identity assurance</element>
+        <element value="ORCID">ORCID</element>
+    </list>
+    
+    <list id="web_analytics_tools_list">
+        <element value="Google Analytics">Google Analytics</element>
+        <element value="Matomo">Matomo</element>
+    </list>
+    
+    <list id="use_of_cookies_list">
+        <element value="used, but not required">Used, but not required</element>
+        <element value="required">Required</element>
+        <element value="not used">Not used</element>
     </list>
 </lists>

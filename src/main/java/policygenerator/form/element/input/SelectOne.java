@@ -67,6 +67,10 @@ public final class SelectOne extends FormElement {
         return availableValues;
     }
 
+    public List<SelectionElement> getAllPossibleValues() {
+        return availableValues;
+    }
+
     @Override
     public boolean isEmpty() {
         return (value == null);

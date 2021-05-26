@@ -53,6 +53,10 @@ public final class ActivityLogger {
         LOG.log(Level.INFO, "{0}: downloaded the configuration file.", header);
     }
 
+    public void downloadedLists() {
+        LOG.log(Level.INFO, "{0}: downloaded the list file.", header);
+    }
+
     public void downloadedTemplate(String formId) {
         LOG.log(Level.INFO, "{0}: downloaded the template \"{1}\".", new Object[]{header, formId});
     }

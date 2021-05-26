@@ -43,6 +43,9 @@
 
                             <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
                                 <p:panel header="#{panel.label}" styleClass="form-panel" rendered="#{panel.rendered}">
+                                    <div class="form-panel-description">
+                                        <h:outputText value="#{panel.description}" escape="false"/>
+                                    </div>
                                     <c:forEach items="#{panel.elements}" var="formElement" varStatus="elementIterator">
                                         <c:choose>
                                             <c:when test="#{formElement.type == 'SEPARATOR'}">

@@ -26,6 +26,7 @@ import policygenerator.form.trigger.Trigger.Operation;
 import policygenerator.form.condition.Condition;
 import policygenerator.form.element.input.FormElement.Type;
 import policygenerator.form.condition.exceptions.ConditionNotFoundException;
+import policygenerator.form.element.ListFactory;
 import policygenerator.form.element.exceptions.ElementNotFoundException;
 import policygenerator.form.element.exceptions.IdentifierCollision;
 import policygenerator.freemarker.FMHandler;
@@ -105,7 +106,7 @@ public final class Form implements Cacheable {
         return FMHandler.getInstance().templateExists(id + ".ftlh");
     }
 
-    protected synchronized void addPanels(List<Panel> panels) throws IdentifierCollision, ConditionNotFoundException {
+    synchronized void addPanels(List<Panel> panels) throws IdentifierCollision, ConditionNotFoundException {
         this.panels.clear();
         this.elementMap.clear();
 
@@ -130,7 +131,7 @@ public final class Form implements Cacheable {
         }
     }
 
-    protected synchronized void addCondition(Condition condition) throws IdentifierCollision {
+    synchronized void addCondition(Condition condition) throws IdentifierCollision {
         String conditionId = condition.getId();
         if (elementMap.containsKey(conditionId)) {
             throw new IdentifierCollision(conditionId, "FormElement");
@@ -290,6 +291,16 @@ public final class Form implements Cacheable {
         }
     }
 
+    public void downloadLists() {
+        try (InputStream is = ListFactory.getInstance().getStream()) {
+            HttpUtilities.sendFileToClient(is, "application/xml", "selection-lists.xml");
+
+            mySessionController.getActivityLogger().downloadedLists();
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, null, ex);
+        }
+    }
+
     // FORM STATS
     // Completion
     public boolean isComplete() throws ConditionNotFoundException {
@@ -351,5 +362,20 @@ public final class Form implements Cacheable {
                 fe.setUserSet();
             }
         }
+    }
+
+    public boolean isHasConditions() {
+        return !conditionMap.isEmpty();
+    }
+
+    public boolean isHasTriggers() {
+        boolean hasTriggers = false;
+        for (FormElement fe : elementMap.values()) {
+            if (!fe.getTriggers().isEmpty()) {
+                hasTriggers = true;
+                break;
+            }
+        }
+        return hasTriggers;
     }
 }

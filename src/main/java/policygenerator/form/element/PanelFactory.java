@@ -14,21 +14,24 @@ import policygenerator.form.element.input.FormElement;
 import policygenerator.form.element.input.FormElementFactory;
 
 public class PanelFactory {
-
+    
     public static Panel parsePanel(Form form, Node panelNode) throws UnknownTypeInputException, MisconfiguredSelectionList, UnknownTriggerOperation, MissingAttributeException {
         String label = XMLUtilities.getAttributeValue(panelNode, "label");
         String conditionId = XMLUtilities.getAttributeValue(panelNode, "rendered");
-
+        
         Panel panel = new Panel(form, label, conditionId);
-
+        
         List<FormElement> elements = new LinkedList<>();
-
+        
         NodeList subElements = panelNode.getChildNodes();
         for (int i = 0; i < subElements.getLength(); i++) {
             Node elementNode = subElements.item(i);
             String nodeName = elementNode.getNodeName();
-
+            
             switch (nodeName) {
+                case "description":
+                    panel.setDescription(XMLUtilities.innerXml(elementNode));
+                    break;
                 case "input":
                     elements.add(FormElementFactory.parseInputElement(panel, elementNode));
                     break;
@@ -37,7 +40,7 @@ public class PanelFactory {
                     break;
             }
         }
-
+        
         panel.addElements(elements);
         return panel;
     }

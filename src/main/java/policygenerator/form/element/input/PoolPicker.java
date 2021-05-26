@@ -132,6 +132,13 @@ public final class PoolPicker extends FormElement {
         return values;
     }
 
+    public List<SelectionElement> getAllPossibleValues() {
+        List<SelectionElement> possibleValues = new LinkedList<>();
+        possibleValues.addAll(selectedValues);
+        possibleValues.addAll(availableValues);
+        return possibleValues;
+    }
+
     @Override
     public List<String> getValue() {
         return getValues();

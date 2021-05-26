@@ -314,27 +314,83 @@
         
     </form>
     
-    <!--    
-    <form id="test" label="Second Form">
-        <description>Testing data share.</description>
-            
+    <form id="privacy" label="Privacy Policy">
+        <description>Generic Privacy Policy (Beta)</description>
         <panel label="General Information">
-            <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
-                <description>
-                    Just do the testing.
-                </description>
+            <input type="oneline" id="service" label="Service name" mandatory="true">
+                <description>Enter the name of the website, service or repository for which you wish to generate a policy.</description>                
             </input>
-            <input type="oneline" id="repo_url" label="Repository URL" mandatory="true"/>
-            <input type="oneline" id="some_url" label="Some URL">
-                <trigger condition="trigger_test" target="principal_languages" operation="reset"/>
+            <input type="oneline" id="service_url" label="Service URL"/>
+            <input type="oneline" id="service_owner" label="Owning institution" mandatory="true">
+                <description>Provide the name of the legal entity or body/unit owning the service. This field is mandatory because the policy must be bound to an entity.</description>                
             </input>
-            <input type="oneline" id="principal_languages" label="Testing PoolPicker Sync" default="srpski"/>
+            <input type="oneline" id="country" label="Service owner’s country"/>
+            <input type="date" id="policy_date" label="Date of the policy document" default="current_date"/>
         </panel>
-            
-        <condition id="trigger_test">
-            <match id="some_url" value="trigger value"/>
-        </condition>
+        <panel label="Legal">
+            <input type="selectmany" id="legal_basis" list-id="legal_basis_list" label="Legal basis for collecting personal data" default="consent">
+                <description>Check all that apply.</description>
+            </input>
+            <input type="selectmany" id="compliance" list-id="compliance_list" label="Compliance with">
+                <description>Check all that apply.</description>
+                <default>GDPR</default>
+                <default>national legislation</default>
+            </input>
+        </panel>
+        <panel label="Data Collection">
+            <input type="selectmany" id="collection_methods" list-id="collection_methods_list" label="Personal identification information from the users is collected using these methods">
+                <description>Check all that apply.</description>
+                <default>use of the service</default>
+                <default>from identity provider</default>
+                <default>registration form</default>
+                <default>feedback form</default>
+                <default>newsletter</default>
+            </input>
+            <input type="poolpicker" id="collected_data" list-id="collected_data_list" label="Types of data collected by use of the service">
+                <description>Check all that apply.</description>
+                <default>IP address</default>
+                <default>date and time</default>
+                <default>pages visited</default>
+            </input>
+            <input type="poolpicker" id="types_of_collected_data_from_idp" list-id="identity_providers_data_list" label="Types of data collected from identity providers">
+                <description>User information required from identity providers in order to use the service, e.g., what university or institution you are logging in from.</description>
+                <default>person’s name (first name and surname)</default>
+                <default>personal email</default>
+                <default>person’s organisation</default>
+                <default>affiliation in broad categories such as student, faculty, staff, etc.</default>
+                <default>entitlement - Indication of rights to specific resources</default>
+                <default>home organisation</default>
+            </input>
+            <input type="poolpicker" id="web_analytics_tools" list-id="web_analytics_tools_list" label="Used web analytics tools">
+                <description>Check all that apply.</description>
+                <default>Google Analytics</default>
+            </input>
+            <input type="selectone" id="use_of_cookies" list-id="use_of_cookies_list" label="Cookies are" default="used but not required"/>
+            <input type="boolean" id="third_party_cookies" label="Third party cookies"/>
+            <input type="oneline" id="server_location" label="The server is located in"/>
+            <input type="integer" id="duration_of_storage" label="Duration of storage (months)"/>
+            <input type="integer" id="duration_of_storage_ip" label="Duration of storage of identifiable IP addresses (months)"/>
+        </panel>
+        
+        <panel label="DPO Contact">
+            <description>Contact on behalf of the service owner for questions regarding personal data, privacy and exercise data subject rights (GDPR Data Protection Officer)</description>
+            <input type="oneline" id="dpo_name" label="Name"/>
+            <input type="oneline" id="dpo_organization" label="Organization"/>
+            <input type="oneline" id="dpo_address" label="Address"/>
+            <input type="oneline" id="dpo_country" label="Country"/> <!-- -->
+            <input type="oneline" id="dpo_email" label="Email"/>
+        </panel>
+        
+        <panel label="Supervisor Contact">
+            <description>Supervisory authority address and contact</description>
+            <input type="oneline" id="supervisor_name" label="Name"/>
+            <input type="oneline" id="supervisor_organization" label="Organization"/>
+            <input type="oneline" id="supervisor_address" label="Address"/>
+            <input type="oneline" id="supervisor_country" label="Country">
+                <description>Assumed as the country of the service in terms of legal jurisdiction.</description>
+            </input>
+            <input type="oneline" id="supervisor_email" label="Email"/>
+        </panel>
     </form>
-    -->
 
 </forms>

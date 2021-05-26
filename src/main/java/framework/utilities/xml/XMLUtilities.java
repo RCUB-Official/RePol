@@ -1,6 +1,5 @@
 package framework.utilities.xml;
 
-import framework.utilities.xml.MissingAttributeException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ls.DOMImplementationLS;

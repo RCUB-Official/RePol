@@ -71,4 +71,17 @@ public final class SelectionElement {
         }
         element.processTriggers();
     }
+
+    public boolean isDefaultValue() {
+        boolean defaultValue = false;
+
+        for (String dv : element.getDefaultValues()) {
+            if (dv.equals(value)) {
+                defaultValue = true;
+                break;
+            }
+        }
+
+        return defaultValue;
+    }
 }

@@ -1,9 +1,9 @@
 package policygenerator.form.element.input;
 
-import policygenerator.form.element.SelectionElement;
 import policygenerator.form.element.Panel;
 import framework.utilities.xml.XMLUtilities;
 import framework.utilities.xml.MissingAttributeException;
+import java.util.LinkedList;
 import java.util.List;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -20,8 +20,14 @@ public class FormElementFactory {
 
         String elementLabel = XMLUtilities.getAttributeValue(node, "label");
         String tooltip = XMLUtilities.getAttributeValue(node, "tooltip");
-        String defaultValue = XMLUtilities.getAttributeValue(node, "default");
         String conditionId = XMLUtilities.getAttributeValue(node, "rendered");
+
+        List<String> defaultValues = new LinkedList<>();
+
+        String attributeDefaultValue = XMLUtilities.getAttributeValue(node, "default"); // Legacy support for single default value declared as default attribute
+        if (attributeDefaultValue != null) {
+            defaultValues.add(attributeDefaultValue);
+        }
 
         String validationRegex = XMLUtilities.getAttributeValue(node, "validation-regex");
         String validationMessage = XMLUtilities.getAttributeValue(node, "validation-message");
@@ -29,8 +35,6 @@ public class FormElementFactory {
         boolean mandatory = "true".equals(XMLUtilities.getAttributeValue(node, "mandatory"));
 
         String listId = XMLUtilities.getAttributeValue(node, "list-id");
-        List<SelectionElement> selectionList;
-
         FormElement element;
 
         switch (type) {
@@ -71,44 +75,51 @@ public class FormElementFactory {
         element.setTooltip(tooltip);
 
         //Parsing Triggers and descriptions
-        NodeList triggerNodes = node.getChildNodes();
+        NodeList subElementNodes = node.getChildNodes();
 
-        for (int i = 0; i < triggerNodes.getLength(); i++) {
-            Node tn = triggerNodes.item(i);
-            if (tn.getNodeName().equals("trigger")) {
-                String triggerConditionId = XMLUtilities.getRequiredAttributeValue(tn, "condition");
-                String target = XMLUtilities.getRequiredAttributeValue(tn, "target");
-                String parsedOperation = XMLUtilities.getRequiredAttributeValue(tn, "operation");
+        for (int i = 0; i < subElementNodes.getLength(); i++) {
+            Node sen = subElementNodes.item(i);
+            String nodeName = sen.getNodeName();
 
-                String value = XMLUtilities.getAttributeValue(tn, "value");
+            switch (nodeName) {
+                case "description":
+                    element.setDescription(XMLUtilities.innerXml(sen));
+                    break;
+                case "default":
+                    defaultValues.add(sen.getTextContent());
+                    break;
+                case "trigger":
+                    String triggerConditionId = XMLUtilities.getRequiredAttributeValue(sen, "condition");
+                    String target = XMLUtilities.getRequiredAttributeValue(sen, "target");
+                    String parsedOperation = XMLUtilities.getRequiredAttributeValue(sen, "operation");
 
-                Trigger.Operation operation;
-                switch (parsedOperation) {
-                    case "set":
-                        operation = Trigger.Operation.SET;
-                        break;
-                    case "clear":
-                        operation = Trigger.Operation.CLEAR;
-                        break;
-                    case "remove":
-                        operation = Trigger.Operation.REMOVE;
-                        break;
-                    case "reset":
-                        operation = Trigger.Operation.RESET;
-                        break;
-                    default:
-                        throw new UnknownTriggerOperation(parsedOperation);
-                }
+                    String value = XMLUtilities.getAttributeValue(sen, "value");
 
-                element.addTrigger(new Trigger(triggerConditionId, target, operation, value));
-            }
-            if (tn.getNodeName().equals("description")) {
-                element.setDescription(XMLUtilities.innerXml(tn));
+                    Trigger.Operation operation;
+                    switch (parsedOperation) {
+                        case "set":
+                            operation = Trigger.Operation.SET;
+                            break;
+                        case "clear":
+                            operation = Trigger.Operation.CLEAR;
+                            break;
+                        case "remove":
+                            operation = Trigger.Operation.REMOVE;
+                            break;
+                        case "reset":
+                            operation = Trigger.Operation.RESET;
+                            break;
+                        default:
+                            throw new UnknownTriggerOperation(parsedOperation);
+                    }
+
+                    element.addTrigger(new Trigger(triggerConditionId, target, operation, value));
+                    break;
             }
         }
 
-        if (defaultValue != null) {
-            element.setDefaultValue(defaultValue);
+        for (String dv : defaultValues) {
+            element.setDefaultValue(dv);
         }
 
         return element;
