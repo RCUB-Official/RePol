@@ -352,7 +352,7 @@
                 <default>date and time</default>
                 <default>pages visited</default>
             </input>
-            <input type="poolpicker" id="types_of_collected_data_from_idp" list-id="identity_providers_data_list" label="Types of data collected from identity providers">
+            <input type="poolpicker" id="collected_data_from_idp" list-id="identity_providers_data_list" label="Types of data collected from identity providers">
                 <description>User information required from identity providers in order to use the service, e.g., what university or institution you are logging in from.</description>
                 <default>person’s name (first name and surname)</default>
                 <default>personal email</default>
@@ -379,6 +379,7 @@
             <input type="oneline" id="dpo_address" label="Address"/>
             <input type="oneline" id="dpo_country" label="Country"/> <!-- -->
             <input type="oneline" id="dpo_email" label="Email"/>
+            <input type="oneline" id="dpo_telephone" label="Telephone"/>
         </panel>
         
         <panel label="Supervisor Contact">
@@ -390,7 +391,42 @@
                 <description>Assumed as the country of the service in terms of legal jurisdiction.</description>
             </input>
             <input type="oneline" id="supervisor_email" label="Email"/>
+            <input type="oneline" id="supervisor_telephone" label="Telephone"/>
         </panel>
+        
+        <!-- CONDITIONS -->      
+        <condition id="gdpr">
+            <match id="compliance" value="GDPR"/>
+        </condition>
+        
+        <!-- data collection methods -->
+        <condition id="cm_registration">
+            <match id="collection_methods" value="registration form"/>
+        </condition>
+        <condition id="cm_feedback">
+            <match id="collection_methods" value="feedback form"/>
+        </condition>
+        <condition id="cm_newsletter">
+            <match id="collection_methods" value="newsletter"/>
+        </condition>
+        <condition id="cm_subdomains">
+            <match id="collection_methods" value="services in subdomains"/>
+        </condition>
+        <condition id="cm_third_party">
+            <match id="collection_methods" value="third-party services"/>
+        </condition>
+        
+        <!-- analytics -->
+        <condition id="use_google_analytics">
+            <match id="web_analytics_tools" value="Google Analytics"/>
+        </condition>
+        <condition id="use_matomo">
+            <match id="web_analytics_tools" value="Matomo"/>
+        </condition>
+        <condition id="web_analytics_other" operator="and">
+            <empty id="web_analytics_tools" inverted="true"/>
+            <match id="web_analytics_tools" value="Google Analytics" inverted="true"/>
+            <match id="web_analytics_tools" value="Matomo" inverted="true"/>
+        </condition>
     </form>
-
 </forms>
