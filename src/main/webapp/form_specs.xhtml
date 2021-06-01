@@ -13,7 +13,18 @@
             <ui:define name="title">
                 <c:choose>
                     <c:when test="#{formController.form.validTemplate}">
-                        RePol - #{formController.form.label}
+                        #{formController.form.label}
+                    </c:when>
+                    <c:otherwise>
+                        RePol - Error
+                    </c:otherwise>
+                </c:choose>
+            </ui:define>
+
+            <ui:define name="formatted_title">
+                <c:choose>
+                    <c:when test="#{formController.form.validTemplate}">
+                        <span class="spec-label">Title</span>#{formController.form.label}
                     </c:when>
                     <c:otherwise>
                         RePol - Error
@@ -35,14 +46,16 @@
                                 <f:viewParam name="document_id" value="#{formController.formId}" />
                             </f:metadata>
 
-                            <div class="form-description"><h:outputText value="#{formController.form.description}" escape="false"/></div>
+                            <div class="form-description">
+                                <span class="spec-label">Explanation</span>
+                                <h:outputText value="#{formController.form.description}" escape="false"/></div>
                             <h3>Panels and input elements</h3>
 
                             <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
                                 <h4>#{panel.label}</h4>
                                 <p:dataTable value="#{panel.elements}" var="formElement" styleClass="spec-element-table"
                                              rowStyleClass="#{formElement.type == 'SEPARATOR' ? 'element-separator' : null}">
-                                    <p:column headerText="Label / ID">
+                                    <p:column headerText="Label / ID / Description">
                                         <h:panelGroup rendered="#{not empty formElement.label}">
                                             <div class="form-element-description-specs">
                                                 #{formElement.label}<br/>
@@ -65,13 +78,13 @@
                                         <h:panelGroup rendered="#{formElement.type == 'ONELINE' || formElement.type == 'TEXT' || formElement.type == 'BOOLEAN'
                                                                   || formElement.type == 'INTEGER' || formElement.type == 'DOUBLE'}">
                                             <h:panelGroup rendered="#{formElement.defaultValue != null}">
-                                                <span class="default-value">#{formElement.defaultValue}</span>
+                                                <span class="default-value">&#10003;#{formElement.defaultValue}</span>
                                             </h:panelGroup>
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{formElement.type == 'DATE'}">
                                             <h:panelGroup rendered="#{!formElement.isEmpty()}">
                                                 <span class="default-value">
-                                                    <h:outputText value="#{formElement.defaultValue}" rendered="#{formElement.defaultValue != null}">
+                                                    &#10003;<h:outputText value="#{formElement.defaultValue}" rendered="#{formElement.defaultValue != null}">
                                                         <f:convertDateTime pattern="yyyy-MM-dd" />
                                                     </h:outputText>
                                                 </span>
@@ -80,7 +93,9 @@
                                         <h:panelGroup rendered="#{formElement.type == 'POOLPICKER' || formElement.type == 'SELECTONE'
                                                                   || formElement.type == 'SELECTMANY' || formElement.type == 'ADDLIST'}">
                                             <p:repeat value="#{formElement.allPossibleValues}" var="avRow">
-                                                <div class="value-row #{avRow.defaultValue ? 'default-value' : null}"><h:panelGroup rendered="#{not empty avRow.label}">#{avRow} - </h:panelGroup><b>&quot;#{avRow.value}&quot;</b></div>
+                                                <div class="value-row #{avRow.defaultValue ? 'default-value' : null}">
+                                                    <h:panelGroup rendered="#{avRow.defaultValue}">&#10003;</h:panelGroup> 
+                                                    <h:panelGroup rendered="#{not empty avRow.label}">#{avRow} - </h:panelGroup><b>&quot;#{avRow.value}&quot;</b></div>
                                             </p:repeat>
                                         </h:panelGroup>
                                     </p:column>

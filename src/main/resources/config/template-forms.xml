@@ -53,7 +53,7 @@
             <input type="boolean" id="include_cc_explainer" label="Include Creative Commons licenses explainer" default="true">
                 <description>Check to include a customized explanation of the CC licenses mentioned in the policy.</description>
             </input>
-            <input type="date" id="policy_date" label="Date of the policy document" default="current_date"/>
+            <input type="date" id="policy_date" label="Date of policy document" default="current_date"/>
         </panel>
         
         <panel label="Metadata">
@@ -287,7 +287,6 @@
         </condition>
         
 
-        
         <condition id="opendoar_minimum">
             <match id="opendoar_min_opt" value="minimum"/>
         </condition>
@@ -310,12 +309,11 @@
         </condition>
         <condition id="curation_data">
             <match id="curation_levels" value="data"/>
-        </condition>
-        
+        </condition> 
     </form>
     
     <form id="privacy" label="Privacy Policy">
-        <description>Generic Privacy Policy (Beta)</description>
+        <description>Generic service Privacy Policy (Beta)</description>
         <panel label="General Information">
             <input type="oneline" id="service" label="Service name" mandatory="true">
                 <description>Enter the name of the website, service or repository for which you wish to generate a policy.</description>                
@@ -324,14 +322,13 @@
             <input type="oneline" id="service_owner" label="Owning institution" mandatory="true">
                 <description>Provide the name of the legal entity or body/unit owning the service. This field is mandatory because the policy must be bound to an entity.</description>                
             </input>
-            <input type="oneline" id="country" label="Service owner’s country"/>
             <input type="date" id="policy_date" label="Date of the policy document" default="current_date"/>
         </panel>
         <panel label="Legal">
             <input type="selectmany" id="legal_basis" list-id="legal_basis_list" label="Legal basis for collecting personal data" default="consent">
                 <description>Check all that apply.</description>
             </input>
-            <input type="selectmany" id="compliance" list-id="compliance_list" label="Compliance with">
+            <input type="selectmany" id="compliance_includes" list-id="compliance_includes_list" label="Compliance with">
                 <description>Check all that apply.</description>
                 <default>GDPR</default>
                 <default>national legislation</default>
@@ -339,21 +336,21 @@
         </panel>
         <panel label="Data Collection">
             <input type="selectmany" id="collection_methods" list-id="collection_methods_list" label="Personal identification information from the users is collected using these methods">
-                <description>Check all that apply.</description>
-                <default>use of the service</default>
-                <default>from identity provider</default>
-                <default>registration form</default>
+                <description>Check all that apply. Specify any services that collect personal data.</description>
+                <default>main service</default>
+                <default>data from identity provider</default>
+                <default>registration</default>
                 <default>feedback form</default>
                 <default>newsletter</default>
             </input>
-            <input type="poolpicker" id="collected_data" list-id="collected_data_list" label="Types of data collected by use of the service">
+            <input type="poolpicker" id="collected_data" list-id="collected_data_list" label="Types of data collected by use of the service" rendered="cm_main_service">
                 <description>Check all that apply.</description>
                 <default>IP address</default>
                 <default>date and time</default>
                 <default>pages visited</default>
             </input>
-            <input type="poolpicker" id="collected_data_from_idp" list-id="identity_providers_data_list" label="Types of data collected from identity providers">
-                <description>User information required from identity providers in order to use the service, e.g., what university or institution you are logging in from.</description>
+            <input type="poolpicker" id="collected_data_from_idp" list-id="identity_providers_data_list" label="Types of data collected from identity providers" rendered="cm_idp">
+                <description>List user information required from identity providers in order to use the service, e.g., what university or institution you are logging in from.</description>
                 <default>person’s name (first name and surname)</default>
                 <default>personal email</default>
                 <default>person’s organisation</default>
@@ -361,47 +358,84 @@
                 <default>entitlement - Indication of rights to specific resources</default>
                 <default>home organisation</default>
             </input>
-            <input type="poolpicker" id="web_analytics_tools" list-id="web_analytics_tools_list" label="Used web analytics tools">
+            <input type="selectmany" id="web_analytics_tools" list-id="web_analytics_tools_list" label="Used web analytics tools" rendered="cm_web_analytics">
                 <description>Check all that apply.</description>
                 <default>Google Analytics</default>
             </input>
-            <input type="selectone" id="use_of_cookies" list-id="use_of_cookies_list" label="Cookies are" default="used but not required"/>
-            <input type="boolean" id="third_party_cookies" label="Third party cookies"/>
-            <input type="oneline" id="server_location" label="The server is located in"/>
-            <input type="integer" id="duration_of_storage" label="Duration of storage (months)"/>
-            <input type="integer" id="duration_of_storage_ip" label="Duration of storage of identifiable IP addresses (months)"/>
+            <input type="selectone" id="cookies" list-id="use_of_cookies_list" label="Cookies" default="used but not required" rendered="cm_cookies"/>
+            <input type="oneline" id="cookie_policy_url" label="Cookie policy URL" rendered="cm_cookies"/>
+            <input type="boolean" id="third_party_cookies" label="Third-party cookies" rendered="cm_cookies"/>
+
+            <input type="boolean" id="stored_as_necessary" label="Data is stored as long as it is necessary." default="true"/>
+            <input type="integer" id="duration_of_storage" label="Duration of storage (months)" rendered="limited_storage"/>
+            
+            <input type="boolean" id="stored_ip_as_necessary" label="IP addresses are stored as long as it is necessary." default="true"/>
+            <input type="integer" id="duration_of_storage_ip" label="Duration of storage for IP addresses (months)" rendered="limited_ip_storage"/>
+            
+            <input type="boolean" id="data_sharing" label="Data may be shared" default="false">
+                <description>Specify cases when personal data may be shared.</description>
+            </input>
+            <input type="boolean" id="possible_transfer_outside_eu" label="Personal data may be transferred outside the EEA." default="false">
+                <description>In some cases, it may be necessary to transfer personal data to countries outside the European Economic Area (EEA). By choosing this option, you warrant that this will be done in line with relevant  legal and technical data protection regulations.</description>
+            </input>
+            <input type="boolean" id="automated_processing" label="Some data may be subject to automatic processing." default="false"/>
+            <input type="boolean" id="data_erasure" label="Personal information may be erased." default="true"/>
         </panel>
         
         <panel label="DPO Contact">
             <description>Contact on behalf of the service owner for questions regarding personal data, privacy and exercise data subject rights (GDPR Data Protection Officer)</description>
-            <input type="oneline" id="dpo_name" label="Name"/>
-            <input type="oneline" id="dpo_organization" label="Organization"/>
-            <input type="oneline" id="dpo_address" label="Address"/>
-            <input type="oneline" id="dpo_country" label="Country"/> <!-- -->
-            <input type="oneline" id="dpo_email" label="Email"/>
-            <input type="oneline" id="dpo_telephone" label="Telephone"/>
+            <input type="oneline" id="dpo_name" label="Name" mandatory="true" default="!!!"/>
+            <input type="oneline" id="dpo_organization" label="Organization" mandatory="true" default="!!!"/>
+            <input type="oneline" id="dpo_address" label="Address" mandatory="true" default="!!!"/>
+            <input type="oneline" id="dpo_country" label="Country" mandatory="true" default="!!!"/>
+            <input type="oneline" id="dpo_email" label="Email" mandatory="true" default="!!!"/>
+            <input type="oneline" id="dpo_telephone" label="Telephone" mandatory="true" default="!!!"/>
         </panel>
         
         <panel label="Supervisor Contact">
             <description>Supervisory authority address and contact</description>
-            <input type="oneline" id="supervisor_name" label="Name"/>
-            <input type="oneline" id="supervisor_organization" label="Organization"/>
-            <input type="oneline" id="supervisor_address" label="Address"/>
-            <input type="oneline" id="supervisor_country" label="Country">
+            <input type="oneline" id="supervisor_name" label="Name" mandatory="true" default="!!!"/>
+            <input type="oneline" id="supervisor_organization" label="Organization" mandatory="true" default="!!!"/>
+            <input type="oneline" id="supervisor_address" label="Address" mandatory="true" default="!!!"/>
+            <input type="oneline" id="supervisor_country" label="Country" mandatory="true" default="!!!"> <!-- TODO: remove default -->
                 <description>Assumed as the country of the service in terms of legal jurisdiction.</description>
             </input>
-            <input type="oneline" id="supervisor_email" label="Email"/>
-            <input type="oneline" id="supervisor_telephone" label="Telephone"/>
+            <input type="oneline" id="supervisor_email" label="Email" mandatory="true" default="!!!"/>
+            <input type="oneline" id="supervisor_telephone" label="Telephone" mandatory="true" default="!!!"/>
+        </panel>
+        
+        <panel label="Policy Updates">
+            <input type="boolean" id="policy_update_notifications" label="Policy update notifications" default="false">
+                <description>Check if you plan to send policy update notifications to registered users.</description>
+            </input>
         </panel>
         
         <!-- CONDITIONS -->      
         <condition id="gdpr">
-            <match id="compliance" value="GDPR"/>
+            <match id="compliance_includes" value="GDPR"/>
+        </condition>
+        <condition id="national_legislation">
+            <match id="compliance_includes" value="national legislation"/>
+        </condition>
+        <condition id="compliance_other">
+            <match id="compliance_includes" value="other"/>
         </condition>
         
         <!-- data collection methods -->
+        <condition id="cm_main_service">
+            <match id="collection_methods" value="main service"/>
+        </condition>
+        <condition id="cm_idp">
+            <match id="collection_methods" value="data from identity provider"/>
+        </condition>
+        <condition id="cm_web_analytics">
+            <match id="collection_methods" value="web analytics"/>
+        </condition>
+        <condition id="cm_cookies">
+            <match id="collection_methods" value="cookies"/>
+        </condition>
         <condition id="cm_registration">
-            <match id="collection_methods" value="registration form"/>
+            <match id="collection_methods" value="registration"/>
         </condition>
         <condition id="cm_feedback">
             <match id="collection_methods" value="feedback form"/>
@@ -412,8 +446,11 @@
         <condition id="cm_subdomains">
             <match id="collection_methods" value="services in subdomains"/>
         </condition>
-        <condition id="cm_third_party">
+        <condition id="cm_third_party_services">
             <match id="collection_methods" value="third-party services"/>
+        </condition>
+        <condition id="cm_other">
+            <match id="collection_methods" value="other"/>
         </condition>
         
         <!-- analytics -->
@@ -423,10 +460,34 @@
         <condition id="use_matomo">
             <match id="web_analytics_tools" value="Matomo"/>
         </condition>
-        <condition id="web_analytics_other" operator="and">
-            <empty id="web_analytics_tools" inverted="true"/>
-            <match id="web_analytics_tools" value="Google Analytics" inverted="true"/>
-            <match id="web_analytics_tools" value="Matomo" inverted="true"/>
+        <condition id="web_analytics_other">
+            <match id="web_analytics_tools" value="other"/>
         </condition>
+        
+        <condition id="supervisor_exists" operator="and" inverted="true">
+            <empty id="supervisor_name"/>
+            <empty id="supervisor_organization"/>
+            <empty id="supervisor_address"/>
+            <empty id="supervisor_country"/>
+            <empty id="supervisor_email"/>
+            <empty id="supervisor_telephone"/>
+        </condition>
+        
+        <condition id="dpo_exists" operator="and" inverted="true">
+            <empty id="dpo_name"/>
+            <empty id="dpo_organization"/>
+            <empty id="dpo_address"/>
+            <empty id="dpo_country"/>
+            <empty id="dpo_email"/>
+            <empty id="dpo_telephone"/>
+        </condition>
+        
+        <condition id="limited_storage">
+            <match id="stored_as_necessary" value="false"/>
+        </condition>
+        <condition id="limited_ip_storage">
+            <match id="stored_ip_as_necessary" value="false"/>
+        </condition>
+        
     </form>
 </forms>

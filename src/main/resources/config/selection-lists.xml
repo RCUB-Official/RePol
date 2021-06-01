@@ -138,6 +138,7 @@
         <element value="type of browser and operating system">Type of device, browser and operating system and screen size</element>
         <element value="date and time">Date and time</element>
         <element value="pages visited">Pages visited</element>
+        <element value="location">Location</element>
     </list>
     
     <!-- Privacy Policy -->
@@ -148,20 +149,23 @@
         <element value="consent">Consent</element>
     </list>
     
-    <list id="compliance_list">
+    <list id="compliance_includes_list">
         <element value="GDPR">GDPR</element>
         <element value="national legislation">National legislation</element>
         <element value="other">Other</element>
     </list>
     
     <list id="collection_methods_list">
-        <element value="use of the service">Use of the service</element>
-        <element value="from identity provider">From identity provider</element>
-        <element value="registration form">Registration form</element>
+        <element value="main service">Main service</element>
+        <element value="data from identity provider">Data from identity provider</element>
+        <element value="web analytics">Web analytics</element>
+        <element value="cookies">Cookies</element>
+        <element value="registration">Registration</element>
         <element value="feedback form">Feedback form</element>
         <element value="newsletter">Newsletter</element>
         <element value="services in subdomains">Services in subdomains</element>
         <element value="third-party services">Third-party services</element>
+        <element value="other">Other</element>
     </list>
     
     <list id="identity_providers_data_list">
@@ -169,21 +173,22 @@
         <element value="personal email">Personal email</element>
         <element value="person’s organisation">Person’s organisation</element>
         <element value="affiliation in broad categories such as student, faculty, staff, etc.">Affiliation in broad categories such as student, faculty, staff, etc.</element>
-        <element value="entitlement - Indication of rights to specific resources">Entitlement - Indication of rights to specific resources</element>
+        <element value="entitlement - indication of rights to specific resources">Entitlement - indication of rights to specific resources</element>
         <element value="home organisation">Home organisation</element>
-        <element value="computer system login name or Person’s identifier with">Computer system login name or Person’s identifier with</element>
+        <element value="computer system login name or person’s identifier with">Computer system login name or person’s identifier with</element>
         <element value="person’s interinstitutional or national educational identifier">Person’s interinstitutional or national educational identifier</element>
         <element value="institutional email">Institutional email</element>
         <element value="preferred language">Preferred language</element>
         <element value="organisational unit">Organisational unit</element>
         <element value="office telephone number">Office telephone number</element>
         <element value="compliance with specific standards for identity assurance">Compliance with specific standards for identity assurance</element>
-        <element value="ORCID">ORCID</element>
+        <element value="ORCID iD">ORCID iD</element>
     </list>
     
     <list id="web_analytics_tools_list">
         <element value="Google Analytics">Google Analytics</element>
         <element value="Matomo">Matomo</element>
+        <element value="other">Other</element>
     </list>
     
     <list id="use_of_cookies_list">

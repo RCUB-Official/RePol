@@ -5,6 +5,9 @@ import org.w3c.dom.Node;
 import policygenerator.form.Form;
 import policygenerator.form.element.input.FormElement;
 import policygenerator.form.element.exceptions.ElementNotFoundException;
+import policygenerator.form.element.input.AddList;
+import policygenerator.form.element.input.PoolPicker;
+import policygenerator.form.element.input.SelectMany;
 
 public class Match extends Condition {
 
@@ -36,7 +39,8 @@ public class Match extends Condition {
 
     @Override
     public String toString() {
-        return element.getId() + (inverted ? " != \"" : " == \"") + matchValue + "\"";
+        boolean listElement = element instanceof PoolPicker || element instanceof AddList || element instanceof SelectMany;
+        return element.getId() + (listElement ? (inverted ? " !contains \"" : " contains \"") : (inverted ? " != \"" : " == \"")) + matchValue + "\"";
     }
 
 }
