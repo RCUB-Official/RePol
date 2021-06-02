@@ -366,6 +366,10 @@
             <input type="oneline" id="cookie_policy_url" label="Cookie policy URL" rendered="cm_cookies"/>
             <input type="boolean" id="third_party_cookies" label="Third-party cookies" rendered="cm_cookies"/>
 
+            <input type="oneline" id="processor_country" label="Country of data processor">
+                <description>Indicate the country Location of external processor (cloud provider), if any</description>
+            </input>
+            
             <input type="boolean" id="stored_as_necessary" label="Data is stored as long as it is necessary." default="true"/>
             <input type="integer" id="duration_of_storage" label="Duration of storage (months)" rendered="limited_storage"/>
             
@@ -488,6 +492,6 @@
         <condition id="limited_ip_storage">
             <match id="stored_ip_as_necessary" value="false"/>
         </condition>
-        
+
     </form>
 </forms>
