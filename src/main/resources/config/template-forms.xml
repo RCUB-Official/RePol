@@ -367,7 +367,7 @@
             <input type="boolean" id="third_party_cookies" label="Third-party cookies" rendered="cm_cookies"/>
 
             <input type="oneline" id="processor_country" label="Country of data processor">
-                <description>Indicate the country Location of external processor (cloud provider), if any</description>
+                <description>Indicate the country of external processor (e.g., cloud provider), if any</description>
             </input>
             
             <input type="boolean" id="stored_as_necessary" label="Data is stored as long as it is necessary." default="true"/>
@@ -382,30 +382,33 @@
             <input type="boolean" id="possible_transfer_outside_eu" label="Personal data may be transferred outside the EEA." default="false">
                 <description>In some cases, it may be necessary to transfer personal data to countries outside the European Economic Area (EEA). By choosing this option, you warrant that this will be done in line with relevant  legal and technical data protection regulations.</description>
             </input>
+            <input type="boolean" id="data_erasure_may_limit_service" label="Data erasure may limit service" default="true">
+                <description>Data erasure may have negative consequences on service functionality.</description>
+            </input>
             <input type="boolean" id="automated_processing" label="Some data may be subject to automatic processing." default="false"/>
             <input type="boolean" id="data_erasure" label="Personal information may be erased." default="true"/>
         </panel>
         
         <panel label="DPO Contact">
             <description>Contact on behalf of the service owner for questions regarding personal data, privacy and exercise data subject rights (GDPR Data Protection Officer)</description>
-            <input type="oneline" id="dpo_name" label="Name" mandatory="true" default="!!!"/>
-            <input type="oneline" id="dpo_organization" label="Organization" mandatory="true" default="!!!"/>
-            <input type="oneline" id="dpo_address" label="Address" mandatory="true" default="!!!"/>
-            <input type="oneline" id="dpo_country" label="Country" mandatory="true" default="!!!"/>
-            <input type="oneline" id="dpo_email" label="Email" mandatory="true" default="!!!"/>
-            <input type="oneline" id="dpo_telephone" label="Telephone" mandatory="true" default="!!!"/>
+            <input type="oneline" id="dpo_name" label="Name" mandatory="true"/>
+            <input type="oneline" id="dpo_organization" label="Organization" mandatory="true"/>
+            <input type="oneline" id="dpo_address" label="Address" mandatory="true"/>
+            <input type="oneline" id="dpo_country" label="Country" mandatory="true"/>
+            <input type="oneline" id="dpo_email" label="Email" mandatory="true"/>
+            <input type="oneline" id="dpo_telephone" label="Telephone" mandatory="true"/>
         </panel>
         
         <panel label="Supervisor Contact">
             <description>Supervisory authority address and contact</description>
-            <input type="oneline" id="supervisor_name" label="Name" mandatory="true" default="!!!"/>
-            <input type="oneline" id="supervisor_organization" label="Organization" mandatory="true" default="!!!"/>
-            <input type="oneline" id="supervisor_address" label="Address" mandatory="true" default="!!!"/>
-            <input type="oneline" id="supervisor_country" label="Country" mandatory="true" default="!!!"> <!-- TODO: remove default -->
+            <input type="oneline" id="supervisor_name" label="Name" mandatory="true"/>
+            <input type="oneline" id="supervisor_organization" label="Organization" mandatory="true"/>
+            <input type="oneline" id="supervisor_address" label="Address" mandatory="true"/>
+            <input type="oneline" id="supervisor_country" label="Country" mandatory="true">
                 <description>Assumed as the country of the service in terms of legal jurisdiction.</description>
             </input>
-            <input type="oneline" id="supervisor_email" label="Email" mandatory="true" default="!!!"/>
-            <input type="oneline" id="supervisor_telephone" label="Telephone" mandatory="true" default="!!!"/>
+            <input type="oneline" id="supervisor_email" label="Email" mandatory="true"/>
+            <input type="oneline" id="supervisor_telephone" label="Telephone" mandatory="true"/>
         </panel>
         
         <panel label="Policy Updates">
