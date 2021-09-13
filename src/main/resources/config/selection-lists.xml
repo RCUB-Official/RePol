@@ -134,7 +134,7 @@
     
     <list id="collected_data_list">
         <element value="IP address">IP address or Internet domain of the accessor</element>
-        <element value="HTTP referer">HTTP header field 'Referer' with the webpage from which the resource was linked</element>
+        <element value="HTTP &apos;referer&apos;">HTTP header field 'Referer' with the webpage from which the resource was linked</element>
         <element value="type of browser and operating system">Type of device, browser and operating system and screen size</element>
         <element value="date and time">Date and time</element>
         <element value="pages visited">Pages visited</element>
@@ -157,7 +157,7 @@
     
     <list id="collection_methods_list">
         <element value="main service">Main service</element>
-        <element value="data from identity provider">Data from identity provider</element>
+        <element value="data from identity providers">Data from identity providers</element>
         <element value="web analytics">Web analytics</element>
         <element value="cookies">Cookies</element>
         <element value="registration">Registration</element>
@@ -173,7 +173,7 @@
         <element value="personal email">Personal email</element>
         <element value="person’s organisation">Person’s organisation</element>
         <element value="affiliation in broad categories such as student, faculty, staff, etc.">Affiliation in broad categories such as student, faculty, staff, etc.</element>
-        <element value="entitlement - indication of rights to specific resources">Entitlement - indication of rights to specific resources</element>
+        <element value="indication of rights to specific resources (entitlement)">Indication of rights to specific resources (entitlement)</element>
         <element value="home organisation">Home organisation</element>
         <element value="computer system login name or person’s identifier with">Computer system login name or person’s identifier with</element>
         <element value="person’s interinstitutional or national educational identifier">Person’s interinstitutional or national educational identifier</element>
