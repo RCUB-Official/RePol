@@ -2,7 +2,7 @@
 
 <forms>    
     <form id="policy" label="Repository Policy">
-        <description>Creation of customised repository policies</description>
+        <description>Data and publications repository policy, in line with open access best practices</description>
         
         <panel label="General Information"> <!-- condition id can be specified -->
             <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
@@ -313,7 +313,7 @@
     </form>
     
     <form id="privacy" label="Privacy Policy">
-        <description>Generic service Privacy Policy (Beta)</description>
+        <description>Generally applicable privacy policy (for websites, services, repositories, etc.)</description>
         <panel label="General Information">
             <input type="oneline" id="service" label="Service name" mandatory="true">
                 <description>Enter the name of the website, service or repository for which you wish to generate a policy.</description>                

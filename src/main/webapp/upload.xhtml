@@ -20,13 +20,13 @@
 
                         <h:form id="upload_form">
                             <div class="row">
-                                <div class="col-lg-12 form-element-description spaced-bottom">If you wish to edit an existing policy generated using RePol, upload the previously generated document or standalone XML</div>
+                                <div class="col-lg-12 form-element-description spaced-bottom">If you have already used RePol and you have a policy saved in an XML file, you may upload that file and edit it in RePol. Otherwise, proceed to 'Select'.</div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-8">
                                     <p:fileUpload mode="advanced" multiple="false" allowTypes="/(\.|\/)(html|xml)$/"
                                                   invalidFileMessage="only html and xml is allowed" update="@form growl navigationForm"
-                                                  listener="#{sessionController.uploadFile}"/>
+                                                  listener="#{sessionController.uploadFile}" chooseButtonTitle="Choose File" uploadButtonTitle="Upload File"/>
                                 </div>
                                 <div class="col-lg-2 text-center action-tile">
                                     <p:commandLink id="reset_data_btn" update="@form navigationForm" action="#{sessionController.reset()}"

@@ -11,13 +11,16 @@
             <ui:param name="page" value="forms" />
 
             <ui:define name="title">
-                Document Creation Forms
+                Available Policies
             </ui:define>
 
             <ui:define name="content">
                 <c:choose>
                     <c:when test="#{dashboard.operational}">
                         <h:form id="formSelectionForm">
+                            <div class="row">
+                                <div class="col-lg-12 form-element-description">Select a type of policy you want to create</div>
+                            </div>
                             <div class="forms spaced-bottom">
                                 <c:forEach items="#{formController.formHeaders}" var="formHeaderRow">
                                     <div class="form-header #{formController.formId == formHeaderRow.formId ? 'selected' : null}">
