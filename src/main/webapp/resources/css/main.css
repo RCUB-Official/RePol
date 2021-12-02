@@ -214,10 +214,8 @@ a, a:hover {
 }
 
 .form-header {
-    font-size:1.1em;
-    margin-bottom:10px;
-    padding-top:10px;
-    padding-bottom:10px;
+    font-size:0.85em;
+    margin-bottom:15px;
 }
 
 
@@ -248,16 +246,6 @@ h4 {
     border:none;
 }
 
-.form-description {
-    display:inline-block;
-    width:100%;
-    margin-top:20px;
-    margin-bottom:30px;
-    border:1px solid #eee;
-    padding:20px;
-    font-size:1.2em;
-}
-
 .submission-time {
     font-size: 1.1em;
     font-weight: lighter;
@@ -273,6 +261,16 @@ h4 {
     padding:5px;
 }
 
+.form-description {
+    display:inline-block;
+    width:100%;
+    margin-top:20px;
+    margin-bottom:30px;
+    border:1px solid #eee;
+    padding:20px;
+    font-size:1.1em;
+}
+
 .form-element-description,.form-panel-description {
     display:block;
     margin:6px;
@@ -282,12 +280,13 @@ h4 {
     color:#10285a;
 }
 
-.form-element-description > a, a:hover {
+.form-element-description > a, a:hover, .form-panel-description > a, a:hover, .form-description > a, a:hover {
     color: #f05532;
 }
 
 .form-panel-description {
-    margin-bottom:20px;
+    margin-bottom:15px;
+    font-size:1em;
 }
 
 .ui-progressbar.ui-widget-content {
@@ -416,4 +415,8 @@ form-element-description-specs {
     border-radius:7px;
     margin-right:15px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.padded-top {
+    padding-top:10px;
 }

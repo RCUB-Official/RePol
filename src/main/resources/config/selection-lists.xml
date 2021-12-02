@@ -168,21 +168,29 @@
         <element value="other">Other</element>
     </list>
     
+    <list id="collection_reasons_list">
+        <element value="required for service operation">Required for service operation</element>
+        <element value="service operation or usage monitoring">Service operation or usage monitoring</element>
+        <element value="technical support">Technical support</element>
+        <element value="enhancement of service experience">Enhancement of service experience</element>
+        <element value="service usage statistics">Service usage statistics</element>
+    </list>
+    
     <list id="identity_providers_data_list">
         <element value="person’s name (first name and surname)">Person’s name (first name and surname)</element>
         <element value="personal email">Personal email</element>
         <element value="person’s organisation">Person’s organisation</element>
-        <element value="affiliation in broad categories such as student, faculty, staff, etc.">Affiliation in broad categories such as student, faculty, staff, etc.</element>
-        <element value="indication of rights to specific resources (entitlement)">Indication of rights to specific resources (entitlement)</element>
         <element value="home organisation">Home organisation</element>
-        <element value="computer system login name or person’s identifier with">Computer system login name or person’s identifier with</element>
-        <element value="person’s interinstitutional or national educational identifier">Person’s interinstitutional or national educational identifier</element>
         <element value="institutional email">Institutional email</element>
-        <element value="preferred language">Preferred language</element>
         <element value="organisational unit">Organisational unit</element>
         <element value="office telephone number">Office telephone number</element>
-        <element value="compliance with specific standards for identity assurance">Compliance with specific standards for identity assurance</element>
+        <element value="computer system login name or person’s identifier with">Computer system login name or person’s identifier with</element>
+        <element value="person’s interinstitutional or national educational identifier">Person’s interinstitutional or national educational identifier</element>
         <element value="ORCID iD">ORCID iD</element>
+        <element value="affiliation in broad categories such as student, faculty, staff, etc.">Affiliation in broad categories such as student, faculty, staff, etc.</element>
+        <element value="indication of rights to specific resources (entitlement)">Indication of rights to specific resources (entitlement)</element>
+        <element value="preferred language">Preferred language</element>
+        <element value="compliance with specific standards for identity assurance">Compliance with specific standards for identity assurance</element>
     </list>
     
     <list id="web_analytics_tools_list">
@@ -194,6 +202,5 @@
     <list id="use_of_cookies_list">
         <element value="used, but not required">Used, but not required</element>
         <element value="required">Required</element>
-        <element value="not used">Not used</element>
     </list>
 </lists>

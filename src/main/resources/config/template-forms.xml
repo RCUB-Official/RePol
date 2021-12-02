@@ -2,7 +2,20 @@
 
 <forms>    
     <form id="policy" label="Repository Policy">
-        <description>Data and publications repository policy, in line with open access best practices</description>
+        <description>
+            <p style="font-size:1.2em">Data and publications repository policy, in line with open access best practices</p>
+            <p>It is highly recommended to have the organisational management, repository administrators and the staff responsible for technical administration available for consultation. You should collect and prepare the following information in advance:<br/>
+                <ul>
+                    <li>repository content (subjects, types, languages)</li>
+                    <li>rights and responsibilities</li>
+                    <li>access levels and usage rights</li>
+                    <li>curation</li>
+                    <li>preservation plans and policies</li>
+                    <li>private data collection and handling</li>
+                    <li>third-party services used</li>
+                </ul>
+            </p>
+        </description>
         
         <panel label="General Information"> <!-- condition id can be specified -->
             <input type="oneline" id="repo_name" label="Repository name" mandatory="true">
@@ -313,7 +326,18 @@
     </form>
     
     <form id="privacy" label="Privacy Policy">
-        <description>Generally applicable privacy policy (for websites, services, repositories, etc.)</description>
+        <description>
+            <p style="font-size:1.2em">Generally applicable privacy policy (for websites, services, repositories, etc.)</p>
+            <p>It is highly recommended to collect and prepare the following information in advance:<br/>
+                <ul>
+                    <li>the type of private information collected</li>
+                    <li>reasons and legal bases for collecting private information</li>
+                    <li>third-party services you are using that collect private information</li>
+                    <li>details about handling private information (retention period, sharing, removal)</li>
+                    <li>rights and responsibilities (to whom questions and complaints are submitted</li>
+                </ul>
+            </p>
+        </description>
         <panel label="General Information">
             <input type="oneline" id="service" label="Service name" mandatory="true">
                 <description>Enter the name of the website, service or repository for which you wish to generate a policy.</description>                
@@ -338,11 +362,16 @@
             <input type="selectmany" id="collection_methods" list-id="collection_methods_list" label="Personal identification information from the users is collected using these methods">
                 <description>Check all that apply. Specify any services that collect personal data.</description>
                 <default>main service</default>
-                <default>data from identity provider</default>
+                <default>data from identity providers</default>
                 <default>registration</default>
                 <default>feedback form</default>
                 <default>newsletter</default>
             </input>
+            
+            <input type="selectmany" id="collection_reasons" list-id="collection_reasons_list" label="Reasons for data collection">
+                <description>Check all that apply. Specify all applicable reasons for service/website collection of personal data.</description>
+            </input>
+            
             <input type="poolpicker" id="collected_data" list-id="collected_data_list" label="Types of data collected by use of the service" rendered="cm_main_service">
                 <description>Check all that apply.</description>
                 <default>IP address</default>
@@ -355,7 +384,7 @@
                 <default>personal email</default>
                 <default>person’s organisation</default>
                 <default>affiliation in broad categories such as student, faculty, staff, etc.</default>
-                <default>entitlement - Indication of rights to specific resources</default>
+                <default>indication of rights to specific resources (entitlement)</default>
                 <default>home organisation</default>
             </input>
             <input type="selectmany" id="web_analytics_tools" list-id="web_analytics_tools_list" label="Used web analytics tools" rendered="cm_web_analytics">
@@ -387,6 +416,9 @@
             </input>
             <input type="boolean" id="automated_processing" label="Some data may be subject to automatic processing." default="false"/>
             <input type="boolean" id="data_erasure" label="Personal information may be erased." default="true"/>
+            <input type="integer" id="age_limit" label="Age limit for personal data in years">
+                <description>Children younger than indicated are prohibited from using the service.</description>
+            </input>
         </panel>
         
         <panel label="DPO Contact">
@@ -401,7 +433,7 @@
         
         <panel label="Supervisor Contact">
             <description>Supervisory authority address and contact</description>
-            <input type="oneline" id="supervisor_name" label="Name" mandatory="true"/>
+            <input type="oneline" id="supervisor_name" label="Name"/>
             <input type="oneline" id="supervisor_organization" label="Organization" mandatory="true"/>
             <input type="oneline" id="supervisor_address" label="Address" mandatory="true"/>
             <input type="oneline" id="supervisor_country" label="Country" mandatory="true">

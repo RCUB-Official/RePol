@@ -47,7 +47,7 @@ public class FormFactory extends XMLHandler {
 
             for (int k = 0; k < subnodes.getLength(); k++) {
                 if (subnodes.item(k).getNodeName().equals("description")) {
-                    description = subnodes.item(k).getTextContent();
+                    description = XMLUtilities.innerXml(subnodes.item(k));
                     break;
                 }
             }

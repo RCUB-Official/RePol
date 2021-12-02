@@ -48,6 +48,7 @@ public class FormController implements Serializable {
 
                 if (formId == null && !formHeaders.isEmpty()) { // If it is still null, select the first header
                     formId = formHeaders.get(0).getFormId();
+                    form = sessionController.getForm(formId);   // Enabling the "Enter Data" in the navigation menu
                 }
             }
 

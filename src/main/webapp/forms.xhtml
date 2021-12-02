@@ -19,27 +19,29 @@
                     <c:when test="#{dashboard.operational}">
                         <h:form id="formSelectionForm">
                             <div class="row">
-                                <div class="col-lg-12 form-element-description">Select a type of policy you want to create</div>
+                                <div class="col-lg-12">Select a type of policy you want to create</div>
                             </div>
                             <div class="forms spaced-bottom">
                                 <c:forEach items="#{formController.formHeaders}" var="formHeaderRow">
                                     <div class="form-header #{formController.formId == formHeaderRow.formId ? 'selected' : null}">
                                         <div class="row">
-                                            <div class="col-lg-1">
+                                            <div class="col-lg-1 padded-top">
                                                 <c:if test="#{formController.formHeaders.size() > 1}">
-                                                    <p:commandLink  action="#{formController.setFormId(formHeaderRow.formId)}"
-                                                                    update="@form navigationForm">
+                                                    <p:commandLink action="#{formController.setFormId(formHeaderRow.formId)}"
+                                                                   update="@form navigationForm">
                                                         <span class="fa fa-fw bool-button #{formController.formId == formHeaderRow.formId ? 'fa-circle' : 'fa-circle-o'}"/>
                                                     </p:commandLink>
                                                 </c:if>
                                             </div>
                                             <div class="col-lg-7">
                                                 <h4>#{formHeaderRow.label}</h4>
-                                                <h:outputText value="#{formHeaderRow.description}" escape="false"/>
+                                                <div class="form-element-description">
+                                                    <h:outputText value="#{formHeaderRow.description}" escape="false"/>
+                                                </div>
                                             </div>
                                             <c:set var="cachedForm" value="#{sessionController.getCachedForm(formHeaderRow.formId)}"/>
                                             <c:if test="#{cachedForm != null}">
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 padded-top">
                                                     <c:if test="#{cachedForm.mandatoryFieldCount > 0}">
                                                         <h:outputText value="#{cachedForm.mandatoryFieldSetCount} field(s) set out of #{cachedForm.mandatoryFieldCount} mandatory"/><br/>
                                                     </c:if>

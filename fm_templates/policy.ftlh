@@ -2,7 +2,6 @@ ${embedded_data?no_esc}
  
 <html>
             <head>
-                        <meta charset="utf-8"/>
                         <title>Repository Policy - ${repo_name}</title>
         <style>
             .red, red-strong {

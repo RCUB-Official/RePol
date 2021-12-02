@@ -43,9 +43,11 @@
 
                             <c:forEach items="#{formController.form.panels}" var="panel" varStatus="panelIterator">
                                 <p:panel header="#{panel.label}" styleClass="form-panel" rendered="#{panel.rendered}">
-                                    <div class="form-panel-description">
-                                        <h:outputText value="#{panel.description}" escape="false"/>
-                                    </div>
+                                    <c:if test="#{not empty panel.description}">
+                                        <div class="form-panel-description">
+                                            <h:outputText value="#{panel.description}" escape="false"/>
+                                        </div>
+                                    </c:if>
                                     <c:forEach items="#{panel.elements}" var="formElement" varStatus="elementIterator">
                                         <c:choose>
                                             <c:when test="#{formElement.type == 'SEPARATOR'}">
@@ -58,7 +60,7 @@
                                                             <p:outputLabel for="oneline#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
                                                                            styleClass="form-input-element-label"/>
                                                         </div>
-                                                        <div class="col-lg-8 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                        <div class="col-lg-8 #{formElement.isEmpty() and formElement.mandatory ? 'empty_mandatory' : null}">
                                                             <p:inputText id="oneline#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.value}"
                                                                          styleClass="form-input-element-box">
                                                                 <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
@@ -79,7 +81,7 @@
                                                         <div class="col-lg-3">
                                                             <p:outputLabel for="text#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"/>
                                                         </div>
-                                                        <div class="col-lg-9 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                        <div class="col-lg-9 #{formElement.isEmpty() and formElement.mandatory ? 'empty_mandatory' : null}">
                                                             <p:inputTextarea id="text#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.value}"
                                                                              styleClass="form-input-element-box">
                                                                 <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
@@ -122,7 +124,7 @@
                                                             <p:outputLabel for="integer#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
                                                                            styleClass="form-input-element-label"/>
                                                         </div>
-                                                        <div class="col-lg-8 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                        <div class="col-lg-8 #{formElement.isEmpty() and formElement.mandatory ? 'empty_mandatory' : null}">
                                                             <p:inputNumber id="integer#{panelIterator.count}_#{elementIterator.count}" decimalPlaces="0" value="#{formElement.value}">
                                                                 <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
                                                             </p:inputNumber>
@@ -143,7 +145,7 @@
                                                             <p:outputLabel for="double#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
                                                                            styleClass="form-input-element-label"/>
                                                         </div>
-                                                        <div class="col-lg-8 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                        <div class="col-lg-8 #{formElement.isEmpty() and formElement.mandatory ? 'empty_mandatory' : null}">
                                                             <p:inputNumber id="double#{panelIterator.count}_#{elementIterator.count}" decimalPlaces="5" value="#{formElement.value}">
                                                                 <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
                                                             </p:inputNumber>
@@ -164,7 +166,7 @@
                                                             <p:outputLabel for="date#{panelIterator.count}_#{elementIterator.count}" value="#{formElement.label}"
                                                                            styleClass="form-input-element-label"/>
                                                         </div>
-                                                        <div class="col-lg-8 #{formElement.isEmpty() &amp;&amp; formElement.mandatory ? 'empty_mandatory' : null}">
+                                                        <div class="col-lg-8 #{formElement.isEmpty() and formElement.mandatory ? 'empty_mandatory' : null}">
                                                             <p:datePicker id="date#{panelIterator.count}_#{elementIterator.count}" pattern="yyyy-MM-dd" value="#{formElement.value}">
                                                                 <p:ajax event="change" listener="#{formElement.processTriggers()}" update="@form"/>
                                                                 <p:ajax event="dateSelect" listener="#{formElement.processTriggers()}" update="@form"/>

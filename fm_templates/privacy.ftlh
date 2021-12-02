@@ -1,5 +1,5 @@
 ${embedded_data?no_esc}
-<#if processor_country!="">
+<#if processor_country != "">
     <#assign hosting_country=processor_country>
 <#else>
     <#assign hosting_country=dpo_country>
@@ -14,7 +14,7 @@ ${embedded_data?no_esc}
                             padding:10px;
                             padding-right:25px;
                     }
-                    .red, red-strong {
+                    .red, .red-strong {
                             color:red;
                     }
                     .red-strong {
@@ -32,10 +32,19 @@ ${service_owner} is dedicated to safeguarding the personal data subject to proce
 <p>We are committed to ensuring ongoing and continued compliance with data protection legislation and guidance provided by the supervisor of our general work and practices and all of our service offerings, to protecting any personal data, limiting any collection to what is strictly necessary by <#list legal_basis as element>${element}<#if element?has_next><#if element?index&lt;legal_basis?size-2>, <#else> and </#if></#if></#list> and complying with the <#list compliance_includes as element>${element}<#if element?has_next><#if element?index&lt;compliance_includes?size-2>, <#else> and </#if></#if></#list>.</p>
 <p>This Privacy Policy concerns the processing of your personal data for which ${service_owner} is the Data Controller or Data Processor, in other words, ${service_owner} collects personal data directly or indirectly from you and decides the personal data needed to provide you with a service, the purposes for which your personal data is being collected, how it is stored, shared and for how long will be retained.</p>
 <p>Considering the significance of this responsibility, ${service_owner} works daily to put in place adequate measures and controls to protect your personal data and ensure that you can exercise your rights at any time.</p>
-<#if collection_methods?size!=0>
+<#if collection_methods?size != 0>
 <p>Personal identification information from the users is collected through:</p>
 <ul>
     <#list collection_methods as element>
+    <li>${element}</li>
+    </#list>
+</ul>
+</#if>
+
+<#if collection_reasons?size != 0>
+<h2>Reasons for data collection</h2>
+<ul>
+    <#list collection_reasons as element>
     <li>${element}</li>
     </#list>
 </ul>
@@ -63,7 +72,7 @@ ${service_owner} is dedicated to safeguarding the personal data subject to proce
             </ul>
 </#if>
 
-<#if collected_data_from_idp?size != 0>
+<#if cm_idp>
 <h3>Data from identity providers</h3>
 <p>Whenever a user logs into the service using an external identity provider, the following information is automatically collected and processed:</p>
         <ul>
@@ -99,7 +108,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 -->
 <p>This data is provided by the institution which has created and which maintains your account. We assume that by logging into the service you consent to the release of your institutional data to our service.</p>
 </#if>
-<#if web_analytics_tools?size!=0>
+<#if cm_web_analytics && web_analytics_tools?size != 0>
 <h3>Web analytics</h3>
 <p>Insights from web analytics tools help us improve content and user experience.</p>
 
@@ -124,12 +133,16 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
                 </#if>
 </#if>
 
-<#if cookies!='not used'>
+<#if cm_cookies>
 <h3>Cookies</h3>
-<p>We use cookies (small text files written by your browser to your device) to track returning visits and navigation through the website. Cookies are <#if cookies=='required'>required<#else>not required</#if> to use the website.</p>
-<p>By using our service’s website, you agree that we can place these types of cookies on your device. However, you can block these cookies using your browser settings<#if cookie_policy_url!=""> (there are instructions in the Cookie Policy on how to do this)</#if>.</p>
+<p>We use cookies (small text files written by your browser to your device) to track returning visits and navigation through the website. Cookies are <#if cookies == 'required'>required<#else>not required</#if> to use the website.</p>
+<p>By using our service’s website, you agree that we can place these types of cookies on your device. However, you can block these cookies using your browser settings<#if cookie_policy_url != ""> (there are instructions in the Cookie Policy on how to do this)</#if>.</p>
+<#if cookies == 'used, but not required'> 
+<p>You can prevent your browser from accepting certain cookies, if the website requires your consent before a new cookie is placed in your browser. You may block cookies altogether by selecting the appropriate settings in your browser's privacy preferences.</p>
+<span class="red-strong">TODO</span>: Indicate if declining cookies affects the functionality of the service and how.
+</#if>
 <p>${service_owner} recommends you to accept and use cookies.</p>
-<#if cookie_policy_url!="">
+<#if cookie_policy_url != "">
 <p>A full Cookie Policy can be seen by clicking <a target="_blank" href="${cookie_policy_url}">${service} Cookie Policy (${cookie_policy_url})</a>, which will provide further details on:</p>
 <ul>
                 <li>how we use cookies</li>
@@ -143,7 +156,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
                 </#if>
 </#if>
 
-<#if collection_methods?size!=0>
+<#if collection_methods?size != 0>
             <#if cm_registration>
 <h3>Registration</h3>
 <p>When you submit a registration through the registration form, ${service_owner} stores your name, email address, institutional affiliation, position and <span class="red-strong">TODO</span>. This data is stored in ${hosting_country}. The data processor for this service is <span class="red-strong">TODO</span>.</p>
@@ -162,7 +175,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
             </#if>
             <#if cm_third_party_services>
 <h3>Third-party services</h3>
-<p><span class="red-strong">TODO: </span>DESCRIBE THE TYPE OF INFORMATION COLLECTED AND NAME THE RESPONSIBLE DATA PROCESSOR.</p>
+<p><span class="red-strong">TODO: </span>LIST ALL THIRD-PARTY SERVICES USED AND DESCRIBE THE TYPE OF INFORMATION COLLECTED AND NAME THE RESPONSIBLE DATA PROCESSOR.</p>
             </#if>
             <#if cm_other>
 <h3>Other</h3>
@@ -172,17 +185,17 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 
 <h2>Data storage and retention periods</h2>
 <p>All data is stored in ${hosting_country}. The website and services are running on a server in ${hosting_country}. Data stored by third parties is covered by appropriate data processing agreements.</p>
-<p>Your personal information is stored for the duration of your use of the service provided<#if duration_of_storage!=0> and additional ${duration_of_storage} months after you cease using our services</#if>. We keep this data to deal with any queries that may arise following your use of our service.</p>
+<p>Your personal information is stored for the duration of your use of the service provided<#if duration_of_storage != 0> and additional ${duration_of_storage} months after you cease using our services</#if>. We keep this data to deal with any queries that may arise following your use of our service.</p>
 <p>Personal data is only stored as long as it is necessary to provide a requested service dependent on this data.</p>
-        <#if duration_of_storage_ip!=0>
+        <#if duration_of_storage_ip != 0>
 <p>Identifiable IP addresses are stored for ${duration_of_storage_ip} months.</p>
         <#else>
 <p>Identifiable IP addresses are not stored.</p>
         </#if>
 <p>In certain circumstances, data may be retained longer for archiving in the public interest, scientific or historical research purposes, and in the context of long-term preservation.</p>
 
-<h2>Security of your personal data</h2>
-<p>${service_owner} takes the confidentiality, integrity and availability of your personal data very seriously. We take appropriate security precautions to protect your personal data from loss, misuse or unauthorised access, disclosure, alteration and destruction. When you access ${service}, ${service_owner} will provide adequate security controls to keep your personal data safe perin accordance with the classification of the personal data we have collected from you.</p>
+<h2>Security of personal data</h2>
+<p>${service_owner} takes the confidentiality, integrity and availability of your personal data very seriously. We take appropriate security precautions to protect your personal data from loss, misuse or unauthorised access, disclosure, alteration and destruction. When you access ${service}, ${service_owner} will provide adequate security controls to keep your personal data safe depending on the type of the personal data collected from you.</p>
 <p>Although we endeavour to ensure your personal data remains secure, there is no absolute guarantee of security when using services online. While we strive to protect your personal data, you acknowledge that:</p>
 <ul>
             <li>There are security and privacy limitations on the Internet which are beyond our control.</li>
@@ -190,7 +203,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
             <li>We cannot be held accountable for activities that result from your own neglect to safeguard the security of your login credentials and equipment that results in a loss of your personal data.</li>
 </ul>
 <p>If you feel this is not sufficient, then please do not provide any personal data.</p>
-<h3>When and how we share information with others</h3>
+<h3>When and how personal information is shared with others</h3>
 <#if data_sharing>
 <p>We provide and support some of our services through contractual arrangements with service owners and other third parties. ${service_owner} and our service partners use your personal data to operate our website(s) and provide services and events to you.</p>
 <p>The personal information ${service_owner} collects from you is stored in one or more databases hosted by third parties <#if gdpr>that may be located within the EU or outside the EU</#if>. These third parties do not use or have the authority to access your personal data for any reason other than cloud storage and retrieval.</p>
@@ -211,7 +224,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
                 </#if>
 <p>${service_owner} also minimises the risk to your rights and freedoms by not collecting or storing any sensitive information about you without your explicit consent.</p>
 
-<h2>Your rights under the GDPR / Data subject rights</h2>
+<h2>Data subject rights</h2>
 <p>The General Data Protection Regulation (GDPR) establishes several rights for individuals concerning their personal data, such as:</p>
 <ul>
             <li>To know about what personal data is kept.</li>
@@ -226,8 +239,8 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 <p>The erasure of personal information or termination of your data processing by us may limit service, access to it or the results or outcomes of previous use of the service, especially if these results are inherently related to the presence of personal information.</p>
     </#if>
 <h3>Access to personal data</h3>
-<p>You may submit a Subject Access Request to ${service_owner}-. The response will include a description of your data, any recipients of it, as well as a copy of your data. Any request regarding Data Subject Rights will be responded to within <span class="red-strong">TODO</span>. </p>
-<p>Any request regarding Data Subject Rights will be responded to within <span class="red-strong">TODO</span>. </p>
+<p>You may submit a Subject Access Request to ${service_owner}. The response will include a description of your data, any recipients of it, as well as a copy of your data. Any request regarding Data Subject Rights will be responded to within <span class="red-strong">TODO</span>.</p>
+<p>Any request regarding Data Subject Rights will be responded to within <span class="red-strong">TODO</span>.</p>
 <h3>Right to rectification and erasure</h3>
 <p>You have the right to correct any inaccurate personal data held by ${service_owner}. You also have the right to request the erasure of any data that is no longer necessary for the purpose for which it was collected.</p>
 <h3>Right to restriction of processing and withdrawal of consent</h3>
@@ -245,10 +258,16 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
         <ul>
                 <li><span class="red-strong">TODO: </span>LIST RIGHTS HERE</li>
         </ul>
-        <p><span class="red-strong">TODO: </span> MORE DETAILED DESCRIPTION OF THE RIGHTS AND RESPONSIBILITIES.</p>
+        <p><span class="red-strong">TODO: </span>MORE DETAILED DESCRIPTION OF THE RIGHTS AND RESPONSIBILITIES.</p>
 </#if>
+
+<#if age_limit != 0>
+<h2>Children's Privacy</h2>
+<p>The service does not knowingly collect information from children under the age of ${age_limit} years, and children under ${age_limit} are prohibited from using our services. If you have the information that a child has provided us with personal information in violation of this Privacy Policy, you can alert the Data Protection Officer.</p>
+</#if>
+
 <h2>Contacts</h2>
-<h3>Data Protection Officer / Contact for questions regarding personal data and privacy</h3>
+<h3>Data Protection Officer - contact for questions regarding personal data and privacy</h3>
 <p>${service_owner}, as the owner and data controller of ${service}, has appointed a Data Protection Officer (DPO), for you to contact if you have any questions or concerns about the way ${service_owner} is processing your personal data. Together, the DPO and ${service_url} service team are working to provide you with accurate information and implement measures to protect your privacy.
 <p>For questions, comments or complaints regarding personal data and privacy, this Privacy Policy and how ${service_owner} processes your personal, and to exercise data subject rights, please contact the Data Protection Officer:</p>
 <table>
@@ -260,7 +279,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
                 <tr><td>Telephone</td><td>${dpo_telephone}</td></tr>
 </table>
 <h3>Supervisory authority</h3>
-<p>Should you wish to report a complaint about ${service_owner}’s data processing that has not been addressed adequately, you may contact:<</p>
+<p>Should you wish to report a complaint about ${service_owner}’s data processing that has not been addressed adequately, you may contact:</p>
 <table>
                 <tr><td>Name</td><td>${supervisor_name}</td></tr>
                 <tr><td>Organisation</td><td>${supervisor_organization}</td></tr>
