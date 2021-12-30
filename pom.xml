@@ -4,7 +4,7 @@
 
     <groupId>com.rcub</groupId>
     <artifactId>repol</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>4.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>RePol</name>
@@ -24,30 +24,11 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>1.0.10</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>2.2.15</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>2.2.15</version>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>10.0.0</version>
-        </dependency>
+        <!-- JAVA WEB -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
+            <version>8.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -55,21 +36,46 @@
             <artifactId>cdi-api</artifactId>
             <version>1.2</version>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        
+        <!-- JAVA SERVER FACES -->
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.2.20</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.2.20</version>
+        </dependency>
+        
+        <!-- PRIMEFACES -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>10.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+
+        <!-- OTHER DEPENDENCIES -->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.30</version>
+            <version>2.3.31</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>2.11.0</version>
         </dependency>
     </dependencies>
 
@@ -78,10 +84,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.8.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
@@ -90,7 +96,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <version>3.3.2</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
@@ -98,7 +104,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.1</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -112,7 +118,7 @@
                                 <artifactItem>
                                     <groupId>javax</groupId>
                                     <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>6.0</version>
+                                    <version>7.0</version>
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>
@@ -122,6 +128,7 @@
             </plugin>
         </plugins>
         
+        <!-- CONFIG FILES -->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

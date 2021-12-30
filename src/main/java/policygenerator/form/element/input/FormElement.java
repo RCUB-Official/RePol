@@ -1,10 +1,8 @@
 package policygenerator.form.element.input;
 
 import policygenerator.form.element.Panel;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import policygenerator.form.Form;
@@ -44,7 +42,6 @@ public abstract class FormElement {
     private final String conditionId;
 
     private final List<Trigger> triggers;
-    private final Map<String, Condition> conditions;
 
     protected final List<String> defaultValues;
 
@@ -68,7 +65,6 @@ public abstract class FormElement {
         this.description = null;
 
         triggers = new LinkedList<>();
-        conditions = new HashMap<>();
         defaultValues = new LinkedList<>();
 
         userSet = false;
@@ -200,10 +196,6 @@ public abstract class FormElement {
     }
 
     // CONDITION FUNCTIONS
-    public void addCondition(String conditionId, Condition condition) {
-        this.conditions.put(id, condition);
-    }
-
     public String getConditionId() {
         return conditionId;
     }
@@ -241,6 +233,7 @@ public abstract class FormElement {
         this.triggers.add(trigger);
     }
 
+    @SuppressWarnings("UseSpecificCatch")   // Don't crash, just log if something goes wrong.
     public void processTriggers() {
         for (Trigger t : triggers) {
             try {

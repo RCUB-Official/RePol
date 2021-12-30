@@ -1,5 +1,6 @@
 package policygenerator.session;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -8,7 +9,7 @@ import javax.annotation.PreDestroy;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-public final class ActivityLogger {
+public final class ActivityLogger implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(ActivityLogger.class.getName());
 
