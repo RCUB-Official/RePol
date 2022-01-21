@@ -70,7 +70,7 @@
                             </p:menuitem>
                         </c:if>
 
-                        <p:menuitem value="Get Results"  icon="fa fa-fw fa-download" outcome="save" disabled="#{!sessionController.used}">
+                        <p:menuitem value="Data Download / Restart"  icon="fa fa-fw fa-download" outcome="save" disabled="#{!sessionController.used}">
                             <c:choose>
                                 <c:when test="#{formController.form != null}">
                                     <f:param name="document_id" value="#{formController.form.id}"/>

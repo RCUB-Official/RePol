@@ -17,6 +17,10 @@
                         padding-bottom:0px;
                         padding-top:0px;
                     }
+
+                    p.footer {
+                        margin-top:50px;
+                    }
                 </style>
 
                 <c:choose>
@@ -29,17 +33,22 @@
                             </p:link>
                         </div>
 
-                        <h3>About RePol</h3>
+                        <h2>About RePol</h2>
                         <p>A trustworthy repository should have a transparent policy, informing users about the roles, responsibilities, rights and procedures aimed at ensuring that their deposited data are preserved and disseminated in line with the FAIR and Open principles. RePol helps you in defining and maintaining comprehensive and clear repository and privacy policies. Generated privacy policies are suitable for any kind of service.</p>
                         <p>RePol uses a step-by-step wizard and self-explanatory forms to guide you through the process. By choosing among the offered options, you choose predefined policy clauses formulated in line with the current best practice. The resulting policy document may be downloaded, additionally edited, and integrated into your repository.</p>
                         <ul>
                             <li>Access, data entry and document creation – You can use RePol without any authentication. After starting the wizard and passing over optional loading of previously saved data, you need to select a policy to be generated. The document is generated after the relevant fields are filled.</li>
                             <li>Editing of generated documents – The generated HTML document is a draft that must be read and edited before it is considered final. The sections that must be revised are clearly marked. If you want to re-upload and re-use the document in RePol, please refrain from deleting or altering the hidden portion between tags because that is where the machine-readable data is stored. We strongly suggest that you keep the original drafts produced by RePol - this simplifies comparison between drafts, and drafts and manual edits.</li>
-                            <li>Saving all forms – At any time, you can download an XML (standalone) file containing data for all policies. Each generated document also contains its data in a machine-readable format.</li>
+                            <li>Saving all entries – At any time, you can download an XML (standalone) file containing data for all policies. Each generated document also contains its data in a machine-readable format.</li>
                             <li>Later changes of data and documents – Both standalone XML exports and generated documents can be re-uploaded to the RePol, restoring the previously provided values, allowing to update the produced draft policy, in line with new choices and improvements of RePol templates. All user edits of the earlier created text will have to be repeated in the new document.</li>
                         </ul>
                         <p>More information about RePol is available at <a target="_blank" href="https://wiki.ni4os.eu/index.php/RePol">NI4OS-Europe Wiki</a>.</p>
-                        <p><a target="_blank" href=" https://docs.google.com/forms/d/e/1FAIpQLSedvcWDtFhPcqGeTyg31TCgcY3TGLYaM7dnlv7pJmIWDWZ9SQ/viewform?usp=pp_url&amp;entry.255020388=RePol">RePol feedback survey</a>&nbsp;&nbsp;<p:link value="Privacy Notice" outcome="privacy_notice"/>&nbsp;&nbsp;<p:link value="Terms of Use" outcome="tos"/></p>
+
+                        <h3>Feedback and support</h3>
+                        <p>The email for feedback and support is <a href="mailto:repol@rcub.bg.ac.rs">repol@rcub.bg.ac.rs</a>. You can also use the below-provided link.</p>
+                        <p>In case you submit feedback, we will collect your name and email address in order to be able to respond to your query. For the same purpose, we collect the following information:</p>
+                        <p>Information submitted via your email to the provided address will be used for no other purpose than to respond to your query.</p>
+                        <p class="footer"><p:link ajax="false" target="_blank" href=" https://docs.google.com/forms/d/e/1FAIpQLSedvcWDtFhPcqGeTyg31TCgcY3TGLYaM7dnlv7pJmIWDWZ9SQ/viewform?usp=pp_url&amp;entry.255020388=RePol" value="Feedback Survey"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p:link value="Privacy Policy" outcome="privacy_policy"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p:link value="Terms of Use, Disclaimer and Copyright Notice" outcome="tou-d-cn"/></p>
 
                     </c:when>
                     <c:otherwise>
