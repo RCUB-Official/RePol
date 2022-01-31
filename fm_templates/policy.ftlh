@@ -15,7 +15,7 @@ ${embedded_data?no_esc}
             <body>
  
 <h1>Repository Policy - ${repo_name}</h1>
- 
+
 <div class="generated_header">
             <p>Date (yyyy-mm-dd): ${policy_date?date?string("yyyy-MM-dd")}</p>
 </div>

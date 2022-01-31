@@ -23,6 +23,11 @@ import org.xml.sax.InputSource;
 import policygenerator.form.element.input.FormElement;
 import policygenerator.form.element.input.FormElementFactory;
 
+/**
+ * Map populated with user provided values of <code>FormElements</code>, i. e. free-marker data-model as map.
+ *
+ * @author Vasilije
+ */
 public final class DataShare {
 
     private static final Logger LOG = Logger.getLogger(DataShare.class.getName());

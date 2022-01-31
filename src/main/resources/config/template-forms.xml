@@ -342,9 +342,15 @@
             <input type="oneline" id="service" label="Service name" mandatory="true">
                 <description>Enter the name of the website, service or repository for which you wish to generate a policy.</description>                
             </input>
+            <input type="boolean" id="service_name_the" label="Use ‘the’ before Service name" default="true">
+                <description>Check this field if the name of the service requires the use of a definite article. It is not used before a proper name or acronym pronounced as a single word. If the name begins with ‘University’, you must use it.</description>
+            </input>
             <input type="oneline" id="service_url" label="Service URL"/>
             <input type="oneline" id="service_owner" label="Owning institution" mandatory="true">
                 <description>Provide the name of the legal entity or body/unit owning the service. This field is mandatory because the policy must be bound to an entity.</description>                
+            </input>
+            <input type="boolean" id="service_owner_the" label="Use ‘the’ before Owning institution" default="true">
+                <description>Check this field if the name of the entity requires the use of a definite article. It is not used before a proper name, company name or acronym pronounced as a single word. If the name begins with ‘University’, you must use it.</description>
             </input>
             <input type="date" id="policy_date" label="Date of the policy document" default="current_date"/>
         </panel>
@@ -423,7 +429,9 @@
         
         <panel label="DPO Contact">
             <description>Contact on behalf of the service owner for questions regarding personal data, privacy and exercise data subject rights (GDPR Data Protection Officer)</description>
-            <input type="oneline" id="dpo_name" label="Name" mandatory="true"/>
+            <input type="oneline" id="dpo_name" label="Name" mandatory="true">
+                <description>Name or the DPO position title in the local language.</description>
+            </input>
             <input type="oneline" id="dpo_organization" label="Organization" mandatory="true"/>
             <input type="oneline" id="dpo_address" label="Address" mandatory="true"/>
             <input type="oneline" id="dpo_country" label="Country" mandatory="true"/>

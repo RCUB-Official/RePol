@@ -2,9 +2,11 @@ package policygenerator.form.element.input;
 
 import policygenerator.form.element.Panel;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public final class DateInput extends FormElement {
 
@@ -37,16 +39,25 @@ public final class DateInput extends FormElement {
 
     @Override
     public void set(String value) {
-        try {
+//        System.out.println("'" + value + "'");
             if ("current_date".equals(value)) {
                 this.value = new Date(System.currentTimeMillis());
             } else {
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                this.value = format.parse(value);
+                try {
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    this.value = format.parse(value);
+//                    System.out.println("yyyy-MM-dd");
+                } catch (ParseException e1) {
+                    try {
+                        // Thu Dec 02 00:00:00 CET 2021
+                        DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+                        this.value = format.parse(value);
+//                        System.out.println("EEE MMM dd HH:mm:ss Z yyyy");
+                    } catch (ParseException e2) {
+                        this.value = null;
+                    }
+                }
             }
-        } catch (Exception ex) {
-            this.value = null;
-        }
     }
 
     @Override
@@ -100,8 +111,9 @@ public final class DateInput extends FormElement {
         } else {
             formId = "";
         }
-
-        return "<field type=\"date\" id=\"" + getId() + "\"" + formId + "><value>" + value + "</value></field>";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String stringValue = Objects.nonNull(this.value) ? dateFormat.format(value) : "null";
+        return "<field type=\"date\" id=\"" + getId() + "\"" + formId + "><value>" + stringValue + "</value></field>";
     }
 
 }
