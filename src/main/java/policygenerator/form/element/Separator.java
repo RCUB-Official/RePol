@@ -2,10 +2,13 @@ package policygenerator.form.element;
 
 import policygenerator.form.element.input.FormElement;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public final class Separator extends FormElement {
 
     protected Separator() {
-        super(null, Type.SEPARATOR, null, false, null, null, null, null);
+        super(null, Type.SEPARATOR, null, null, false, null, null, null, null);
     }
 
     @Override
@@ -52,6 +55,11 @@ public final class Separator extends FormElement {
     @Override
     public String getXml(boolean includeFormId) {
         return "";
+    }
+
+    @Override
+    public Set<String> getXmlForAliases() {
+        return new HashSet<>();
     }
 
 }

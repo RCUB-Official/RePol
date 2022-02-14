@@ -1,8 +1,8 @@
 package policygenerator.form.element.input;
 
 import policygenerator.form.element.Panel;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import policygenerator.form.Form;
@@ -11,6 +11,12 @@ import policygenerator.form.condition.Condition;
 import policygenerator.form.condition.exceptions.ConditionNotFoundException;
 
 public abstract class FormElement {
+
+    public boolean hasAlias(String alias) {
+        return this.idAliases.contains(alias);
+    }
+
+    public abstract Set<String> getXmlForAliases();
 
     public enum Type {
         ONELINE,
@@ -33,6 +39,8 @@ public abstract class FormElement {
     private final Type type;
     private final String id;
 
+    private final Set<String> idAliases;
+
     protected final boolean mandatory;
 
     private final String label;
@@ -50,10 +58,11 @@ public abstract class FormElement {
 
     private boolean userSet;
 
-    protected FormElement(Panel panel, Type type, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+    protected FormElement(Panel panel, Type type, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
         this.panel = panel;
         this.type = type;
         this.id = id;
+        this.idAliases = idAliases;
         this.mandatory = mandatory;
         this.label = label;
         this.conditionId = conditionId;
@@ -70,6 +79,15 @@ public abstract class FormElement {
         userSet = false;
     }
 
+//    public final String getRealId (String alias) {
+//        String realId = this.idAliases.get(alias);
+//        if (Objects.isNull(realId)) {
+//            return alias;
+//        } else {
+//            return realId;
+//        }
+//    }
+//
     public final Form getForm() {
         if (panel != null) {
             return panel.getForm();
@@ -84,6 +102,10 @@ public abstract class FormElement {
 
     public final String getId() {
         return id;
+    }
+
+    public final Set<String> getIdAliases() {
+        return this.idAliases;
     }
 
     public final String getLabel() {
@@ -164,6 +186,11 @@ public abstract class FormElement {
             set(dv);
         }
         push();
+    }
+
+    //
+    public final boolean isIdAliased() {
+        return !this.idAliases.isEmpty();
     }
 
     //VALIDATION

@@ -1,19 +1,18 @@
 package policygenerator.form.element.input;
 
+import framework.utilities.xml.XMLUtilities;
 import policygenerator.form.element.Panel;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 public final class DateInput extends FormElement {
 
     private Date value;
 
-    DateInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.DATE, id, mandatory, label, conditionId, null, null); // TODO: regex validation
+    DateInput(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId) {
+        super(panel, Type.DATE, id, idAliases, mandatory, label, conditionId, null, null); // TODO: regex validation
         this.value = new Date(System.currentTimeMillis());
     }
 
@@ -114,6 +113,18 @@ public final class DateInput extends FormElement {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String stringValue = Objects.nonNull(this.value) ? dateFormat.format(value) : "null";
         return "<field type=\"date\" id=\"" + getId() + "\"" + formId + "><value>" + stringValue + "</value></field>";
+    }
+
+    @Override
+    public Set<String> getXmlForAliases() {
+        Set<String> aliases = this.getIdAliases();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String stringValue = Objects.nonNull(this.value) ? dateFormat.format(value) : "null";
+        Set<String> xmlForAliases = new HashSet<String>();
+        for (String alias : aliases) {
+            xmlForAliases.add("<field type=\"date\" id=\"" + alias + "\"><value>" + stringValue + "</value></field>");
+        }
+        return xmlForAliases;
     }
 
 }

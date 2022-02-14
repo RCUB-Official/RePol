@@ -4,8 +4,12 @@ import policygenerator.form.element.SelectionElement;
 import policygenerator.form.element.Panel;
 import framework.settings.RepolSettings;
 import framework.utilities.xml.XMLUtilities;
+
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
 import policygenerator.form.element.ListFactory;
 import policygenerator.form.condition.exceptions.ConditionNotFoundException;
 import policygenerator.form.element.exceptions.ElementNotFoundException;
@@ -18,8 +22,8 @@ public final class PoolPicker extends FormElement {
     private final List<SelectionElement> selectedValues;
     private String toBeAdded;
 
-    PoolPicker(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage, String listId) throws MisconfiguredSelectionList {
-        super(panel, Type.POOLPICKER, id, mandatory, label, conditionId, validationRegex, validationMessage);
+    PoolPicker(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage, String listId) throws MisconfiguredSelectionList {
+        super(panel, Type.POOLPICKER, id, idAliases, mandatory, label, conditionId, validationRegex, validationMessage);
         availableValues = new LinkedList<>();
 
         List<SelectionElement> fetchedList = ListFactory.getInstance().getSelectionList(listId);
@@ -255,6 +259,28 @@ public final class PoolPicker extends FormElement {
             xml = "";
         }
         return xml;
+    }
+
+    @Override
+    public Set<String> getXmlForAliases() {
+        Set<String> aliases = this.getIdAliases();
+        Set<String> xmlForAliases = new HashSet<>();
+        for (String alias : aliases) {
+            String xml;
+            if (!getValues().isEmpty()) {
+                xml = "<field type=\"poolpicker\" id=\"" + getId() + "\">";
+                for (String value : getValues()) {
+                    xml += "<value>" + XMLUtilities.xmlEscape(value) + "</value>";
+                }
+                xml += "</field>";
+            } else {
+                xml = "";
+            }
+            if (!xml.isEmpty()) {
+                xmlForAliases.add(xml);
+            }
+        }
+        return xmlForAliases;
     }
 
 }

@@ -14,10 +14,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
@@ -44,6 +41,7 @@ public final class Form implements Cacheable {
 
     private final List<Panel> panels;
     private final Map<String, FormElement> elementMap;
+    private final Map<String, String> elementIdAliases;
 
     private final List<Condition> conditions;
     private final Map<String, Condition> conditionMap;
@@ -60,6 +58,7 @@ public final class Form implements Cacheable {
 
         this.panels = new LinkedList<>();
         this.elementMap = new HashMap<>();
+        this.elementIdAliases = new HashMap<>();
 
         this.conditions = new LinkedList<>();
         this.conditionMap = new HashMap<>();
@@ -122,6 +121,11 @@ public final class Form implements Cacheable {
                         throw new IdentifierCollision(elementId, "Condition");
                     }
                     elementMap.put(elementId, fe);
+
+                    if (fe.isIdAliased()) {
+                        for (String idAlias : fe.getIdAliases())
+                        this.elementIdAliases.put(fe.getId(), idAlias);
+                    }
 
                     if (fe.isMandatory() || fe.getValidationRegex() != null) {
                         needValidation.add(fe);
@@ -230,9 +234,21 @@ public final class Form implements Cacheable {
             if (fe.getType() != Type.SEPARATOR) {
                 if (fe.isValid()) {
                     if (settings.isUseSafeDefaults()) { // Making sure no null values are passed to FreeMarker
-                        model.put(fe.getId(), fe.getSafeValue());
+                        Object safeValue = fe.getSafeValue();
+                        model.put(fe.getId(), safeValue);
+                        if (fe.isIdAliased()) {
+                            for (String aliasId : fe.getIdAliases()) {
+                                model.put(aliasId, safeValue);
+                            }
+                        }
                     } else {
-                        model.put(fe.getId(), fe.getValue());
+                        Object value = fe.getValue();
+                        model.put(fe.getId(), value);
+                        if (fe.isIdAliased()) {
+                            for (String aliasId : fe.getIdAliases()) {
+                                model.put(aliasId, value);
+                            }
+                        }
                     }
                 } else {
                     EventHandler.alertUserError("Invalid input", fe.getLabel());
@@ -377,5 +393,19 @@ public final class Form implements Cacheable {
             }
         }
         return hasTriggers;
+    }
+
+    public String getFormElementRealId(Type aliasType, String alias) {
+        System.out.println("String alias " + alias + " " + " aliasType " + aliasType);
+        for (Panel panel : this.panels) {
+
+            for (FormElement element : panel.getElements()) {
+//                System.out.println("\t element " + element.getId() + " aliases " + Arrays.toString(element.getIdAliases().toArray(new String[0])));
+                if (element.getType().name().equals(aliasType.name()) && element.hasAlias(alias)) {
+                    return element.getId();
+                }
+            }
+        }
+        return alias;
     }
 }

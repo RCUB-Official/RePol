@@ -3,6 +3,9 @@ package policygenerator.form.element.input;
 import policygenerator.form.element.Panel;
 import framework.settings.RepolSettings;
 import framework.utilities.xml.XMLUtilities;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,8 +13,8 @@ public final class Text extends FormElement {
 
     private String value;
 
-    Text(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
-        super(panel, Type.TEXT, id, mandatory, label, conditionId, validationRegex, validationMessage);
+    Text(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+        super(panel, Type.TEXT, id, idAliases, mandatory, label, conditionId, validationRegex, validationMessage);
         this.value = "";
     }
 
@@ -130,6 +133,16 @@ public final class Text extends FormElement {
         }
 
         return "<field type=\"text\" id=\"" + getId() + "\"" + formId + "><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
+    }
+
+    @Override
+    public Set<String> getXmlForAliases() {
+        Set<String> aliases = this.getIdAliases();
+        Set<String> xmlForAliases = new HashSet<>();
+        for (String alias : aliases) {
+            xmlForAliases.add("<field type=\"text\" id=\"" + alias + "\"><value>" + XMLUtilities.xmlEscape(value) + "</value></field>");
+        }
+        return xmlForAliases;
     }
 
 }

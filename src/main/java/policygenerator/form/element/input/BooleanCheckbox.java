@@ -1,13 +1,17 @@
 package policygenerator.form.element.input;
 
+import framework.utilities.xml.XMLUtilities;
 import policygenerator.form.element.Panel;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public final class BooleanCheckbox extends FormElement {
 
     private boolean value;
 
-    BooleanCheckbox(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.BOOLEAN, id, mandatory, label, conditionId, null, null);
+    BooleanCheckbox(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId) {
+        super(panel, Type.BOOLEAN, id, idAliases, mandatory, label, conditionId, null, null);
         this.value = false;
         defaultValues.add("false");
     }
@@ -96,6 +100,17 @@ public final class BooleanCheckbox extends FormElement {
         }
 
         return "<field type=\"boolean\" id=\"" + getId() + "\"" + formId + "><value>" + value + "</value></field>";
+    }
+
+
+    @Override
+    public Set<String> getXmlForAliases() {
+        Set<String> aliases = this.getIdAliases();
+        Set<String> xmlForAliases = new HashSet<>();
+        for (String alias : aliases) {
+            xmlForAliases.add("<field type=\"boolean\" id=\"" + alias + "\"><value>" + value + "</value></field>");
+        }
+        return xmlForAliases;
     }
 
 }

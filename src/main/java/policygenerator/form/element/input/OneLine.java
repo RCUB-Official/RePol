@@ -1,8 +1,14 @@
 package policygenerator.form.element.input;
 
+import policygenerator.form.Form;
 import policygenerator.form.element.Panel;
 import framework.settings.RepolSettings;
 import framework.utilities.xml.XMLUtilities;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,9 +16,14 @@ public final class OneLine extends FormElement {
 
     private String value;
 
-    OneLine(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
-        super(panel, Type.ONELINE, id, mandatory, label, conditionId, validationRegex, validationMessage);
+    OneLine(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+        super(panel, Type.ONELINE, id, idAliases, mandatory, label, conditionId, validationRegex, validationMessage);
         this.value = "";
+    }
+
+    @Override
+    public void syncElement(FormElement element) {
+        super.syncElement(element);
     }
 
     @Override
@@ -124,7 +135,10 @@ public final class OneLine extends FormElement {
     public String getXml(boolean includeFormId) {
 
         String formId;
-        if (getForm() != null && includeFormId) {
+        Form myForm = getForm();
+//        String myRealId = Objects.nonNull(myForm) ? myForm.getFormElementRealId(getType(), getId()) : getId();
+
+        if (myForm != null && includeFormId) {
             formId = " form=\"" + getForm().getId() + "\"";
         } else {
             formId = "";
@@ -132,4 +146,15 @@ public final class OneLine extends FormElement {
 
         return "<field type=\"oneline\" id=\"" + getId() + "\"" + formId + "><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
     }
+
+    @Override
+    public Set<String> getXmlForAliases() {
+        Set<String> aliases = this.getIdAliases();
+        Set<String> xmlForAliases = new HashSet<>();
+        for (String alias : aliases) {
+            xmlForAliases.add("<field type=\"oneline\" id=\"" + alias + "\"><value>" + XMLUtilities.xmlEscape(value) + "</value></field>");
+        }
+        return xmlForAliases;
+    }
+
 }

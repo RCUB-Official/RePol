@@ -3,8 +3,12 @@ package policygenerator.form.element.input;
 import policygenerator.form.element.SelectionElement;
 import policygenerator.form.element.Panel;
 import framework.utilities.xml.XMLUtilities;
+
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
 import policygenerator.form.element.ListFactory;
 import policygenerator.form.element.exceptions.MisconfiguredSelectionList;
 
@@ -13,8 +17,8 @@ public final class SelectOne extends FormElement {
     private final List<SelectionElement> availableValues;
     private String value;
 
-    SelectOne(Panel panel, String id, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
-        super(panel, Type.SELECTONE, id, mandatory, label, conditionId, null, null);
+    SelectOne(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
+        super(panel, Type.SELECTONE, id, idAliases, mandatory, label, conditionId, null, null);
         availableValues = new LinkedList<>();
 
         List<SelectionElement> fetchedList = ListFactory.getInstance().getSelectionList(listId);
@@ -136,6 +140,16 @@ public final class SelectOne extends FormElement {
         } else {
             return "";
         }
+    }
+
+    @Override
+    public Set<String> getXmlForAliases() {
+        Set<String> aliases = this.getIdAliases();
+        Set<String> xmlForAliases = new HashSet<>();
+        for (String alias : aliases) {
+            xmlForAliases.add("<field type=\"oneline\" id=\"" + alias + "\"><value>" + XMLUtilities.xmlEscape(value) + "</value></field>");
+        }
+        return xmlForAliases;
     }
 
 }
