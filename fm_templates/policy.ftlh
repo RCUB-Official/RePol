@@ -1,5 +1,5 @@
 ${embedded_data?no_esc}
- 
+
 <html>
             <head>
                         <title>Repository Policy - ${repo_name}</title>
@@ -454,8 +454,8 @@ This policy is subject to revision every ${policy_renewal_interval_years} years 
  
 <!-- GENERATED FOOTER -->
  
-<div class="generated_footer">
-            <p><i>Created by <a href="${repol_url}" target="_blank">RePol (${repol_url})</a> version ${repol_version}, <a href="https://github.com/RestlessDevil/RePol" target="_blank">source code at GitHub</a> under <a href="https://spdx.org/licenses/EUPL-1.2.html" target="_blank">EUPL-1.2</a>, on ${current_time?string("yyyy-MM-dd HH:mm zzz")}</i></p>
+<div class="generated_footer">R
+            <p><i>Created by <a href="${repol_url}" target="_blank">RePol (${repol_url})</a> version ${repol_version}, <a href="https://github.com/RCUB-Official/RePol" target="_blank">source code at GitHub</a> under <a href="https://spdx.org/licenses/EUPL-1.2.html" target="_blank">EUPL-1.2</a>, on ${current_time?string("yyyy-MM-dd HH:mm zzz")}</i></p>
 </div>
 
             </body>
