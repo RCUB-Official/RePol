@@ -292,7 +292,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 <p>&nbsp;</p>
 <!-- GENERATED FOOTER -->
      	<div class="generated_footer">
-        	<p><i>Created by <a href="${repol_url}" target="_blank">RePol (${repol_url})</a> version ${repol_version}, source code at <a href="https://github.com/RestlessDevil/RePol" target="_blank">GitHub</a> under <a href="https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12" target="_blank">EUPL-1.2-or-later</a>, on ${current_time?string("yyyy-MM-dd hh:mm zzz")}</i></p>
+        	<p><i>Created by <a href="${repol_url}" target="_blank">RePol (${repol_url})</a> version ${repol_version}, source code at <a href="https://github.com/RCUB-Official/RePol" target="_blank">GitHub</a> under <a href="https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12" target="_blank">EUPL-1.2-or-later</a>, on ${current_time?string("yyyy-MM-dd hh:mm zzz")}</i></p>
     	</div>
 	</body>
 </html>
