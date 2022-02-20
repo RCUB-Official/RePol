@@ -14,7 +14,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import policygenerator.form.FormFactory;
-import policygenerator.form.FormHeader;
 import policygenerator.form.element.input.FormElement;
 import policygenerator.form.element.input.FormElementFactory;
 
@@ -72,19 +71,23 @@ public final class DataShare {
     }
 
     public synchronized void requestSync(FormElement element) {
-        if (element.isIdAliased()) {
+//        if (element.isIdAliased()) {
+//        System.out.println("Request sync element id " + element.getId() + " with aliases " + (element.isIdAliased() ? Arrays.toString(element.getIdAliases().toArray()) : " NEMA ALIASE "));
+        if (Objects.nonNull(element.getIdAliases())) {
             for (String alias : element.getIdAliases()) {
                 if (latestValues.containsKey(alias)) {
-                    if (element != latestValues.get(alias)) {
-                        element.syncElement(latestValues.get(alias));
-                    }
+// sigurno nisu isti objekti
+//                    if (element != latestValues.get(alias)) {
+                    element.syncElement(latestValues.get(alias));
+//                    }
                 }
             }
         }
         if (latestValues.containsKey(element.getId())) {
-            if (element != latestValues.get(element.getId())) {
+// sigurno nisu isti objekti
+//            if (element != latestValues.get(element.getId())) {
                 element.syncElement(latestValues.get(element.getId()));
-            }
+//            }
         }
     }
 
@@ -93,14 +96,19 @@ public final class DataShare {
         xml += "<embedded-data>";
 
         Iterator<String> iterator = latestValues.keySet().iterator();
+        Set<String> writtenIds = new HashSet<>();
         while (iterator.hasNext()) {
             String key = iterator.next();
             FormElement formElement = latestValues.get(key);
-            xml += "\n\t" + formElement.getXml(true);
+            if (!writtenIds.contains(formElement.getId())) {
+                xml += "\n\t" + formElement.getXml(false);
+                writtenIds.add(formElement.getId());
+            }
             if (formElement.isIdAliased()) {
-                for (String xmlForAlias : formElement.getXmlForAliases()) {
+                for (String xmlForAlias : formElement.getXmlForAliases(writtenIds)) {
                     xml += "\n\t" + xmlForAlias;
                 }
+                writtenIds.addAll(formElement.getIdAliases());
             }
         }
         xml += "\n</embedded-data>";
@@ -108,9 +116,9 @@ public final class DataShare {
         HttpUtilities.sendFileToClient(xml, "PolGen-Export-" + System.currentTimeMillis() + ".xml");
     }
 
-    public List<String> processUpload(FileUploadEvent event) {
+    public Set<String> processUpload(FileUploadEvent event) {
 
-        List<String> affectedFormIds = new LinkedList<>();
+        Set<String> affectedFormIds = new HashSet<>();
 
         UploadedFile file = event.getFile();
         try {
@@ -137,17 +145,18 @@ public final class DataShare {
             } catch (Exception ex) {    // In case there is no form id specified
             }
 
-            Set<String> detectedForms = new HashSet<>();
-            Set<String> detectedRealElementIds = new HashSet<>();
+//            Set<String> detectedForms = new HashSet<>();
+//            Set<String> detectedRealElementIds = new HashSet<>();
 
             NodeList fieldNodes = document.getElementsByTagName("field");
+//            System.out.println("JOVANA: Number of uploaded nodes " + fieldNodes.getLength());
             for (int i = 0; i < fieldNodes.getLength(); i++) {
                 Node fNode = fieldNodes.item(i);
 
                 String type = fNode.getAttributes().getNamedItem("type").getTextContent();
                 String id = fNode.getAttributes().getNamedItem("id").getTextContent();
 
-//                NE POSTOJI OVDE
+//                NE POSTOJI OVDE: ovo je upload-ovan (XML) dokument
 //                String aliases = Objects.nonNull(fNode.getAttributes().getNamedItem("aliases")) ? fNode.getAttributes().getNamedItem("aliases").getTextContent() : null;
 //                List<String> aliasIds = new ArrayList<>();
 //                if (Objects.nonNull(aliases)) {
@@ -155,19 +164,21 @@ public final class DataShare {
 //                }
 
                 try {
-                    String formId = fNode.getAttributes().getNamedItem("form").getTextContent();
-                    detectedForms.add(formId);
-                    Set<String> formIdsForAlias = FormFactory.getInstance().getFormIdsForAttribute(id);
-                    detectedForms.addAll(formIdsForAlias);
-                    System.out.print("Form ids for for attribute " + id + " size " + formIdsForAlias.size());
-                    for (String formIdForAlias : formIdsForAlias) {
-                        System.out.print(" " + formIdForAlias);
+                    if (Objects.nonNull(fNode.getAttributes().getNamedItem("form"))) {
+                        String formId = fNode.getAttributes().getNamedItem("form").getTextContent();
+                        if (Objects.nonNull(formId) && !formId.isEmpty()) {
+                            affectedFormIds.add(formId);
+                        }
                     }
-                    System.out.println();
-                } catch (Exception ex) {
-                }
 
-                Set<String> elementAliases = FormFactory.getInstance().getElementIdsForAlias(id);
+                    Set<String> formIdsForAlias = FormFactory.getInstance().getFormIdsForAttribute(id);
+                    affectedFormIds.addAll(formIdsForAlias);
+//                    System.out.print("Form ids for for attribute " + id + " size " + formIdsForAlias.size());
+//                    for (String formIdForAlias : formIdsForAlias) {
+//                        System.out.print(" " + formIdForAlias);
+//                    }
+//                    System.out.println();
+                Set<String> elementAliases = FormFactory.getInstance().getAliasesForElementId(id);
 
                 FormElement element = FormElementFactory.getDummyElement(type, id, elementAliases);
                 if (element != null) {
@@ -185,10 +196,22 @@ public final class DataShare {
                     } else {    // if not, put the dummy into the map
                         latestValues.put(id, element);
                     }
+                    // sync aliases
+                    for (String alias : element.getIdAliases()) {
+                        if (latestValues.containsKey(alias)) { // If it already exists, just sync it with the dummy
+                            latestValues.get(alias).sync(element);
+                        } else {    // if not, put the dummy into the map
+                            latestValues.put(alias, element);
+                        }
+                    }
                 }
-            }
 
-            affectedFormIds.addAll(detectedForms);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+
+            }
 
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, null, ex);

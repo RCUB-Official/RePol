@@ -108,11 +108,13 @@ public final class IntegerInput extends FormElement {
     }
 
     @Override
-    public Set<String> getXmlForAliases() {
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
         Set<String> aliases = this.getIdAliases();
         Set<String> xmlForAliases = new HashSet<String>();
         for (String alias : aliases) {
-            xmlForAliases.add("<field type=\"integer\" id=\"" + alias + "\"><value>" + value + "</value></field>");
+            if (!skipIds.contains(alias) && !getId().equals(alias)) {
+                xmlForAliases.add("\n\t<field type=\"integer\" id=\"" + alias + "\"><value>" + value + "</value></field>");
+            }
         }
         return xmlForAliases;
     }
