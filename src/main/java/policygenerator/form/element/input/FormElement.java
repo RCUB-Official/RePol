@@ -12,12 +12,6 @@ import policygenerator.form.condition.exceptions.ConditionNotFoundException;
 
 public abstract class FormElement {
 
-    public boolean hasAlias(String alias) {
-        return this.idAliases.contains(alias);
-    }
-
-    public abstract Set<String> getXmlForAliases();
-
     public enum Type {
         ONELINE,
         TEXT,
@@ -102,6 +96,10 @@ public abstract class FormElement {
 
     public final String getId() {
         return id;
+    }
+
+    public boolean hasAlias(String alias) {
+        return this.idAliases.contains(alias);
     }
 
     public final Set<String> getIdAliases() {
@@ -190,7 +188,7 @@ public abstract class FormElement {
 
     //
     public final boolean isIdAliased() {
-        return !this.idAliases.isEmpty();
+        return Objects.nonNull(this.idAliases) && !this.idAliases.isEmpty();
     }
 
     //VALIDATION
@@ -297,5 +295,7 @@ public abstract class FormElement {
 
     // For embedded and standalone export
     public abstract String getXml(boolean includeFormId);
+
+    public abstract Set<String> getXmlForAliases(Set<String> skipIds);
 
 }

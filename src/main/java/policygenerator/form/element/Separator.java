@@ -58,7 +58,7 @@ public final class Separator extends FormElement {
     }
 
     @Override
-    public Set<String> getXmlForAliases() {
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
         return new HashSet<>();
     }
 

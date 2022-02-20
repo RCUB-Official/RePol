@@ -63,9 +63,13 @@ public final class FormHeader {
         return this.dataIdAliases.containsKey(id);
     }
 
-    public Set<String> getElementIdsForAlias(String alias) {
+    public Set<String> getAliasesForElementId(String alias) {
         Set<String> elementIds = new HashSet<>();
-        for (String elementId : this.dataIdAliases.keySet()) {
+        Set<String> keySet = this.dataIdAliases.keySet();
+        if (keySet.contains(alias)) {
+            elementIds.add(alias);
+        }
+        for (String elementId : keySet) {
             List<String> aliases = this.dataIdAliases.get(elementId);
             if (aliases.contains(alias)) {
                 elementIds.add(elementId);

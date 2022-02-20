@@ -30,11 +30,6 @@ public class FormFactory extends XMLHandler {
 
     private FormFactory() {
         super(true, "Form Factory", "/config/template-forms.xml");
-//        try {
-//            initializeProcedure();
-//        } catch (MissingAttributeException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public static FormFactory getInstance() {
@@ -179,12 +174,11 @@ public class FormFactory extends XMLHandler {
         return form;
     }
 
-    public Set<String> getElementIdsForAlias(String id) {
+    public Set<String> getAliasesForElementId(String id) {
         Set<String> elementIds = new HashSet<>();
         for (FormHeader form : this.headers) {
-            Set<String> aliasedElementIds = form.getElementIdsForAlias(id);
+            Set<String> aliasedElementIds = form.getAliasesForElementId(id);
             elementIds.addAll(aliasedElementIds);
-//            elementIds.addAll(aliasedElementIds);
             if (form.hasAttributeId(id)) {
                 elementIds.add(id);
             }

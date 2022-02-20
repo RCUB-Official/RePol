@@ -116,13 +116,15 @@ public final class DateInput extends FormElement {
     }
 
     @Override
-    public Set<String> getXmlForAliases() {
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
         Set<String> aliases = this.getIdAliases();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String stringValue = Objects.nonNull(this.value) ? dateFormat.format(value) : "null";
         Set<String> xmlForAliases = new HashSet<String>();
         for (String alias : aliases) {
-            xmlForAliases.add("<field type=\"date\" id=\"" + alias + "\"><value>" + stringValue + "</value></field>");
+            if (!skipIds.contains(alias) && !getId().equals(alias)) {
+                xmlForAliases.add("\n\t<field type=\"date\" id=\"" + alias + "\"><value>" + stringValue + "</value></field>");
+            }
         }
         return xmlForAliases;
     }

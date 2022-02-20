@@ -283,6 +283,7 @@ public final class Form implements Cacheable {
 
     public void sync() throws ConditionNotFoundException {
         for (FormElement fe : elementMap.values()) {
+            System.out.println("Form syncing element " + fe.getId() + " with aliases " + Arrays.toString(fe.getIdAliases().toArray()));
             mySessionController.requestSync(fe);
         }
     }

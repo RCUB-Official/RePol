@@ -262,22 +262,24 @@ public final class PoolPicker extends FormElement {
     }
 
     @Override
-    public Set<String> getXmlForAliases() {
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
         Set<String> aliases = this.getIdAliases();
         Set<String> xmlForAliases = new HashSet<>();
         for (String alias : aliases) {
             String xml;
-            if (!getValues().isEmpty()) {
-                xml = "<field type=\"poolpicker\" id=\"" + getId() + "\">";
-                for (String value : getValues()) {
-                    xml += "<value>" + XMLUtilities.xmlEscape(value) + "</value>";
+            if (!skipIds.contains(alias) && !getId().equals(alias)) {
+                if (!getValues().isEmpty()) {
+                    xml = "\n\t<field type=\"poolpicker\" id=\"" + getId() + "\">";
+                    for (String value : getValues()) {
+                        xml += "<value>" + XMLUtilities.xmlEscape(value) + "</value>";
+                    }
+                    xml += "</field>";
+                } else {
+                    xml = "";
                 }
-                xml += "</field>";
-            } else {
-                xml = "";
-            }
-            if (!xml.isEmpty()) {
-                xmlForAliases.add(xml);
+                if (!xml.isEmpty()) {
+                    xmlForAliases.add(xml);
+                }
             }
         }
         return xmlForAliases;

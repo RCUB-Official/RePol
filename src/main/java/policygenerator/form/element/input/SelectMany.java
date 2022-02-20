@@ -199,24 +199,26 @@ public final class SelectMany extends FormElement {
     }
 
     @Override
-    public Set<String> getXmlForAliases() {
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
         Set<String> aliases = this.getIdAliases();
         Set<String> xmlForAliases = new HashSet<>();
         for (String alias : aliases) {
             String xml;
-            if (!availableValues.isEmpty()) {
-                xml = "<field type=\"selectmany\" id=\"" + getId() + "\">";
-                for (SelectionElement av : availableValues) {
-                    if (av.isSelected()) {
-                        xml += "<value>" + XMLUtilities.xmlEscape(av.getValue()) + "</value>";
+            if (!skipIds.contains(alias) && !getId().equals(alias)) {
+                if (!availableValues.isEmpty()) {
+                    xml = "\n\t<field type=\"selectmany\" id=\"" + alias + "\">";
+                    for (SelectionElement av : availableValues) {
+                        if (av.isSelected()) {
+                            xml += "<value>" + XMLUtilities.xmlEscape(av.getValue()) + "</value>";
+                        }
                     }
+                    xml += "</field>";
+                } else {
+                    xml = "";
                 }
-                xml += "</field>";
-            } else {
-                xml = "";
-            }
-            if (!xml.isEmpty()) {
-                xmlForAliases.add(xml);
+                if (!xml.isEmpty()) {
+                    xmlForAliases.add(xml);
+                }
             }
         }
         return xmlForAliases;

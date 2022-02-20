@@ -212,13 +212,13 @@ public final class AddList extends FormElement {
     }
 
     @Override
-    public Set<String> getXmlForAliases() {
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
         Set<String> aliases = this.getIdAliases();
         System.out.println("AddList id aliases " + aliases.size());
         Set<String> xmlForAliases = new HashSet<>();
         for (String alias : aliases) {
             String xml;
-            if (!getId().equals(alias) && !values.isEmpty()) {
+            if (!skipIds.contains(alias) && !getId().equals(alias) && !values.isEmpty()) {
                 xml = "<field type=\"addlist\" id=\"" + alias + "\">";
                 for (String value : values) {
                     xml += "<value>" + XMLUtilities.xmlEscape(value) + "</value>";

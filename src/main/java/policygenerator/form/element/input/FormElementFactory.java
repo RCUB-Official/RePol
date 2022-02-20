@@ -34,6 +34,7 @@ public class FormElementFactory {
         String attributeIdAliases = XMLUtilities.getAttributeValue(node, "aliases"); // Support for id aliases
         Set<String> idAliases = new HashSet<>();
         if (Objects.nonNull(attributeIdAliases)) {
+            System.out.println("Parsing input element with aliases " + attributeIdAliases + " for node" + node.getTextContent());
             for (String alias : attributeIdAliases.split(ALIAS_DELIMITER)) {
                 idAliases.add(alias);
             }

@@ -148,11 +148,13 @@ public final class OneLine extends FormElement {
     }
 
     @Override
-    public Set<String> getXmlForAliases() {
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
         Set<String> aliases = this.getIdAliases();
         Set<String> xmlForAliases = new HashSet<>();
         for (String alias : aliases) {
-            xmlForAliases.add("<field type=\"oneline\" id=\"" + alias + "\"><value>" + XMLUtilities.xmlEscape(value) + "</value></field>");
+            if (!skipIds.contains(alias) && !getId().equals(alias)) {
+                xmlForAliases.add("\n\t<field type=\"oneline\" id=\"" + alias + "\"><value>" + XMLUtilities.xmlEscape(value) + "</value></field>");
+            }
         }
         return xmlForAliases;
     }

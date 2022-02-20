@@ -6,7 +6,10 @@ import framework.utilities.Utilities;
 import framework.utilities.xml.MissingAttributeException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -71,15 +74,17 @@ public final class SessionController implements Serializable {
         return (Form) formCache.get(id);
     }
 
-    private void preload(List<String> formIds) {
+    private void preload(Set<String> formIds) {
         for (String id : formIds) {
             try {
-                Form form = (Form) formCache.get(id);
-                if (form == null) {
+                Form form;
+                if (Objects.isNull(formCache.get(id))) {
                     form = FormFactory.getInstance().getForm(this, id);
                     formCache.put(form);
-                    form.sync();
+                } else {
+                    form = (Form) formCache.get(id);
                 }
+                form.sync();
             } catch (Exception ex) {    // No need to throw an exception because the id might come from a faulty imported file
                 LOG.log(Level.SEVERE, null, ex);
             }
@@ -117,15 +122,17 @@ public final class SessionController implements Serializable {
 
     // IMPORT/EXPORT
     public void uploadFile(FileUploadEvent event) {
-        List<String> formIds = dataShare.processUpload(event);
+        Set<String> formIds = dataShare.processUpload(event);
+        System.out.println("JOVANA sessionController discoveredForms: " + Arrays.toString(formIds.toArray()));
+
         used = true;
 
         activityLogger.uploadedDocument();
 
-        if (!formIds.isEmpty()) {
-            if (FormFactory.getInstance().validateFormId(formIds.get(0))) {
-                activityLogger.setLastRequestedFormId(formIds.get(0));
-            }
+        if (Objects.nonNull(formIds) && !formIds.isEmpty()) {
+//            if (FormFactory.getInstance().validateFormId(formIds.get(0))) {
+//                activityLogger.setLastRequestedFormId(formIds.get(0));
+//            }
             preload(formIds);
         }
     }
