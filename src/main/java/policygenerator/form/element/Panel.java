@@ -38,7 +38,7 @@ public final class Panel {
         this.elements.addAll(elements);
     }
 
-    public List<FormElement> getElements() throws ConditionNotFoundException {
+    public List<FormElement> getElements() {
         List<FormElement> list = new LinkedList<>();
         list.addAll(elements);
         return list;

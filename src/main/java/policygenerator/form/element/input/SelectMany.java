@@ -4,8 +4,12 @@ import policygenerator.form.element.SelectionElement;
 import policygenerator.form.element.Panel;
 import framework.settings.RepolSettings;
 import framework.utilities.xml.XMLUtilities;
+
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
 import policygenerator.form.element.ListFactory;
 import policygenerator.form.element.exceptions.MisconfiguredSelectionList;
 
@@ -13,8 +17,8 @@ public final class SelectMany extends FormElement {
 
     private final List<SelectionElement> availableValues;
 
-    SelectMany(Panel panel, String id, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
-        super(panel, Type.SELECTMANY, id, mandatory, label, conditionId, null, null);
+    SelectMany(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId, String listId) throws MisconfiguredSelectionList {
+        super(panel, Type.SELECTMANY, id, idAliases, mandatory, label, conditionId, null, null);
         availableValues = new LinkedList<>();
 
         List<SelectionElement> fetchedList = ListFactory.getInstance().getSelectionList(listId);
@@ -193,4 +197,31 @@ public final class SelectMany extends FormElement {
         }
         return xml;
     }
+
+    @Override
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
+        Set<String> aliases = this.getIdAliases();
+        Set<String> xmlForAliases = new HashSet<>();
+        for (String alias : aliases) {
+            String xml;
+            if (!skipIds.contains(alias) && !getId().equals(alias)) {
+                if (!availableValues.isEmpty()) {
+                    xml = "\n\t<field type=\"selectmany\" id=\"" + alias + "\">";
+                    for (SelectionElement av : availableValues) {
+                        if (av.isSelected()) {
+                            xml += "<value>" + XMLUtilities.xmlEscape(av.getValue()) + "</value>";
+                        }
+                    }
+                    xml += "</field>";
+                } else {
+                    xml = "";
+                }
+                if (!xml.isEmpty()) {
+                    xmlForAliases.add(xml);
+                }
+            }
+        }
+        return xmlForAliases;
+    }
+
 }

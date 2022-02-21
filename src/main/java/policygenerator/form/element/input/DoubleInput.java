@@ -2,12 +2,15 @@ package policygenerator.form.element.input;
 
 import policygenerator.form.element.Panel;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public final class DoubleInput extends FormElement {
 
     private Double value;
 
-    DoubleInput(Panel panel, String id, boolean mandatory, String label, String conditionId) {
-        super(panel, Type.DOUBLE, id, mandatory, label, conditionId, null, null); // TODO: regex validation
+    DoubleInput(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId) {
+        super(panel, Type.DOUBLE, id, idAliases, mandatory, label, conditionId, null, null); // TODO: regex validation
         this.value = null;
     }
 
@@ -102,6 +105,18 @@ public final class DoubleInput extends FormElement {
         }
 
         return "<field type=\"double\" id=\"" + getId() + "\"" + formId + "><value>" + value + "</value></field>";
+    }
+
+    @Override
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
+        Set<String> aliases = this.getIdAliases();
+        Set<String> xmlForAliases = new HashSet<>();
+        for (String alias : aliases) {
+            if (!skipIds.contains(alias) && !getId().equals(alias)) {
+                xmlForAliases.add("\n\t<field type=\"double\" id=\"" + alias + "\"><value>" + value + "</value></field>");
+            }
+        }
+        return xmlForAliases;
     }
 
 }

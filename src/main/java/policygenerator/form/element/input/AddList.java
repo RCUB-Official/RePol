@@ -4,8 +4,11 @@ import policygenerator.form.element.SelectionElement;
 import policygenerator.form.element.Panel;
 import framework.settings.RepolSettings;
 import framework.utilities.xml.XMLUtilities;
+
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import policygenerator.form.condition.exceptions.ConditionNotFoundException;
@@ -16,9 +19,10 @@ public final class AddList extends FormElement {
     private final List<String> values = new LinkedList<>();
     private String toBeAdded;
 
-    AddList(Panel panel, String id, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
-        super(panel, Type.ADDLIST, id, mandatory, label, conditionId, validationRegex, validationMessage);
+    AddList(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
+        super(panel, Type.ADDLIST, id, idAliases, mandatory, label, conditionId, validationRegex, validationMessage);
         this.toBeAdded = "";
+//        System.out.println("AddList konstruktor " + idAliases.size());
     }
 
     public void add() throws ElementNotFoundException, ConditionNotFoundException {
@@ -205,6 +209,30 @@ public final class AddList extends FormElement {
             xml = "";
         }
         return xml;
+    }
+
+    @Override
+    public Set<String> getXmlForAliases(Set<String> skipIds) {
+        Set<String> aliases = this.getIdAliases();
+//        System.out.println("AddList id aliases " + aliases.size());
+        Set<String> xmlForAliases = new HashSet<>();
+        for (String alias : aliases) {
+            String xml;
+            if (!skipIds.contains(alias) && !getId().equals(alias) && !values.isEmpty()) {
+                xml = "<field type=\"addlist\" id=\"" + alias + "\">";
+                for (String value : values) {
+                    xml += "<value>" + XMLUtilities.xmlEscape(value) + "</value>";
+                }
+                xml += "</field>";
+            } else {
+                xml = "";
+            }
+            if (!xml.isEmpty()) {
+                xmlForAliases.add(xml);
+            }
+        }
+//        System.out.println("AddList xml for aliases " + aliases.size());
+        return xmlForAliases;
     }
 
 }

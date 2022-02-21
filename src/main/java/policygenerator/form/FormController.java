@@ -26,7 +26,11 @@ public class FormController implements Serializable {
 
     public FormController() {
         sessionController = SessionController.getSessionController();
+//        System.out.println("FormContoller: form  headers");
         formHeaders = FormFactory.getInstance().getFormHeaders();
+//        for (FormHeader header : formHeaders) {
+//            System.out.println(header.getFormId());
+//        }
 
         form = null;
         errorMessage = null;
@@ -69,6 +73,7 @@ public class FormController implements Serializable {
 
     // Form selection mode
     public List<FormHeader> getFormHeaders() {
+//        System.out.println("FormController: formHeaders.size " + formHeaders.size());
         return formHeaders;
     }
 

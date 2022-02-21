@@ -2,10 +2,8 @@ ${embedded_data?no_esc}
 
 <html>
             <head>
-                        <title>Repository Policy - ${repo_name}</title>
+                        <title>Repository Policy - <#if service_name_the>the </#if>${service_name}</title>
         <style>
-            .red, red-strong {
-                color:red;
 }
             .red-strong {
                 font-weight:bold;
@@ -14,7 +12,7 @@ ${embedded_data?no_esc}
             </head>
             <body>
  
-<h1>Repository Policy - ${repo_name}</h1>
+<h1>Repository Policy - <#if service_name_the>the </#if>${service_name}</h1>
 
 <div class="generated_header">
             <p>Date (yyyy-mm-dd): ${policy_date?date?string("yyyy-MM-dd")}</p>
@@ -23,12 +21,12 @@ ${embedded_data?no_esc}
 <!-- PREAMBLE -->
  
 <#if include_preamble>
-<h2>About ${repo_name}</h2>
+<h2>About <#if service_name_the>the </#if>${service_name}</h2>
  
 <p><span class="red-strong">TODO: TO REVIEW AND EDIT BY POLICY WRITER, (SEARCH FOR PARAGRAPHS WITH &quot;TODO:&quot;)</span></p>
-<p><span class="red-strong">TODO: </span>${repo_owner} has established the ${repo_type} repository <#if repo_url!=""><a target="_blank" href="${repo_url}">${repo_name} (${repo_url})</a><#else>${repo_name})</#if>. It is the digital repository of ALL (OR THOSE QUALIFIED/CONSTRAINED WITH, E.G., “research”) MEMBERS OR DEPARTMENTS OR DEPOSITING/ASSOCIATED INSTITUTIONS of ${repo_owner}<#if parent_organization!=""> OR ${parent_organization}</#if>.</p>
-<p><span class="red-strong">TODO: </span>The aim of the repository is to provide open access to DIGITAL COLLECTIONS OR RESEARCH OUTPUTS OR SCHOLARLY OUTPUTS of ${repo_owner} IN SOME SPECIFIC FIELD (IN LINE WITH THE REPOSITORY TYPE (${repo_type}) AND SUBJECTS<#if repo_subjects?has_content> (<#list repo_subjects as element>${element}<#if element?has_next>, </#if></#list>)</#if>). The main aim of this repository is to increase the visibility of its <#if item_types_overally=="educational materials">teaching and </#if>research output / OR of the MEMBERS OR DEPARTMENTS<#if allowed_depositors?has_content> OR ALLOWED DEPOSITORS (<#list allowed_depositors as element>${element}<#if element?has_next>, </#if></#list>)</#if> of ${repo_owner}<#if parent_organization!=""> OR ${parent_organization}</#if> and, at the same time, provide free access, in compliance with the <#if oa_policy_url!=""><a target="_blank" href="${oa_policy_url}"> Open Access/Science Policy (${oa_policy_url })</a><#else>LINK TO Open Access/Science Policy (ALSO PRINTABLE URL)</#if> of ${repo_owner}<#if parent_organization!=""> OR ${parent_organization}</#if> passed by the GOVERNING BODY (DATE OF POLICY, E.G., 1 April 2020).</p>
-<p><span class="red-strong">TODO: </span>The aim of this policy is to ensure that the contents of ${repo_name} reflect and strengthen the ${repo_owner}’s<#if parent_organization!=""> OR ${parent_organization}&apos;s</#if> tradition of research excellence, by increasing the visibility of ${repo_owner}’s research, and providing open access to its research outputs. This policy also establishes the framework within which ${repo_name} is managed.</p>
+<p><span class="red-strong">TODO: </span><#if service_owner_the>the </#if>${service_owner} has established the ${repo_type} repository <#if service_url!=""><a target="_blank" href="${service_url}"><#if service_name_the>the </#if>${service_name} (${service_url})</a><#else><#if service_name_the>the </#if>${service_name})</#if>. It is the digital repository of ALL (OR THOSE QUALIFIED/CONSTRAINED WITH, E.G., “research”) MEMBERS OR DEPARTMENTS OR DEPOSITING/ASSOCIATED INSTITUTIONS of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if>.</p>
+<p><span class="red-strong">TODO: </span>The aim of the repository is to provide open access to DIGITAL COLLECTIONS OR RESEARCH OUTPUTS OR SCHOLARLY OUTPUTS of <#if service_owner_the>the </#if>${service_owner} IN SOME SPECIFIC FIELD (IN LINE WITH THE REPOSITORY TYPE (${repo_type}) AND SUBJECTS<#if repo_subjects?has_content> (<#list repo_subjects as element>${element}<#if element?has_next>, </#if></#list>)</#if>). The main aim of this repository is to increase the visibility of its <#if item_types_overally=="educational materials">teaching and </#if>research output / OR of the MEMBERS OR DEPARTMENTS<#if allowed_depositors?has_content> OR ALLOWED DEPOSITORS (<#list allowed_depositors as element>${element}<#if element?has_next>, </#if></#list>)</#if> of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if> and, at the same time, provide free access, in compliance with the <#if oa_policy_url!=""><a target="_blank" href="${oa_policy_url}"> Open Access/Science Policy (${oa_policy_url })</a><#else>LINK TO Open Access/Science Policy (ALSO PRINTABLE URL)</#if> of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if> passed by the GOVERNING BODY (DATE OF POLICY, E.G., 1 April 2020).</p>
+<p><span class="red-strong">TODO: </span>The aim of this policy is to ensure that the contents of <#if service_name_the>the </#if>${service_name} reflect and strengthen the <#if service_owner_the>the </#if>${service_owner}’s<#if parent_organization!=""> OR ${parent_organization}&apos;s</#if> tradition of research excellence, by increasing the visibility of <#if service_owner_the>the </#if>${service_owner}’s research, and providing open access to its research outputs. This policy also establishes the framework within which <#if service_name_the>the </#if>${service_name} is managed.</p>
 <p><span class="red-strong">TODO: </span><span class="red">DESCRIPTION OF REPOSITORY PLATFORM AND VENDOR; EXAMPLE: </span>The repository uses a <a target="_blank" href="https://github.com/DSpace/DSpace">DSpace</a>-based software platform developed and maintained by the MAINTAINER/SUPPORTER (WITH LINK AND PRINTABLE URL). The software platform is compliant with the <a target="_blank" href="https://guidelines.openaire.eu/en/latest/literature/index_guidelines-lit_v3.html ">OpenAIRE Guidelines for Literature Repositories v3</a>.</p>
 <p><span class="red-strong">TODO: </span><span class="red">DESCRIPTION OF FRONT-END APP SUPPORTING DEPOSITORS OR OTHER USERS, EXAMPLE: </span>The repository is supplied with the external application FRONT END APP NAME (LINK AND PRINTABLE URL), developed by the SOLUTION DEVELOPER (LINK AND PRINTABLE URL). In FRONT-END APP, authors and funding information are presented as normalized entities. FRONT-END APP also enables metadata export and displays <a target="_blank" href="https://www.altmetric.com/">Altmetric scores</a> and <a target="_blank" href="https://www.dimensions.ai/">Dimensions</a> citations.</p>
 <p>Related documents:</p>
@@ -53,9 +51,9 @@ ${embedded_data?no_esc}
  
 <h2><span class=”red-strong”>TODO: </span>Designated Community</h2>
 <span class=”red”>Describe briefly the groups of current and potential users and communities for whom the content of the repository is relevant. The designated community may include various sub-communities and it may be relevant to distinguish between primary and secondary communities or internal and external users. For example:</span>
-<p>The Designated Community of ${repo_name} includes the following user groups:</p>
+<p>The Designated Community of <#if service_name_the>the </#if>${service_name} includes the following user groups:</p>
 <ul>
-            <li>Internal users: MEMBERS, STAFF OR FACULTY of ${repo_owner}<#if parent_organization!=""> OR ${parent_organization}</#if>. They can deposit their research outputs in the repository, browse and search the metadata, and, in most cases, download content from all repository collections.</li>
+            <li>Internal users: MEMBERS, STAFF OR FACULTY of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if>. They can deposit their research outputs in the repository, browse and search the metadata, and, in most cases, download content from all repository collections.</li>
             <li>External users: local and international professional researchers, citizen scientists, teachers, students, informed citizens, the general audience, etc. They can browse and search the metadata, and download the Open Access content from the repository.</li>
             <li>Associates: local and international professional researchers who have joint projects with internal users. They can browse and search the metadata, download Open Access content from the repository, access the collection dedicated to their project.</li>
 </ul>
@@ -72,8 +70,8 @@ ${embedded_data?no_esc}
 </#if>
  
 <#if metadata_policy_flavour=="cc0" || metadata_policy_flavour=="cc-by">
-            <li>The metadata of the items deposited in ${repo_name} are made available under the Creative Commons <#if metadata_policy_flavour=="cc0"><a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option (“no rights reserved", https://creativecommons.org/publicdomain/zero/1.0/)</a>. This dedication<#else><a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Attribution CC BY (Attribution Only)</a> licence. This licence</#if> applies exclusively to the metadata associated with the items deposited and under no circumstances is a substitute for or affects their individual licences or permits.</li>
-            <li>Anyone can access, copy, share, modify, harvest and re-use the metadata for any purpose, free of charge and without requiring permission from ${repo_owner}<#if metadata_policy_flavour=="cc-by">, as long as the original source of metadata of is cited</#if>.</li>
+            <li>The metadata of the items deposited in <#if service_name_the>the </#if>${service_name} are made available under the Creative Commons <#if metadata_policy_flavour=="cc0"><a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option (“no rights reserved", https://creativecommons.org/publicdomain/zero/1.0/)</a>. This dedication<#else><a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Attribution CC BY (Attribution Only)</a> licence. This licence</#if> applies exclusively to the metadata associated with the items deposited and under no circumstances is a substitute for or affects their individual licences or permits.</li>
+            <li>Anyone can access, copy, share, modify, harvest and re-use the metadata for any purpose, free of charge and without requiring permission from <#if service_owner_the>the </#if>${service_owner}<#if metadata_policy_flavour=="cc-by">, as long as the original source of metadata of is cited</#if>.</li>
 <#else><!-- descriptive (OpenDOAR) -->
             <#if commercial_metadata_use_allowed><!-- Minimum -->
             <li>The metadata may be re-used in any medium without prior permission for not-for-profit purposes provided:</li>
@@ -83,13 +81,13 @@ ${embedded_data?no_esc}
                         <ul>
                                     <li>The OAI Identifier or a link to the original metadata record is given</li>
                         <#if mention_repository_owner>
-                                    <li>${repo_owner} is mentioned</li>
+                                    <li><#if service_owner_the>The </#if>${service_owner} is mentioned</li>
                         </#if>
                         </ul>
             </li>
 </#if>
-            <li>${repo_owner} is dedicated to providing high-quality and machine-readable item-level metadata.</li>
-            <li>Mention of ${repo_name} is appreciated but not mandatory.</li>
+            <li><#if service_owner_the>The </#if>${service_owner} is dedicated to providing high-quality and machine-readable item-level metadata.</li>
+            <li>Mention of <#if service_name_the>the </#if>${service_name} is appreciated but not mandatory.</li>
 </ul>
  
 <!-- DATA POLICY -->
@@ -151,7 +149,7 @@ ${embedded_data?no_esc}
 <#if !commercial_item_use_allowed>
             <li>Data must not be used commercially in any format or medium without formal permission of the copyright holders.</li>
 </#if>
-            <li>Mention of ${repo_name} is appreciated but not mandatory.</li> 
+            <li>Mention of <#if service_name_the>the </#if>${service_name} is appreciated but not mandatory.</li>
 </ul>
  
 <!-- CONTENT POLICY -->
@@ -159,9 +157,9 @@ ${embedded_data?no_esc}
 <h2>Content Policy</h2>
  
 <ul>
-            <li>${repo_name} is a<#if repo_type=="institutional" || repo_type=="aggregating">n</#if> ${repo_type} repository.</li>
+            <li><#if service_name_the>The </#if>${service_name} is a<#if repo_type=="institutional" || repo_type=="aggregating">n</#if> ${repo_type} repository.</li>
             <#if repo_type=="subject-based">
-            <li>${repo_name} is a subject-based repository, covering these specialties:
+            <li><#if service_name_the>The </#if>${service_name} is a subject-based repository, covering these specialties:
                         <ul>
                         <#list repo_subjects as element>
                                     <li>${element}</li>
@@ -171,9 +169,9 @@ ${embedded_data?no_esc}
             </#if>
  
             <#if item_types_overally=="all">
-            <li>${repo_name} holds all types of materials.</li>
+            <li><#if service_name_the>The </#if>${service_name} holds all types of materials.</li>
             <#else>
-            <li>${repo_name} includes the following item types:
+            <li><#if service_name_the>The </#if>${service_name} includes the following item types:
                         <ul>
                         <#list item_types as element>
                                     <li>${element}</li>
@@ -189,9 +187,9 @@ ${embedded_data?no_esc}
             </#if>
  
             <#if item_types_overally=="educational materials">
-            <li>${repo_name} is restricted to scholarly material produced by affiliates of ${repo_owner}.</li>
+            <li><#if service_name_the>The </#if>${service_name} is restricted to scholarly material produced by affiliates of <#if service_owner_the>the </#if>${service_owner}.</li>
             <#elseif item_types_overally=="all">
-            <li>${repo_name} holds all types of materials.</li>
+            <li><#if service_name_the>The </#if>${service_name} holds all types of materials.</li>
             <#elseif item_types_overally=="data">
             <li>Deposited items may include only data.</li>
             </#if>
@@ -211,7 +209,7 @@ ${embedded_data?no_esc}
  
 <ul>
 <#if direct_submissions_allowed>
-            <li>Items may only be deposited by authorised users of ${repo_name} with appropriate credentials.</li>
+            <li>Items may only be deposited by authorised users of <#if service_name_the>the </#if>${service_name} with appropriate credentials.</li>
             <#if allowed_depositors?size!=0>
             <li>Authorised users include:
                         <ul>
@@ -236,23 +234,23 @@ and applicable embargos</li>
             <li>The administrator only vets items for the exclusion of spam.</li>
             <#else><!-- Optimum: admin also vets items for eligibility of authors, relevance and format -->
             <li>Deposited metadata and items are subject to verification by repository administrators</li> 
-            <li>The administrators vet items for the eligibility of authors/depositors, relevance to the scope of ${repo_name}, valid layout and format, and the exclusion of spam.</li>
+            <li>The administrators vet items for the eligibility of authors/depositors, relevance to the scope of <#if service_name_the>the </#if>${service_name}, valid layout and format, and the exclusion of spam.</li>
             </#if>
  
             <li>Depositors must own all necessary rights required to deposit the data. Data depositors are held responsible for compliance with any national or international legal regulations and publisher embargoes.</li>
  
             <li>The validity and authenticity of the content of submissions and any copyright violations are the entirely responsibility of the depositor.</li>
             <#if !opendoar_minimum>
-             <li>If ${repo_name} receives proof of copyright violation, the relevant item will be removed as soon as possible.</li>
+             <li>If <#if service_name_the>the </#if>${service_name} receives proof of copyright violation, the relevant item will be removed as soon as possible.</li>
             </#if>
  
             <#if file_size_limit_mb gt 0>
             <li>Files exceeding ${file_size_limit_mb} MB in size should not be directly uploaded to the repository. For files with sizes larger than ${file_size_limit_mb} MB, a special upload permission may be sought out with repository administrators.</li>
             </#if>
  
-            <li>By depositing metadata and the content into ${repo_name}, the depositors accept the terms and conditions defined in this Repository Policy.</li>
+            <li>By depositing metadata and the content into <#if service_name_the>the </#if>${service_name}, the depositors accept the terms and conditions defined in this Repository Policy.</li>
 <#else><!-- No direct_submissions_allowed -->
-            <li>${repo_name} is an aggregating repository. Direct submissions are not possible.</li>
+            <li><#if service_name_the>The </#if>${service_name} is an aggregating repository. Direct submissions are not possible.</li>
 </#if>
 </ul>
 
@@ -341,10 +339,10 @@ The system collects personal information submitted during the deposit process. S
 </#if>
 
 <#if regular_backups>
-    <li>${repo_name} regularly backs up its files according to current best practice.</li>
+    <li><#if service_name_the>The </#if>${service_name} regularly backs up its files according to current best practice.</li>
 </#if>
 
-            <li>${repo_name} will try to ensure continued content readability and accessibility of the deposited items.</li>
+            <li><#if service_name_the>The </#if>${service_name} will try to ensure continued content readability and accessibility of the deposited items.</li>
 <#if file_format_migration>
             <li>Where possible, items will be migrated to new file formats when necessary.</li>
             <li>The repository may work with external partners to convert or migrate file formats, develop and implement software emulations for old file formats, and/or record preservation metadata.</li>
@@ -376,7 +374,7 @@ The system collects personal information submitted during the deposit process. S
                         </ul>
             </li>
             <#else>
-            <li>Identifiers/URLs of withdrawn items will be retained transiently. ${repo_name} may reveal a deleted status for records upon harvesting requests.</li>
+            <li>Identifiers/URLs of withdrawn items will be retained transiently. <#if service_name_the>The </#if>${service_name} may reveal a deleted status for records upon harvesting requests.</li>
             </#if>
             <li>The metadata of withdrawn items will not be searchable.</li>
             <li>Changes to deposited items are not permitted.<!-- Sometimes, updates are allowed, see below. --></li>
@@ -385,7 +383,7 @@ The system collects personal information submitted during the deposit process. S
             <li>Errata and corrigenda lists may be included with the original record if required.</li>
 </#if>
 <#if committed_to_preserve_repository_database>
-            <li>In the event of ${repo_name} being closed down, ${repo_owner} will endeavour to transfer the database to another archive</li>
+            <li>In the event of <#if service_name_the>the </#if>${service_name} being closed down, <#if service_owner_the>the </#if>${service_owner} will endeavour to transfer the database to another archive</li>
 <#else>
             <li>No preservation or closure/succession policy is defined.</li>
 </#if>
@@ -396,9 +394,9 @@ The system collects personal information submitted during the deposit process. S
 <h2>Harvesting Policy</h2>
 
 <#if metadata_policy_flavour=="cc0">
-<li>The metadata of the items deposited in ${repo_name} are made available to harvesters and aggregators under the Creative Commons <a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option (“no rights reserved", https://creativecommons.org/publicdomain/zero/1.0/)</a></li>
+<li>The metadata of the items deposited in <#if service_name_the>the </#if>${service_name} are made available to harvesters and aggregators under the Creative Commons <a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option (“no rights reserved", https://creativecommons.org/publicdomain/zero/1.0/)</a></li>
 <#elseif metadata_policy_flavour=="cc-by">
-<li>Anyone can access, copy, share, modify, harvest and re-use the metadata for any purpose, free of charge and without requiring permission from ${repo_owner}, as long as the original source of metadata of is cited</li>
+<li>Anyone can access, copy, share, modify, harvest and re-use the metadata for any purpose, free of charge and without requiring permission from <#if service_owner_the>the </#if>${service_owner}, as long as the original source of metadata of is cited</li>
 <#else><!-- descriptive (OpenDOAR) -->
             <#if commercial_metadata_use_allowed><!-- Minimum -->
             <li>The metadata may be re-used by harvesters and aggregators without prior permission for not-for-profit purposes provided:</li>
@@ -408,7 +406,7 @@ The system collects personal information submitted during the deposit process. S
                         <ul>
                                     <li>The OAI Identifier or a link to the original metadata record is given</li>
                         <#if mention_repository_owner>
-                                    <li>${repo_owner} is mentioned</li>
+                                    <li><#if service_owner_the>The </#if>${service_owner} is mentioned</li>
                         </#if>
                         </ul>
             </li>

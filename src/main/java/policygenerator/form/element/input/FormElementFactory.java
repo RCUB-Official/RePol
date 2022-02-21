@@ -3,8 +3,9 @@ package policygenerator.form.element.input;
 import policygenerator.form.element.Panel;
 import framework.utilities.xml.XMLUtilities;
 import framework.utilities.xml.MissingAttributeException;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import policygenerator.form.trigger.Trigger;
@@ -13,6 +14,7 @@ import policygenerator.form.element.exceptions.UnknownTriggerOperation;
 import policygenerator.form.element.exceptions.UnknownTypeInputException;
 
 public class FormElementFactory {
+    public static final String ALIAS_DELIMITER = ";";
 
     public static FormElement parseInputElement(Panel panel, Node node) throws UnknownTypeInputException, MisconfiguredSelectionList, UnknownTriggerOperation, MissingAttributeException {
         String type = XMLUtilities.getRequiredAttributeValue(node, "type");
@@ -29,6 +31,15 @@ public class FormElementFactory {
             defaultValues.add(attributeDefaultValue);
         }
 
+        String attributeIdAliases = XMLUtilities.getAttributeValue(node, "aliases"); // Support for id aliases
+        Set<String> idAliases = new HashSet<>();
+        if (Objects.nonNull(attributeIdAliases)) {
+//            System.out.println("Parsing input element with aliases " + attributeIdAliases + " for node" + node.getTextContent());
+            for (String alias : attributeIdAliases.split(ALIAS_DELIMITER)) {
+                idAliases.add(alias);
+            }
+        }
+
         String validationRegex = XMLUtilities.getAttributeValue(node, "validation-regex");
         String validationMessage = XMLUtilities.getAttributeValue(node, "validation-message");
 
@@ -39,34 +50,34 @@ public class FormElementFactory {
 
         switch (type) {
             case "oneline":
-                element = new OneLine(panel, id, mandatory, elementLabel, conditionId, validationRegex, validationMessage);
+                element = new OneLine(panel, id, idAliases, mandatory, elementLabel, conditionId, validationRegex, validationMessage);
                 break;
             case "text":
-                element = new Text(panel, id, mandatory, elementLabel, conditionId, validationRegex, validationMessage);
+                element = new Text(panel, id, idAliases, mandatory, elementLabel, conditionId, validationRegex, validationMessage);
                 break;
             case "boolean":
-                element = new BooleanCheckbox(panel, id, mandatory, elementLabel, conditionId);
+                element = new BooleanCheckbox(panel, id, idAliases, mandatory, elementLabel, conditionId);
                 break;
             case "integer":
-                element = new IntegerInput(panel, id, mandatory, elementLabel, conditionId);
+                element = new IntegerInput(panel, id, idAliases, mandatory, elementLabel, conditionId);
                 break;
             case "double":
-                element = new DoubleInput(panel, id, mandatory, elementLabel, conditionId);
+                element = new DoubleInput(panel, id, idAliases, mandatory, elementLabel, conditionId);
                 break;
             case "date":
-                element = new DateInput(panel, id, mandatory, elementLabel, conditionId);
+                element = new DateInput(panel, id, idAliases, mandatory, elementLabel, conditionId);
                 break;
             case "addlist":
-                element = new AddList(panel, id, mandatory, elementLabel, conditionId, validationRegex, validationMessage);
+                element = new AddList(panel, id, idAliases, mandatory, elementLabel, conditionId, validationRegex, validationMessage);
                 break;
             case "selectone":
-                element = new SelectOne(panel, id, mandatory, elementLabel, conditionId, listId);
+                element = new SelectOne(panel, id, idAliases, mandatory, elementLabel, conditionId, listId);
                 break;
             case "selectmany":
-                element = new SelectMany(panel, id, mandatory, elementLabel, conditionId, listId);
+                element = new SelectMany(panel, id, idAliases, mandatory, elementLabel, conditionId, listId);
                 break;
             case "poolpicker":
-                element = new PoolPicker(panel, id, mandatory, elementLabel, conditionId, validationRegex, validationMessage, listId);
+                element = new PoolPicker(panel, id, idAliases, mandatory, elementLabel, conditionId, validationRegex, validationMessage, listId);
                 break;
             default:
                 throw new UnknownTypeInputException(type);
@@ -125,33 +136,33 @@ public class FormElementFactory {
         return element;
     }
 
-    public static FormElement getDummyElement(String type, String id) {
+    public static FormElement getDummyElement(String type, String id, Set<String> aliasIds) {
         FormElement element;
 
         switch (type) {
             case "oneline":
-                element = new OneLine(null, id, false, null, null, null, null);
+                element = new OneLine(null, id, aliasIds, false, null, null, null, null);
                 break;
             case "text":
-                element = new Text(null, id, false, null, null, null, null);
+                element = new Text(null, id, aliasIds, false, null, null, null, null);
                 break;
             case "boolean":
-                element = new BooleanCheckbox(null, id, false, null, null);
+                element = new BooleanCheckbox(null, id, aliasIds, false, null, null);
                 break;
             case "integer":
-                element = new IntegerInput(null, id, false, null, null);
+                element = new IntegerInput(null, id, aliasIds, false, null, null);
                 break;
             case "double":
-                element = new DoubleInput(null, id, false, null, null);
+                element = new DoubleInput(null, id, aliasIds, false, null, null);
                 break;
             case "date":
-                element = new DateInput(null, id, false, null, null);
+                element = new DateInput(null, id, aliasIds, false, null, null);
                 break;
             case "addlist": // AddList can serve as a dummy for any list-like FormElement
             case "selectone":
             case "selectmany":
             case "poolpicker":
-                element = new AddList(null, id, false, null, null, null, null);
+                element = new AddList(null, id, aliasIds, false, null, null, null, null);
                 break;
             default:
                 element = null;
