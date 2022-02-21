@@ -72,7 +72,7 @@ public final class DataShare {
 
     public synchronized void requestSync(FormElement element) {
 //        if (element.isIdAliased()) {
-        System.out.println("Request sync element id " + element.getId() + " with aliases " + (element.isIdAliased() ? Arrays.toString(element.getIdAliases().toArray()) : " NEMA ALIASE "));
+//        System.out.println("Request sync element id " + element.getId() + " with aliases " + (element.isIdAliased() ? Arrays.toString(element.getIdAliases().toArray()) : " NEMA ALIASE "));
         if (Objects.nonNull(element.getIdAliases())) {
             for (String alias : element.getIdAliases()) {
                 if (latestValues.containsKey(alias)) {
@@ -149,7 +149,7 @@ public final class DataShare {
 //            Set<String> detectedRealElementIds = new HashSet<>();
 
             NodeList fieldNodes = document.getElementsByTagName("field");
-            System.out.println("JOVANA: Number of uploaded nodes " + fieldNodes.getLength());
+//            System.out.println("JOVANA: Number of uploaded nodes " + fieldNodes.getLength());
             for (int i = 0; i < fieldNodes.getLength(); i++) {
                 Node fNode = fieldNodes.item(i);
 
@@ -173,11 +173,11 @@ public final class DataShare {
 
                     Set<String> formIdsForAlias = FormFactory.getInstance().getFormIdsForAttribute(id);
                     affectedFormIds.addAll(formIdsForAlias);
-                    System.out.print("Form ids for for attribute " + id + " size " + formIdsForAlias.size());
-                    for (String formIdForAlias : formIdsForAlias) {
-                        System.out.print(" " + formIdForAlias);
-                    }
-                    System.out.println();
+//                    System.out.print("Form ids for for attribute " + id + " size " + formIdsForAlias.size());
+//                    for (String formIdForAlias : formIdsForAlias) {
+//                        System.out.print(" " + formIdForAlias);
+//                    }
+//                    System.out.println();
                 Set<String> elementAliases = FormFactory.getInstance().getAliasesForElementId(id);
 
                 FormElement element = FormElementFactory.getDummyElement(type, id, elementAliases);

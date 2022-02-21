@@ -38,7 +38,7 @@ public class FormFactory extends XMLHandler {
 
     @Override
     protected void initializeProcedure() throws MissingAttributeException {
-        System.out.println("FormFactory: initialize procedure");
+//        System.out.println("FormFactory: initialize procedure");
         headers = new LinkedList<>();
 
         NodeList forms = xmlDoc.getElementsByTagName("form");
@@ -49,7 +49,7 @@ public class FormFactory extends XMLHandler {
             Map<String, List<String>> aliasesByElementId = new HashMap<>();
 
             NodeList subnodes = forms.item(i).getChildNodes();
-            System.out.println("\tchildNodes.size " + subnodes.getLength());
+//            System.out.println("\tchildNodes.size " + subnodes.getLength());
 
             for (int k = 0; k < subnodes.getLength(); k++) {
                 Node panelOrConditionNOde = subnodes.item(k);
@@ -57,23 +57,23 @@ public class FormFactory extends XMLHandler {
                 if (panelOrConditionNOde.getNodeName().equals("description")) {
                     description = XMLUtilities.innerXml(subnodes.item(k));
                 } else if (panelOrConditionNOde.getNodeName().equals("panel")) {
-                    System.out.println("JOVANA: form " + formId + " panel ");
+//                    System.out.println("JOVANA: form " + formId + " panel ");
                     NodeList panelSubnodes = panelOrConditionNOde.getChildNodes();
                     for (int l = 0; l < panelSubnodes.getLength(); l++) {
                         Node xmlNode = panelSubnodes.item(l);
                         if (xmlNode.getNodeName().equals("input")) {
                             String id = xmlNode.getAttributes().getNamedItem("id").getTextContent();
                             List<String> aliasIds = new ArrayList<>();
-                            System.out.print("\t" + id + " aliases ");
+//                            System.out.print("\t" + id + " aliases ");
 
                             Node aliasesNode = xmlNode.getAttributes().getNamedItem("aliases");
-                            System.out.println("Form " + formId + " aliases for id " + id + " " + (Objects.nonNull(aliasesNode) ? aliasesNode.getTextContent() : "null"));
+//                            System.out.println("Form " + formId + " aliases for id " + id + " " + (Objects.nonNull(aliasesNode) ? aliasesNode.getTextContent() : "null"));
                             if (Objects.nonNull(aliasesNode)) {
                                 String[] aliases = aliasesNode.getTextContent().split(ALIAS_DELIMITER);
                                 aliasIds.addAll(Arrays.asList(aliases));
-                                System.out.print(Arrays.toString(aliases));
+//                                System.out.print(Arrays.toString(aliases));
                             }
-                            System.out.println();
+//                            System.out.println();
                             aliasesByElementId.put(id, aliasIds);
                         }
                     }
@@ -82,19 +82,19 @@ public class FormFactory extends XMLHandler {
 
             headers.add(new FormHeader(formId, label, description, aliasesByElementId));
         }
-        System.out.println("\theaders number " + this.headers.size());
+//        System.out.println("\theaders number " + this.headers.size());
     }
 
     public Set<String> getFormIdsForAttribute(String attributeId) {
-        System.out.println("finding form ids for attribute " + attributeId);
+//        System.out.println("finding form ids for attribute " + attributeId);
         Set<String> formIds = new HashSet<>();
         for (FormHeader formHeader : this.headers) {
-            System.out.print("\ttrying " + formHeader.getFormId());
+//            System.out.print("\ttrying " + formHeader.getFormId());
             if (formHeader.hasAtrribute(attributeId)) {
                 formIds.add(formHeader.getFormId());
-                System.out.print(" has");
+//                System.out.print(" has");
             }
-            System.out.println();
+//            System.out.println();
         }
         return formIds;
     }
@@ -105,7 +105,7 @@ public class FormFactory extends XMLHandler {
     }
 
     public List<FormHeader> getFormHeaders() {
-        System.out.println("FormFactory.getFormHeaders " + headers.size());
+//        System.out.println("FormFactory.getFormHeaders " + headers.size());
         return headers;
     }
 

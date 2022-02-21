@@ -283,7 +283,7 @@ public final class Form implements Cacheable {
 
     public void sync() throws ConditionNotFoundException {
         for (FormElement fe : elementMap.values()) {
-            System.out.println("Form syncing element " + fe.getId() + " with aliases " + Arrays.toString(fe.getIdAliases().toArray()));
+//            System.out.println("Form syncing element " + fe.getId() + " with aliases " + Arrays.toString(fe.getIdAliases().toArray()));
             mySessionController.requestSync(fe);
         }
     }
@@ -397,7 +397,7 @@ public final class Form implements Cacheable {
     }
 
     public String getFormElementRealId(Type aliasType, String alias) {
-        System.out.println("String alias " + alias + " " + " aliasType " + aliasType);
+//        System.out.println("String alias " + alias + " " + " aliasType " + aliasType);
         for (Panel panel : this.panels) {
 
             for (FormElement element : panel.getElements()) {

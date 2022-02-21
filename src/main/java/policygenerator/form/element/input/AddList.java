@@ -22,7 +22,7 @@ public final class AddList extends FormElement {
     AddList(Panel panel, String id, Set<String> idAliases, boolean mandatory, String label, String conditionId, String validationRegex, String validationMessage) {
         super(panel, Type.ADDLIST, id, idAliases, mandatory, label, conditionId, validationRegex, validationMessage);
         this.toBeAdded = "";
-        System.out.println("AddList konstruktor " + idAliases.size());
+//        System.out.println("AddList konstruktor " + idAliases.size());
     }
 
     public void add() throws ElementNotFoundException, ConditionNotFoundException {
@@ -214,7 +214,7 @@ public final class AddList extends FormElement {
     @Override
     public Set<String> getXmlForAliases(Set<String> skipIds) {
         Set<String> aliases = this.getIdAliases();
-        System.out.println("AddList id aliases " + aliases.size());
+//        System.out.println("AddList id aliases " + aliases.size());
         Set<String> xmlForAliases = new HashSet<>();
         for (String alias : aliases) {
             String xml;
@@ -231,7 +231,7 @@ public final class AddList extends FormElement {
                 xmlForAliases.add(xml);
             }
         }
-        System.out.println("AddList xml for aliases " + aliases.size());
+//        System.out.println("AddList xml for aliases " + aliases.size());
         return xmlForAliases;
     }
 

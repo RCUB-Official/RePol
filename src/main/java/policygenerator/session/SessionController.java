@@ -123,7 +123,7 @@ public final class SessionController implements Serializable {
     // IMPORT/EXPORT
     public void uploadFile(FileUploadEvent event) {
         Set<String> formIds = dataShare.processUpload(event);
-        System.out.println("JOVANA sessionController discoveredForms: " + Arrays.toString(formIds.toArray()));
+//        System.out.println("JOVANA sessionController discoveredForms: " + Arrays.toString(formIds.toArray()));
 
         used = true;
 
