@@ -101,7 +101,7 @@ public final class DataShare {
             String key = iterator.next();
             FormElement formElement = latestValues.get(key);
             if (!writtenIds.contains(formElement.getId())) {
-                xml += "\n\t" + formElement.getXml(true);
+                xml += "\n\t" + formElement.getXml(false);
                 writtenIds.add(formElement.getId());
             }
             if (formElement.isIdAliased()) {
