@@ -7,8 +7,8 @@ The main purpose of this extensible web application is to generate policies for 
 This tool helps resource owners in the creation of repository and service policies and alignment of their services with requirements for participation and onboarding in the above-mentioned infrastructures.
 
 ## Install
-Make sure to select the path for template directory. Default is `/usr/local/fm_templates` and it can be changed in `RePol/src/main/resources/config/settings.cfg` file.
-Default templates are provided in `RePol/fm_templates`.
+Freemarker templates are in dedicated directory in `Maven` `resources` directory. Default (relative) path for template directory is `freemarker_templates` and it can be changed in `RePol/src/main/resources/config/settings.cfg` file.
+Default templates are provided in `src/main/resources/fm_templates`.
 
 ```
 cd RePol

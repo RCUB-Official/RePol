@@ -6,10 +6,13 @@ import framework.diagnostics.Status.State;
 import framework.settings.RepolSettings;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,11 +39,27 @@ public final class FMHandler implements Monitorable {
     @Override
     public synchronized void initialize() {
         try {
-            File templateDirectory = new File(RepolSettings.getInstance().getTemplatePath());
+//            File templateDirectory = new File(RepolSettings.getInstance().getTemplatePath());
+//            templateFiles = templateDirectory.listFiles();
+            String fmTemplateDirPath = RepolSettings.getInstance().getTemplatePath();
+            System.out.println("JOVANA: " + fmTemplateDirPath);
+            URL freemarkerTemplatesDirectory = FMHandler.class.getResource(fmTemplateDirPath);
+            File templateDirectory = new File(freemarkerTemplatesDirectory.toURI());
+            System.out.println("JOVANA: " + freemarkerTemplatesDirectory);
             templateFiles = templateDirectory.listFiles();
+            System.out.println("JOVANA: templates " + Arrays.toString(templateFiles));
+//            final java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(
+//                    FMHandler.class.getClassLoader().getResourceAsStream(fmTemplateDirPath)));
+//            java.util.List<File> templates = new ArrayList<>();
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                URL templateURL = FMHandler.class.getResource(fmTemplateDirPath + "/" + line);
+//                templates.add(new File(templateURL.toURI()));
+//            }
+//            templateFiles = templates.toArray(new File[0]);
 
             configuration = new Configuration(Configuration.VERSION_2_3_30);
-            configuration.setDirectoryForTemplateLoading(templateDirectory);
+            configuration.setDirectoryForTemplateLoading(new File(freemarkerTemplatesDirectory.toURI()));
             configuration.setDefaultEncoding("UTF-8");
             configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
             configuration.setLogTemplateExceptions(false);
@@ -98,8 +117,9 @@ public final class FMHandler implements Monitorable {
     }
 
     public static InputStream getInputStream(String filename) throws FileNotFoundException {
-        File file = new File(RepolSettings.getInstance().getTemplatePath() + "/" + filename + ".ftlh");
-        return new FileInputStream(file);
+        return FMHandler.class.getResourceAsStream(RepolSettings.getInstance().getTemplatePath() + "/" + filename + ".ftlh");
+//        File file = new File(RepolSettings.getInstance().getTemplatePath() + "/" + filename + ".ftlh");
+//        return new FileInputStream(file);
     }
 
 }
