@@ -25,9 +25,9 @@ ${embedded_data?no_esc}
 <body>
 <h1>Privacy Policy - ${service}</h1>
 <p>This is the Privacy Policy for <#if service_name_the>the </#if>${service}, owned and maintained by <#if service_owner_the>the </#if>${service_owner}.
-<#if service_owner_the>The </#if>${service_owner} is dedicated to safeguarding personal data subject to processing, as well as to developing and applying data protection solutions that are effective, fit for purpose and demonstrate an understanding of, and appreciation for the <#if gdpr>General Data Protection Regulation 679/2016 (GDPR) and </#if>applicable <#if national_legislation>national </#if>data protection legislation.</p>
+<#if service_owner_the>The </#if>${service_owner} is dedicated to safeguarding personal data subject to processing, as well as to developing and applying data protection solutions that are effective, fit for purpose and demonstrate an understanding of, and appreciation for the <#if gdpr>General Data Protection Regulation 2016/679 (GDPR) and </#if>applicable <#if national_legislation>national </#if>data protection legislation.</p>
 <p>We are committed to ensuring ongoing and continued compliance with data protection legislation and guidance provided by the supervisor of our general work and practices and all of our service offerings, to protecting any personal data, limiting any collection to what is strictly necessary by <#list legal_basis as element>${element}<#if element?has_next><#if element?index&lt;legal_basis?size-2>, <#else> and </#if></#if></#list> and complying with the <#list compliance_includes as element>${element}<#if element?has_next><#if element?index&lt;compliance_includes?size-2>, <#else> and </#if></#if></#list>.</p>
-<p>This Privacy Policy concerns the processing of your personal data for which <#if service_owner_the>the </#if>${service_owner} is the Data Controller or Data Processor, in other words, <#if service_owner_the>the </#if>${service_owner} collects personal data directly or indirectly from you and decides personal data that is needed to provide you with the service, the purposes for which your personal data is being collected, how it is stored, shared and how long it will be retained.</p>
+<p>This Privacy Policy concerns the processing of your personal data for which <#if service_owner_the>the </#if>${service_owner} is the Data Controller or Data Processor, in other words, <#if service_owner_the>the </#if>${service_owner} collects personal data directly or indirectly from you and describes personal data that is needed to provide you with the service, the purposes for which your personal data is being collected, how it is stored, shared and how long it will be retained.</p>
 <p>Considering the significance of this responsibility, <#if service_owner_the>the </#if>${service_owner} works daily to put in place adequate measures and controls to protect your personal data and ensure that you can exercise your rights at any time.</p>
 <#if collection_methods?size != 0>
 <p>Personal identification information from the users is collected through:</p>
@@ -47,15 +47,6 @@ ${embedded_data?no_esc}
 </ul>
 </#if>
 
-<#if collected_data?size != 0>
-<h2>Types of data collected and processed</h2>
-<p><#if service_owner_the>The </#if>${service_owner} processes:</p>
-<ul>
-	<#list collected_data as element>
-	<li>${element}</li>
-	</#list>
-</ul>
-</#if>
 
 <h2>Methods of data collection</h2>
 <p>The following tools are used to collect user and usage data:</p>
