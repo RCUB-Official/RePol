@@ -42,12 +42,12 @@ public final class FMHandler implements Monitorable {
 //            File templateDirectory = new File(RepolSettings.getInstance().getTemplatePath());
 //            templateFiles = templateDirectory.listFiles();
             String fmTemplateDirPath = RepolSettings.getInstance().getTemplatePath();
-            System.out.println("JOVANA: " + fmTemplateDirPath);
+//            System.out.println("JOVANA: " + fmTemplateDirPath);
             URL freemarkerTemplatesDirectory = FMHandler.class.getResource(fmTemplateDirPath);
             File templateDirectory = new File(freemarkerTemplatesDirectory.toURI());
-            System.out.println("JOVANA: " + freemarkerTemplatesDirectory);
+//            System.out.println("JOVANA: " + freemarkerTemplatesDirectory);
             templateFiles = templateDirectory.listFiles();
-            System.out.println("JOVANA: templates " + Arrays.toString(templateFiles));
+//            System.out.println("JOVANA: templates " + Arrays.toString(templateFiles));
 //            final java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(
 //                    FMHandler.class.getClassLoader().getResourceAsStream(fmTemplateDirPath)));
 //            java.util.List<File> templates = new ArrayList<>();
