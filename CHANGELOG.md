@@ -15,7 +15,7 @@ straightforward as possible.
 - MINOR Added parameters `service_name_the` and `service_owner_the` to support automatic inserting of a definite article before `service_name` and `service_owner` in _RePol Generic Privacy Policy Template_.
 - [RePol-issue-3](https://github.com/RCUB-Official/RePol/issues/3)
   MINOR RePol freemarker templates moved to web archive.
-- MAJOR Added changelog based on [teplate](https://gist.github.com/juampynr/4c18214a8eb554084e21d6e288a18a2c).
+- MAJOR Added changelog based on [template](https://gist.github.com/juampynr/4c18214a8eb554084e21d6e288a18a2c).
  
 ### Changed
 - [RePol-issue-1](https://github.com/RCUB-Official/RePol/issues/1)
