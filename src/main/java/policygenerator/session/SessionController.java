@@ -107,7 +107,13 @@ public final class SessionController implements Serializable {
     }
 
     public void push(FormElement element) {
+        System.out.println("SessionController.push " + element.getId() + " " + Arrays.toString(element.getIdAliases().toArray()));
         dataShare.push(element);
+        used = true;
+    }
+
+    public void push(String alias, FormElement element) {
+        dataShare.push(alias, element);
         used = true;
     }
 

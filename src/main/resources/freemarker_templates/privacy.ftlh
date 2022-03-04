@@ -188,7 +188,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
     	<#if duration_of_storage_ip != 0>
 <p>Identifiable IP addresses are stored for ${duration_of_storage_ip} months.</p>
     	<#else>
-<p>No identifiable IP addresses are stored. The University of Belgrade Computer Centre does not have legal means of obtaining sufficient additional data to link an IP address to a person's real-world identity.
+<p>No identifiable IP addresses are stored. <#if service_owner_the>The </#if>${service_owner} does not have legal means of obtaining sufficient additional data to link an IP address to a person's real-world identity.
 </p>
     	</#if>
 <p>In certain circumstances, data may be retained longer for archiving in the public interest, scientific or historical research and other similar purposes.</p>

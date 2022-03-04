@@ -127,16 +127,9 @@ public final class SelectOne extends FormElement {
     }
 
     @Override
-    public String getXml(boolean includeFormId) {
+    public String getXml() {
         if (value != null) {
-            String formId;
-            if (getForm() != null && includeFormId) {
-                formId = " form=\"" + getForm().getId() + "\"";
-            } else {
-                formId = "";
-            }
-
-            return "<field type=\"oneline\" id=\"" + getId() + "\"" + formId + "><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
+            return "<field type=\"oneline\" id=\"" + getId() + "\"><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
         } else {
             return "";
         }

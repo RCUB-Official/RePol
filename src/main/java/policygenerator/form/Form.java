@@ -122,8 +122,7 @@ public final class Form implements Cacheable {
                     }
                     elementMap.put(elementId, fe);
 
-                    if (fe.isIdAliased()) {
-                        for (String idAlias : fe.getIdAliases())
+                    for (String idAlias : fe.getIdAliases()) {
                         this.elementIdAliases.put(fe.getId(), idAlias);
                     }
 
@@ -205,7 +204,7 @@ public final class Form implements Cacheable {
         xml += "<embedded-data form=\"" + id + "\">";
         for (Panel p : panels) {
             for (FormElement fe : p.getElements()) {
-                xml += "\n\t" + fe.getXml(false);
+                xml += "\n\t" + fe.getXml();
             }
         }
         xml += "\n</embedded-data>";
@@ -236,18 +235,14 @@ public final class Form implements Cacheable {
                     if (settings.isUseSafeDefaults()) { // Making sure no null values are passed to FreeMarker
                         Object safeValue = fe.getSafeValue();
                         model.put(fe.getId(), safeValue);
-                        if (fe.isIdAliased()) {
-                            for (String aliasId : fe.getIdAliases()) {
-                                model.put(aliasId, safeValue);
-                            }
+                        for (String aliasId : fe.getIdAliases()) {
+                            model.put(aliasId, safeValue);
                         }
                     } else {
                         Object value = fe.getValue();
                         model.put(fe.getId(), value);
-                        if (fe.isIdAliased()) {
-                            for (String aliasId : fe.getIdAliases()) {
-                                model.put(aliasId, value);
-                            }
+                        for (String aliasId : fe.getIdAliases()) {
+                            model.put(aliasId, value);
                         }
                     }
                 } else {

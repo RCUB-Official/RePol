@@ -3,11 +3,14 @@ package policygenerator.form;
 import framework.utilities.Utilities;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
+import policygenerator.form.condition.exceptions.ConditionNotFoundException;
 import policygenerator.session.SessionController;
 
 @ManagedBean(name = "formController", eager = false)
@@ -53,6 +56,7 @@ public class FormController implements Serializable {
                 if (formId == null && !formHeaders.isEmpty()) { // If it is still null, select the first header
                     formId = formHeaders.get(0).getFormId();
                     form = sessionController.getForm(formId);   // Enabling the "Enter Data" in the navigation menu
+                    form.sync();
                 }
             }
 

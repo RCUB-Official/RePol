@@ -41,12 +41,17 @@ public final class SelectMany extends FormElement {
     }
 
     public List<String> getValues() {
+        System.out.println(this.getId() + " getting values ");
         List<String> list = new LinkedList<>();
         for (SelectionElement se : availableValues) {
             if (se.isSelected()) {
+                System.out.print(se.getValue() + ":added ");
                 list.add(se.getValue());
+            } else {
+                System.out.print(se.getValue() + ":skipped ");
             }
         }
+        System.out.println();
         return list;
     }
 
@@ -62,9 +67,12 @@ public final class SelectMany extends FormElement {
 
     @Override
     public void set(String value) {
+        System.out.println(this.getId() + " setting value " + value);
         for (SelectionElement se : availableValues) {
+            System.out.print(se.getValue());
             if (se.getValue().equals(value)) {
                 se.setSelected(true);
+                System.out.println(" set");
                 break;
             }
         }
@@ -117,6 +125,8 @@ public final class SelectMany extends FormElement {
 
     @Override
     public void sync(FormElement element) {
+//        System.out.println("SYNC select many");
+//        (new Exception()).printStackTrace();
         clear();
 
         String listDelimiter = RepolSettings.getInstance().getListDelimiter();
@@ -174,18 +184,11 @@ public final class SelectMany extends FormElement {
     }
 
     @Override
-    public String getXml(boolean includeFormId) {
+    public String getXml() {
         String xml;
 
-        String formId;
-        if (getForm() != null && includeFormId) {
-            formId = " form=\"" + getForm().getId() + "\"";
-        } else {
-            formId = "";
-        }
-
         if (!availableValues.isEmpty()) {
-            xml = "<field type=\"selectmany\" id=\"" + getId() + "\"" + formId + ">";
+            xml = "<field type=\"selectmany\" id=\"" + getId() + "\">";
             for (SelectionElement av : availableValues) {
                 if (av.isSelected()) {
                     xml += "<value>" + XMLUtilities.xmlEscape(av.getValue()) + "</value>";

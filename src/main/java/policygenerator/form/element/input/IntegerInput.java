@@ -95,16 +95,9 @@ public final class IntegerInput extends FormElement {
     }
 
     @Override
-    public String getXml(boolean includeFormId) {
+    public String getXml() {
 
-        String formId;
-        if (getForm() != null && includeFormId) {
-            formId = " form=\"" + getForm().getId() + "\"";
-        } else {
-            formId = "";
-        }
-
-        return "<field type=\"integer\" id=\"" + getId() + "\"" + formId + "><value>" + value + "</value></field>";
+        return "<field type=\"integer\" id=\"" + getId() + "\"><value>" + value + "</value></field>";
     }
 
     @Override

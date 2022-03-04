@@ -239,18 +239,11 @@ public final class PoolPicker extends FormElement {
     }
 
     @Override
-    public String getXml(boolean includeFormId) {
+    public String getXml() {
         String xml;
 
-        String formId;
-        if (getForm() != null && includeFormId) {
-            formId = " form=\"" + getForm().getId() + "\"";
-        } else {
-            formId = "";
-        }
-
         if (!getValues().isEmpty()) {
-            xml = "<field type=\"poolpicker\" id=\"" + getId() + "\"" + formId + ">";
+            xml = "<field type=\"poolpicker\" id=\"" + getId() + "\">";
             for (String value : getValues()) {
                 xml += "<value>" + XMLUtilities.xmlEscape(value) + "</value>";
             }

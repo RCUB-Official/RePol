@@ -124,15 +124,9 @@ public final class Text extends FormElement {
     }
 
     @Override
-    public String getXml(boolean includeFormId) {
-        String formId;
-        if (getForm() != null && includeFormId) {
-            formId = " form=\"" + getForm().getId() + "\"";
-        } else {
-            formId = "";
-        }
+    public String getXml() {
 
-        return "<field type=\"text\" id=\"" + getId() + "\"" + formId + "><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
+        return "<field type=\"text\" id=\"" + getId() + "\"><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
     }
 
     @Override

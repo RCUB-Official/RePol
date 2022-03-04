@@ -96,15 +96,9 @@ public final class DoubleInput extends FormElement {
     }
 
     @Override
-    public String getXml(boolean includeFormId) {
-        String formId;
-        if (getForm() != null && includeFormId) {
-            formId = " form=\"" + getForm().getId() + "\"";
-        } else {
-            formId = "";
-        }
+    public String getXml() {
 
-        return "<field type=\"double\" id=\"" + getId() + "\"" + formId + "><value>" + value + "</value></field>";
+        return "<field type=\"double\" id=\"" + getId() + "\"><value>" + value + "</value></field>";
     }
 
     @Override

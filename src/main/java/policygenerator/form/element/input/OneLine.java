@@ -6,8 +6,6 @@ import framework.settings.RepolSettings;
 import framework.utilities.xml.XMLUtilities;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -84,6 +82,8 @@ public final class OneLine extends FormElement {
 
     @Override
     public void sync(FormElement element) {
+//        System.out.println("SYNC one line");
+//        (new Exception()).printStackTrace();
 
         String listDelimiter = RepolSettings.getInstance().getListDelimiter();
         String merged = "";
@@ -132,19 +132,9 @@ public final class OneLine extends FormElement {
     }
 
     @Override
-    public String getXml(boolean includeFormId) {
+    public String getXml() {
 
-        String formId;
-        Form myForm = getForm();
-//        String myRealId = Objects.nonNull(myForm) ? myForm.getFormElementRealId(getType(), getId()) : getId();
-
-        if (myForm != null && includeFormId) {
-            formId = " form=\"" + getForm().getId() + "\"";
-        } else {
-            formId = "";
-        }
-
-        return "<field type=\"oneline\" id=\"" + getId() + "\"" + formId + "><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
+        return "<field type=\"oneline\" id=\"" + getId() + "\"><value>" + XMLUtilities.xmlEscape(value) + "</value></field>";
     }
 
     @Override

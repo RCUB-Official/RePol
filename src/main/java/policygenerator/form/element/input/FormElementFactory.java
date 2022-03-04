@@ -28,6 +28,7 @@ public class FormElementFactory {
 
         String attributeDefaultValue = XMLUtilities.getAttributeValue(node, "default"); // Legacy support for single default value declared as default attribute
         if (attributeDefaultValue != null) {
+//            System.out.println(id + " " + type + " parsed default " + attributeDefaultValue);
             defaultValues.add(attributeDefaultValue);
         }
 
@@ -97,6 +98,7 @@ public class FormElementFactory {
                     element.setDescription(XMLUtilities.innerXml(sen));
                     break;
                 case "default":
+//                    System.out.println("Subnode " + sen.getNodeName() + " " + type + " parsed default " + sen.getTextContent());
                     defaultValues.add(sen.getTextContent());
                     break;
                 case "trigger":

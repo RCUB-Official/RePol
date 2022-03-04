@@ -36,7 +36,8 @@ public final class DataShare {
     }
 
     public synchronized void push(FormElement element) {
-        if (element.isIdAliased()) {
+        System.out.println("JOVANA DataShare.push " + element.getId() + " " + element.getValue() + ": " + Arrays.toString(element.getIdAliases().toArray()));
+//        if (element.isIdAliased()) {
             for (String alias : element.getIdAliases()) {
                 FormElement oldAliased = latestValues.get(alias);
                 latestValues.put(alias, element);
@@ -46,10 +47,34 @@ public final class DataShare {
                 }
 
             }
-        }
+//        }
 
         FormElement old = latestValues.get(element.getId());
         latestValues.put(element.getId(), element);
+
+        if (element != old && old != null) {
+            old.syncElement(element);
+        }
+        System.out.println("JOVANA DataShare.push kraj" + element.getId() + " " + element.getValue() + ": " + Arrays.toString(element.getIdAliases().toArray()));
+
+    }
+
+    public synchronized void push(String aliasId, FormElement element) {
+        System.out.println("JOVANA DataShare.push " + aliasId + " (id " + element.getId() + ") " + element.getValue() + ": " + Arrays.toString(element.getIdAliases().toArray()));
+//        if (element.isIdAliased()) {
+        for (String alias : element.getIdAliases()) {
+            FormElement oldAliased = latestValues.get(alias);
+            latestValues.put(alias, element);
+
+            if (element != oldAliased && oldAliased != null) {
+                oldAliased.syncElement(element);
+            }
+
+        }
+//        }
+
+        FormElement old = latestValues.get(aliasId);
+        latestValues.put(aliasId, element);
 
         if (element != old && old != null) {
             old.syncElement(element);
@@ -58,11 +83,9 @@ public final class DataShare {
     }
 
     public synchronized void touch(FormElement element) {
-        if (element.isIdAliased()) {
-            for (String alias : element.getIdAliases()) {
-                if (!latestValues.containsKey(alias)) {
-                    latestValues.put(alias, element);
-                }
+        for (String alias : element.getIdAliases()) {
+            if (!latestValues.containsKey(alias)) {
+                latestValues.put(alias, element);
             }
         }
         if (!latestValues.containsKey(element.getId())) {
@@ -71,23 +94,20 @@ public final class DataShare {
     }
 
     public synchronized void requestSync(FormElement element) {
-//        if (element.isIdAliased()) {
-//        System.out.println("Request sync element id " + element.getId() + " with aliases " + (element.isIdAliased() ? Arrays.toString(element.getIdAliases().toArray()) : " NEMA ALIASE "));
-        if (Objects.nonNull(element.getIdAliases())) {
-            for (String alias : element.getIdAliases()) {
-                if (latestValues.containsKey(alias)) {
-// sigurno nisu isti objekti
-//                    if (element != latestValues.get(alias)) {
+        for (String alias : element.getIdAliases()) {
+            if (latestValues.containsKey(alias)) {
+                // JOVANA: bitan uslov koliko god delovao besmisleno
+                if (element != latestValues.get(alias)) {
                     element.syncElement(latestValues.get(alias));
-//                    }
                 }
             }
         }
+
         if (latestValues.containsKey(element.getId())) {
-// sigurno nisu isti objekti
-//            if (element != latestValues.get(element.getId())) {
+            // JOVANA: bitan uslov koliko god delovao besmisleno
+            if (element != latestValues.get(element.getId())) {
                 element.syncElement(latestValues.get(element.getId()));
-//            }
+            }
         }
     }
 
@@ -101,15 +121,13 @@ public final class DataShare {
             String key = iterator.next();
             FormElement formElement = latestValues.get(key);
             if (!writtenIds.contains(formElement.getId())) {
-                xml += "\n\t" + formElement.getXml(false);
+                xml += "\n\t" + formElement.getXml();
                 writtenIds.add(formElement.getId());
             }
-            if (formElement.isIdAliased()) {
-                for (String xmlForAlias : formElement.getXmlForAliases(writtenIds)) {
-                    xml += "\n\t" + xmlForAlias;
-                }
-                writtenIds.addAll(formElement.getIdAliases());
+            for (String xmlForAlias : formElement.getXmlForAliases(writtenIds)) {
+                xml += "\n\t" + xmlForAlias;
             }
+            writtenIds.addAll(formElement.getIdAliases());
         }
         xml += "\n</embedded-data>";
 

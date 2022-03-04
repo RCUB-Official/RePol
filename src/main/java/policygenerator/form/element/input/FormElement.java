@@ -73,15 +73,6 @@ public abstract class FormElement {
         userSet = false;
     }
 
-//    public final String getRealId (String alias) {
-//        String realId = this.idAliases.get(alias);
-//        if (Objects.isNull(realId)) {
-//            return alias;
-//        } else {
-//            return realId;
-//        }
-//    }
-//
     public final Form getForm() {
         if (panel != null) {
             return panel.getForm();
@@ -156,9 +147,11 @@ public abstract class FormElement {
     public abstract boolean match(String value);
 
     final void setDefaultValue(String defaultValue) {
+//        System.out.println(this.getId() + " setting default value " + defaultValue);
         this.defaultValues.add(defaultValue);
         set(defaultValue);
         touch();
+//        System.out.println(getId() + " " + this.type + " values " + Arrays.toString(this.getDefaultValues().toArray()));
     }
 
     public final void setByUpload(String value) {
@@ -184,11 +177,6 @@ public abstract class FormElement {
             set(dv);
         }
         push();
-    }
-
-    //
-    public final boolean isIdAliased() {
-        return Objects.nonNull(this.idAliases) && !this.idAliases.isEmpty();
     }
 
     //VALIDATION
@@ -260,16 +248,20 @@ public abstract class FormElement {
 
     @SuppressWarnings("UseSpecificCatch")   // Don't crash, just log if something goes wrong.
     public void processTriggers() {
+//        System.out.print("FormElement.processTriggers ");
         for (Trigger t : triggers) {
+//            System.out.print(" triger " + t.getTargetId() + " " + t.getValue());
             try {
                 if (panel.getForm().getCondition(t.getConditionId()).evaluate()) {
                     panel.getForm().processTrigger(t.getTargetId(), t.getOperation(), t.getValue());
                 }
             } catch (Exception ex) {
+                ex.printStackTrace();
                 LOG.log(Level.SEVERE, null, ex);
             }
         }
         userSet = true;
+//        System.out.println();
         push();
     }
 
@@ -283,7 +275,11 @@ public abstract class FormElement {
 
     private void push() {
         if (panel != null) {    // Can be null if dummy element
+//            System.out.println("FormElement.push panel " + panel.getLabel());
             panel.getForm().getSessionController().push(this);
+            for (String alias : this.getIdAliases()) {
+                panel.getForm().getSessionController().push(alias, this);
+            }
         }
     }
 
@@ -294,7 +290,7 @@ public abstract class FormElement {
     }
 
     // For embedded and standalone export
-    public abstract String getXml(boolean includeFormId);
+    public abstract String getXml();
 
     public abstract Set<String> getXmlForAliases(Set<String> skipIds);
 
