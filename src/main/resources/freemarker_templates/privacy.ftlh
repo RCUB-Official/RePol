@@ -23,11 +23,11 @@ ${embedded_data?no_esc}
     		</style>
 	</head>
 <body>
-<h1>Privacy Policy - ${service}</h1>
+<h1>Privacy Policy – ${service}</h1>
 <p>This is the Privacy Policy for <#if service_name_the>the </#if>${service}, owned and maintained by <#if service_owner_the>the </#if>${service_owner}.
 <#if service_owner_the>The </#if>${service_owner} is dedicated to safeguarding personal data subject to processing, as well as to developing and applying data protection solutions that are effective, fit for purpose and demonstrate an understanding of, and appreciation for the <#if gdpr>General Data Protection Regulation 2016/679 (GDPR) and </#if>applicable <#if national_legislation>national </#if>data protection legislation.</p>
 <p>We are committed to ensuring ongoing and continued compliance with data protection legislation and guidance provided by the supervisor of our general work and practices and all of our service offerings, to protecting any personal data, limiting any collection to what is strictly necessary by <#list legal_basis as element>${element}<#if element?has_next><#if element?index&lt;legal_basis?size-2>, <#else> and </#if></#if></#list> and complying with the <#list compliance_includes as element>${element}<#if element?has_next><#if element?index&lt;compliance_includes?size-2>, <#else> and </#if></#if></#list>.</p>
-<p>This Privacy Policy concerns the processing of your personal data for which <#if service_owner_the>the </#if>${service_owner} is the Data Controller or Data Processor, in other words, <#if service_owner_the>the </#if>${service_owner} collects personal data directly or indirectly from you and describes personal data that is needed to provide you with the service, the purposes for which your personal data is being collected, how it is stored, shared and how long it will be retained.</p>
+<p>This Privacy Policy concerns the processing of your personal data for which <#if service_owner_the>the </#if>${service_owner} is the Data Controller or Data Processor, in other words, <#if service_owner_the>the </#if>${service_owner} collects personal data directly or indirectly from you and decides personal data that is needed to provide you with the service, the purposes for which your personal data is being collected, how it is stored, shared and how long it will be retained.</p>
 <p>Considering the significance of this responsibility, <#if service_owner_the>the </#if>${service_owner} works daily to put in place adequate measures and controls to protect your personal data and ensure that you can exercise your rights at any time.</p>
 <#if collection_methods?size != 0>
 <p>Personal identification information from the users is collected through:</p>
@@ -40,13 +40,13 @@ ${embedded_data?no_esc}
 
 <#if collection_reasons?size != 0>
 <h2>Reasons for data collection</h2>
+<p>Reasons for collection of your personal data are:</p>
 <ul>
 	<#list collection_reasons as element>
 	<li>${element}</li>
 	</#list>
 </ul>
 </#if>
-
 
 <h2>Methods of data collection</h2>
 <p>The following tools are used to collect user and usage data:</p>
@@ -109,7 +109,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 </#if>
 
 <#if use_google_analytics>
-<p>Google Analytics is used to analyse the use of this service. Google's privacy policy is available at: <a href="http://www.google.com/privacypolicy.html" target="_blank">http://www.google.com/privacypolicy.html</a>.</p>
+<p>Google Analytics is used to analyse the use of this service. Google&apos;s privacy policy is available at: <a href="http://www.google.com/privacypolicy.html" target="_blank">http://www.google.com/privacypolicy.html</a>.</p>
 <ul>
             	<li>We use Google Analytics to track how often people access or read our content. We use this information in the aggregate form to understand what content our members find useful or interesting, so we can produce the most valuable content to meet your needs.</li>
             	<li>We use Google Analytics to track the number of visitors to our site but do not collect any personal information or store IP addresses locally on our site. This is only used to monitor the number of hits on our pages and the coarse location; therefore we cannot track or trace individual users or their physical addresses. If you would like to opt-out, please use the Google Analytics Opt-out Browser Add-on https://tools.google.com/dlpage/gaoptout.</li>
@@ -124,9 +124,9 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 <#if cm_cookies>
 <h3>Cookies</h3>
 <p>We use cookies (small text files written by your browser to your device) to track returning visits and navigation through the website. Cookies are <#if cookies == 'required'>required<#else>not required</#if> to use the website.</p>
-<p>By using our service’s website, you agree that we can place these types of cookies on your device. However, you can block these cookies using your browser settings<#if cookie_policy_url != ""> (there are instructions in the Cookie Policy on how to do this)</#if>.</p>
+<p>By using our service&apos;s website, you agree that we can place these types of cookies on your device. However, you can block these cookies using your browser settings<#if cookie_policy_url != ""> (there are instructions in the Cookie Policy on how to do this)</#if>.</p>
 <#if cookies == 'used, but not required'>
-<p>You can prevent your browser from accepting certain cookies, if the website requires your consent before a new cookie is placed in your browser. You may block cookies altogether by selecting the appropriate settings in your browser's privacy preferences.</p>
+<p>You can prevent your browser from accepting certain cookies, if the website requires your consent before a new cookie is placed in your browser. You may block cookies altogether by selecting the appropriate settings in your browser&apos;s privacy preferences.</p>
 <span class="red-strong">TODO:</span> INDICATE IF DECLINING COOKIES AFFECTS THE FUNCTIONALITY OF THE SERVICE AND HOW.
 </#if>
 <p><#if service_owner_the>The </#if>${service_owner} recommends you to accept and use cookies.</p>
@@ -149,14 +149,17 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 <h3>Registration</h3>
 <p>When you submit a registration through the registration form, <#if service_owner_the>the </#if>${service_owner} stores your name, email address, institutional affiliation, position and <span class="red-strong">TODO</span>. This data is stored in ${hosting_country}. The data processor for this service is <span class="red-strong">TODO</span>.</p>
         	</#if>
+
         	<#if cm_feedback>
 <h3>Feedback form</h3>
             <p>When using the feedback form, <#if service_owner_the>the </#if>${service_owner} collects the information you enter, including your email address and name, if you provide it. The legal basis is the legitimate interest to provide user support and the user consent implied by submitting the entered data. The data processor for this service is <span class="red-strong">TODO</span>.</p>
         	</#if>
+
         	<#if cm_newsletter>
 <h3>Newsletter</h3>
-<p>If you sign up for the newsletter, you give consent to record and use your email address to send you regular newsletters. The data processor for this service is <span class="red-strong">TODO:</span>  <#if service_owner_the>the </#if>${service_owner} OR SOMEONE ELSE. You may withdraw your consent and unsubscribe at any time by clicking the unsubscribe link in any received newsletter.</p>
+<p>If you sign up for the newsletter, you give consent to record and use your email address to send you regular newsletters. The data processor for this service is <span class="red-strong">TODO:</span> <#if service_owner_the>the </#if>${service_owner} OR SOMEONE ELSE. You may withdraw your consent and unsubscribe at any time by clicking the unsubscribe link in any received newsletter.</p>
         	</#if>
+
         	<#if cm_subdomains>
 <h3>Services in subdomains</h3>
 <p><span class="red-strong">TODO:</span> DESCRIBE THE TYPE OF INFORMATION COLLECTED AND NAME THE RESPONSIBLE DATA PROCESSOR.</p>
@@ -179,7 +182,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
     	<#if duration_of_storage_ip != 0>
 <p>Identifiable IP addresses are stored for ${duration_of_storage_ip} months.</p>
     	<#else>
-<p>No identifiable IP addresses are stored. <#if service_owner_the>The </#if>${service_owner} does not have legal means of obtaining sufficient additional data to link an IP address to a person's real-world identity.
+<p>No identifiable IP addresses are stored. <#if service_owner_the>The </#if>${service_owner} does not have legal means of obtaining sufficient additional data to link an IP address to a person&apos;s real-world identity.
 </p>
     	</#if>
 <p>In certain circumstances, data may be retained longer for archiving in the public interest, scientific or historical research and other similar purposes.</p>
@@ -217,11 +220,11 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 <h2>Data subject rights</h2>
 <p>The General Data Protection Regulation (GDPR) establishes several rights for individuals concerning their personal data, such as:</p>
 <ul>
-        	<li>To know about what personal data is kept.</li>
-        	<li>To request access to your data.</li>
-        	<li>To ask us to rectify your personal data.</li>
-        	<li>To ask us to erase your personal information.</li>
-        	<li>To object to your data being processed by us.</li>
+        	<li>to know about what personal data is kept</li>
+        	<li>to request access to your data</li>
+        	<li>to ask us to rectify your personal data</li>
+        	<li>to ask us to erase your personal information</li>
+        	<li>to object to your data being processed by us</li>
 </ul>
 <p>You also have the right to inquire what personal data we hold about you, and to present a complaint to the relevant Supervisory Authority about our personal data processing activities if you feel your personal data is not being managed as described here.</p>
 <p>Please note that submitting a Data Subject Access Request might be connected with providing information confirming your identity and the legal basis for this processing is compliance with a legal obligation (ensuring data subject access request).</p>
@@ -251,12 +254,12 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 </#if>
 
 <#if age_limit != 0>
-<h2>Children's privacy</h2>
+<h2>Children&apos;s privacy</h2>
 <p>The service does not knowingly collect information from children under the age of ${age_limit} years, and children under ${age_limit} are prohibited from using our services. If you have the information that a child has provided us with personal information in violation of this Privacy Policy, you can alert the Data Protection Officer.</p>
 </#if>
 
 <h2>Contacts</h2>
-<h3>Data Protection Officer - contact for questions regarding personal data and privacy</h3>
+<h3>Data Protection Officer – contact for questions regarding personal data and privacy</h3>
 <p><#if service_owner_the>The </#if>${service_owner}, as the owner and data controller of <#if service_name_the>the </#if>${service}, has appointed a Data Protection Officer (DPO), for you to contact if you have any questions or concerns about the way <#if service_owner_the>the </#if>${service_owner} is processing your personal data. Together, the DPO and ${service} service team are working to provide you with accurate information and implement measures to protect your privacy.
 <p>For questions, comments or complaints regarding personal data and privacy, this Privacy Policy and how <#if service_owner_the>the </#if>${service_owner} processes your personal, and to exercise data subject rights, please contact the Data Protection Officer:</p>
 <table>
@@ -268,7 +271,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
             	<tr><td>Telephone</td><td>${dpo_telephone}</td></tr>
 </table>
 <h3>Supervisory authority</h3>
-<p>Should you wish to report a complaint about <#if service_owner_the>the </#if>${service_owner}’s data processing that has not been addressed adequately, you may contact:</p>
+<p>Should you wish to report a complaint about <#if service_owner_the>the </#if>${service_owner}&apos;s data processing that has not been addressed adequately, you may contact:</p>
 <table>
             	<tr><td>Name</td><td>${supervisor_name}</td></tr>
             	<tr><td>Organisation</td><td>${supervisor_organization}</td></tr>
@@ -280,8 +283,10 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 <h2>Changes and updates to the Privacy Policy</h2>
 <p>This service may change from time to time and this Privacy Policy will be updated appropriately. We reserve the right to amend the Privacy Policy at any time – in such case, an updated version of the Privacy Policy will be posted at this location and we encourage you to check it from time to time. <#if policy_update_notifications>We may email periodic notifications of our notices and terms that are currently in effect and any changes that may have been made to them.</#if></p>
 <p><#if service_owner_the>The </#if>${service_owner} keeps this Privacy Policy under regular review; the last update was on (yyyy-mm-dd): ${policy_date?date?string("yyyy-MM-dd")}.</p>
+
 <p>&nbsp;</p>
 <!-- GENERATED FOOTER -->
+
      	<div class="generated_footer">
         	<p><i>Created by <a href="${repol_url}" target="_blank">RePol (${repol_url})</a> version ${repol_version}, source code at <a href="https://github.com/RCUB-Official/RePol" target="_blank">GitHub</a> under <a href="https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12" target="_blank">EUPL-1.2-or-later</a>, on ${current_time?string("yyyy-MM-dd hh:mm zzz")}</i></p>
     	</div>
