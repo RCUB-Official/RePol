@@ -185,4 +185,22 @@ public class FormFactory extends XMLHandler {
         }
         return elementIds;
     }
+
+    public boolean isAttributeAlias(String alias) {
+        for (FormHeader header : this.headers) {
+            if (header.hasAttributeAlias(alias)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Set<String> getAttributeIdsFromAllForms() {
+        Set<String> ids = new HashSet<>();
+        for (FormHeader header : this.headers) {
+            ids.addAll(header.getAttributeIds());
+        }
+
+        return ids;
+    }
 }

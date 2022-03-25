@@ -1,9 +1,6 @@
 package policygenerator.form;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public final class FormHeader {
 
@@ -76,5 +73,18 @@ public final class FormHeader {
             }
         }
         return elementIds;
+    }
+
+    public boolean hasAttributeAlias(String alias) {
+        for (String key : this.dataIdAliases.keySet()) {
+            if (this.dataIdAliases.get(key).contains(alias)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Set<String> getAttributeIds() {
+        return this.dataIdAliases.keySet();
     }
 }

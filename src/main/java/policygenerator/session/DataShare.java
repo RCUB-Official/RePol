@@ -116,11 +116,28 @@ public final class DataShare {
         xml += "<embedded-data>";
 
         Iterator<String> iterator = latestValues.keySet().iterator();
+
+        Set<String> idsWithoutAlieses = FormFactory.getInstance().getAttributeIdsFromAllForms();
+//        System.out.println();
+//        System.out.println();
+//        System.out.println();
+//        System.out.println();
+//        for (String idNotAlias : idsWithoutAlieses) {
+//            System.out.println("id " + idNotAlias);
+//        }
+//        System.out.println();
+//        System.out.println();
+//        System.out.println();
+//        System.out.println();
+//        System.out.println();
+
+
+
         Set<String> writtenIds = new HashSet<>();
         while (iterator.hasNext()) {
             String key = iterator.next();
             FormElement formElement = latestValues.get(key);
-            if (!writtenIds.contains(formElement.getId())) {
+            if (!writtenIds.contains(formElement.getId()) && idsWithoutAlieses.contains(formElement.getId())) {
                 xml += "\n\t" + formElement.getXml();
                 writtenIds.add(formElement.getId());
             }
@@ -174,7 +191,7 @@ public final class DataShare {
                 String type = fNode.getAttributes().getNamedItem("type").getTextContent();
                 String id = fNode.getAttributes().getNamedItem("id").getTextContent();
 
-//                NE POSTOJI OVDE: ovo je upload-ovan (XML) dokument
+//                (NOVI) id NE POSTOJI OVDE: ovo je upload-ovan (XML) dokument
 //                String aliases = Objects.nonNull(fNode.getAttributes().getNamedItem("aliases")) ? fNode.getAttributes().getNamedItem("aliases").getTextContent() : null;
 //                List<String> aliasIds = new ArrayList<>();
 //                if (Objects.nonNull(aliases)) {
@@ -234,6 +251,7 @@ public final class DataShare {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, null, ex);
         }
+
 
         return affectedFormIds;
     }
