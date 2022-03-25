@@ -6,7 +6,7 @@ ${embedded_data?no_esc}
 </#if>
 <html>
 	<head>
-	    	<title>Privacy Policy - ${service}</title>
+	    	<title>Privacy Policy - ${service_name}</title>
 		<meta charset="utf-8"/>
     		<style>
 	        		td {
@@ -23,8 +23,8 @@ ${embedded_data?no_esc}
     		</style>
 	</head>
 <body>
-<h1>Privacy Policy – ${service}</h1>
-<p>This is the Privacy Policy for <#if service_name_the>the </#if>${service}, owned and maintained by <#if service_owner_the>the </#if>${service_owner}.
+<h1>Privacy Policy – ${service_name}</h1>
+<p>This is the Privacy Policy for <#if service_name_the>the </#if>${service_name}, owned and maintained by <#if service_owner_the>the </#if>${service_owner}.
 <#if service_owner_the>The </#if>${service_owner} is dedicated to safeguarding personal data subject to processing, as well as to developing and applying data protection solutions that are effective, fit for purpose and demonstrate an understanding of, and appreciation for the <#if gdpr>General Data Protection Regulation 2016/679 (GDPR) and </#if>applicable <#if national_legislation>national </#if>data protection legislation.</p>
 <p>We are committed to ensuring ongoing and continued compliance with data protection legislation and guidance provided by the supervisor of our general work and practices and all of our service offerings, to protecting any personal data, limiting any collection to what is strictly necessary by <#list legal_basis as element>${element}<#if element?has_next><#if element?index&lt;legal_basis?size-2>, <#else> and </#if></#if></#list> and complying with the <#list compliance_includes as element>${element}<#if element?has_next><#if element?index&lt;compliance_includes?size-2>, <#else> and </#if></#if></#list>.</p>
 <p>This Privacy Policy concerns the processing of your personal data for which <#if service_owner_the>the </#if>${service_owner} is the Data Controller or Data Processor, in other words, <#if service_owner_the>the </#if>${service_owner} collects personal data directly or indirectly from you and decides personal data that is needed to provide you with the service, the purposes for which your personal data is being collected, how it is stored, shared and how long it will be retained.</p>
@@ -131,7 +131,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 </#if>
 <p><#if service_owner_the>The </#if>${service_owner} recommends you to accept and use cookies.</p>
 <#if cookie_policy_url != "">
-<p>A full Cookie Policy can be seen by clicking <a target="_blank" href="${cookie_policy_url}"><#if service_name_the>the </#if>${service} Cookie Policy (${cookie_policy_url})</a>, which will provide further details on:</p>
+<p>A full Cookie Policy can be seen by clicking <a target="_blank" href="${cookie_policy_url}"><#if service_name_the>the </#if>${service_name} Cookie Policy (${cookie_policy_url})</a>, which will provide further details on:</p>
 <ul>
             	<li>how we use cookies</li>
             	<li>how to enable/disable cookies</li>
@@ -188,7 +188,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 <p>In certain circumstances, data may be retained longer for archiving in the public interest, scientific or historical research and other similar purposes.</p>
 
 <h2>Security of personal data</h2>
-<p><#if service_owner_the>The </#if>${service_owner} takes the confidentiality, integrity and availability of your personal data very seriously. We take appropriate security precautions to protect your personal data from loss, misuse or unauthorised access, disclosure, alteration and destruction. When you access <#if service_name_the>the </#if>${service}, <#if service_owner_the>the </#if>${service_owner} will provide adequate security controls to keep your personal data safe depending on the type of data collected from you.</p>
+<p><#if service_owner_the>The </#if>${service_owner} takes the confidentiality, integrity and availability of your personal data very seriously. We take appropriate security precautions to protect your personal data from loss, misuse or unauthorised access, disclosure, alteration and destruction. When you access <#if service_name_the>the </#if>${service_name}, <#if service_owner_the>the </#if>${service_owner} will provide adequate security controls to keep your personal data safe depending on the type of data collected from you.</p>
 <p>Although we endeavour to ensure your personal data remains secure, there is no absolute guarantee of security when using services online. While we strive to protect your personal data, you acknowledge that:</p>
 <ul>
         	<li>There are security and privacy limitations on the Internet which are beyond our control.</li>
@@ -210,7 +210,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 <p>We do not sell personal information to anyone or share it with third parties who are facilitating the delivery of other services.</p>
 <#if gdpr>
 <h3>Transferring personal data from the EU</h3>
-<p><#if service_name_the>The </#if>${service} is located in ${hosting_country}. Personal data we collect about you will generally be processed in its locations. <#if service_owner_the>The </#if>${service_owner} endeavours to apply suitable safeguards to protect the privacy and security of your personal data and to use it only within the authorisation you have given and the practices described in this Privacy Policy.</p>
+<p><#if service_name_the>The </#if>${service_name} is located in ${hosting_country}. Personal data we collect about you will generally be processed in its locations. <#if service_owner_the>The </#if>${service_owner} endeavours to apply suitable safeguards to protect the privacy and security of your personal data and to use it only within the authorisation you have given and the practices described in this Privacy Policy.</p>
             	<#if possible_transfer_outside_eu>
 <p>In some cases, <#if service_owner_the>the </#if>${service_owner} may transfer your personal data to countries outside the European Economic Area (EEA), for example, if we use a third party for processing services or storing data, or for obtaining feedback on one of the services or events we provide. If we transfer personal data to third countries, we will ensure that such transfers are compliant with our obligations under relevant data protection legislation and that appropriate technical and operational controls are in place to keep your personal data secure.</p>
 <p>If personal data is transferred from the EU to the USA, the EU-US Privacy Shield will be used. This framework was developed to enable companies to comply with data protection requirements when transferring personal data from the EU to the USA.</p>
@@ -260,7 +260,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 
 <h2>Contacts</h2>
 <h3>Data Protection Officer – contact for questions regarding personal data and privacy</h3>
-<p><#if service_owner_the>The </#if>${service_owner}, as the owner and data controller of <#if service_name_the>the </#if>${service}, has appointed a Data Protection Officer (DPO), for you to contact if you have any questions or concerns about the way <#if service_owner_the>the </#if>${service_owner} is processing your personal data. Together, the DPO and ${service} service team are working to provide you with accurate information and implement measures to protect your privacy.
+<p><#if service_owner_the>The </#if>${service_owner}, as the owner and data controller of <#if service_name_the>the </#if>${service_name}, has appointed a Data Protection Officer (DPO), for you to contact if you have any questions or concerns about the way <#if service_owner_the>the </#if>${service_owner} is processing your personal data. Together, the DPO and ${service_name} service team are working to provide you with accurate information and implement measures to protect your privacy.
 <p>For questions, comments or complaints regarding personal data and privacy, this Privacy Policy and how <#if service_owner_the>the </#if>${service_owner} processes your personal, and to exercise data subject rights, please contact the Data Protection Officer:</p>
 <table>
             	<tr><td>Name</td><td>${dpo_name}</td></tr>

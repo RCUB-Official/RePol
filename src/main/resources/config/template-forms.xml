@@ -24,7 +24,7 @@
                 </description>
             </input>
             <input type="boolean" id="service_name_the" label="Use ‘the’ before Service name" default="true">
-                <description>Check this field if the name of the service requires the use of a definite article. It is not used before a proper name or acronym pronounced as a single word. If the name begins with ‘University’, you must use it.</description>
+                <description>Check this field if the name of the repository requires the use of a definite article. It is not used before a proper name or acronym pronounced as a single word. If the name begins with ‘University’, you must use it.</description>
             </input>
             <input type="oneline" id="service_url" aliases="repo_url" label="Repository URL">
                 <description>Enter the full URL of the repository’s home page.</description>
@@ -35,11 +35,11 @@
             
             <separator/>
                         
-            <input type="oneline" id="service_owner"  aliases="repo_owner" label="Owning organization(s)" mandatory="true">
+            <input type="oneline" id="service_owner"  aliases="repo_owner" label="Owning institutions(s)" mandatory="true">
                 <description>Provide the name of the legal entity or body/unit owning the repository. This field is mandatory because the policy must be bound to an entity.</description>                
             </input>
             <input type="boolean" id="service_owner_the" label="Use ‘the’ before Owning institution" default="true">
-                <description>Check this field if the name of the entity requires the use of a definite article. It is not used before a proper name, company name or acronym pronounced as a single word. If the name begins with ‘University’, you must use it.</description>
+                <description>Check this field if the name of the owning institution requires the use of a definite article. It is not used before a proper name, company name or acronym pronounced as a single word. If the name begins with ‘University’, you must use it.</description>
             </input>
             <input type="oneline" id="parent_organization" label="Parent organization">
                 <description>If the owner of the repository is a unit within a larger legal entity (e.g., a faculty or an institute within a university), provide the name of the parent organization.</description>                
@@ -345,7 +345,7 @@
             </p>
         </description>
         <panel label="General Information">
-            <input type="oneline" id="service" label="Service name" mandatory="true">
+            <input type="oneline" id="service_name" aliases="service" label="Service name" mandatory="true">
                 <description>Enter the name of the website, service or repository for which you wish to generate a policy.</description>                
             </input>
             <input type="boolean" id="service_name_the" label="Use ‘the’ before Service name" default="true">
@@ -356,7 +356,7 @@
                 <description>Provide the name of the legal entity or body/unit owning the service. This field is mandatory because the policy must be bound to an entity.</description>                
             </input>
             <input type="boolean" id="service_owner_the" label="Use ‘the’ before Owning institution" default="true">
-                <description>Check this field if the name of the entity requires the use of a definite article. It is not used before a proper name, company name or acronym pronounced as a single word. If the name begins with ‘University’, you must use it.</description>
+                <description>Check this field if the name of the owning institution requires the use of a definite article. It is not used before a proper name, company name or acronym pronounced as a single word. If the name begins with ‘University’, you must use it.</description>
             </input>
             <input type="date" id="policy_date" label="Date of the policy document" default="current_date"/>
         </panel>
