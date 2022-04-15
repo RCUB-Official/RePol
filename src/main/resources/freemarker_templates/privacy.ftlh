@@ -23,7 +23,7 @@ ${embedded_data?no_esc}
     		</style>
 	</head>
 <body>
-<h1>Privacy Policy – ${service_name}</h1>
+<h1>Privacy Policy &ndash; ${service_name}</h1>
 <p>This is the Privacy Policy for <#if service_name_the>the </#if>${service_name}, owned and maintained by <#if service_owner_the>the </#if>${service_owner}.
 <#if service_owner_the>The </#if>${service_owner} is dedicated to safeguarding personal data subject to processing, as well as to developing and applying data protection solutions that are effective, fit for purpose and demonstrate an understanding of, and appreciation for the <#if gdpr>General Data Protection Regulation 2016/679 (GDPR) and </#if>applicable <#if national_legislation>national </#if>data protection legislation.</p>
 <p>We are committed to ensuring ongoing and continued compliance with data protection legislation and guidance provided by the supervisor of our general work and practices and all of our service offerings, to protecting any personal data, limiting any collection to what is strictly necessary by <#list legal_basis as element>${element}<#if element?has_next><#if element?index&lt;legal_basis?size-2>, <#else> and </#if></#if></#list> and complying with the <#list compliance_includes as element>${element}<#if element?has_next><#if element?index&lt;compliance_includes?size-2>, <#else> and </#if></#if></#list>.</p>
@@ -50,7 +50,7 @@ ${embedded_data?no_esc}
 
 <h2>Methods of data collection</h2>
 <p>The following tools are used to collect user and usage data:</p>
-<#if cm_main_service>
+<#if cm_main_service && collected_data?size != 0>
 <h3>Main service</h3>
 <p>Whenever a user visits the service, the following information is automatically collected and stored:</p>
         	<ul>
@@ -60,7 +60,7 @@ ${embedded_data?no_esc}
         	</ul>
 </#if>
 
-<#if cm_idp>
+<#if cm_idp && collected_data_from_idp?size != 0>
 <h3>Data from identity providers</h3>
 <p>Whenever a user logs into the service using an external identity provider, the following information is automatically collected and processed:</p>
     	<ul>
@@ -259,7 +259,7 @@ eduPersonOrgDN - Distinguished name of the directory entry representing the inst
 </#if>
 
 <h2>Contacts</h2>
-<h3>Data Protection Officer – contact for questions regarding personal data and privacy</h3>
+<h3>Data Protection Officer &ndash; contact for questions regarding personal data and privacy</h3>
 <p><#if service_owner_the>The </#if>${service_owner}, as the owner and data controller of <#if service_name_the>the </#if>${service_name}, has appointed a Data Protection Officer (DPO), for you to contact if you have any questions or concerns about the way <#if service_owner_the>the </#if>${service_owner} is processing your personal data. Together, the DPO and ${service_name} service team are working to provide you with accurate information and implement measures to protect your privacy.
 <p>For questions, comments or complaints regarding personal data and privacy, this Privacy Policy and how <#if service_owner_the>the </#if>${service_owner} processes your personal, and to exercise data subject rights, please contact the Data Protection Officer:</p>
 <table>

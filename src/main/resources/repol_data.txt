@@ -1,0 +1,43 @@
+<!--EMBEDDED_BEGIN
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<embedded-data form="privacy">
+    <field type="oneline" id="service_name"><value>RePol</value></field>
+    <field type="oneline" id="service_url"><value>https://repol.ni4os.eu/</value></field>
+    <field type="oneline" id="service_owner"><value>University of Belgrade Computer Centre</value></field>
+    <field type="date" id="policy_date"><value>2022-03-24</value></field>
+    <field type="selectmany" id="legal_basis"><value>legal obligation</value><value>legitimate interest</value></field>
+    <field type="selectmany" id="compliance_includes"><value>GDPR</value><value>national legislation</value></field>
+    <field type="selectmany" id="collection_methods"><value>main service</value></field>
+    <field type="selectmany" id="collection_reasons"><value>service operation or usage monitoring</value><value>enhancement of service experience</value></field>
+    <field type="poolpicker" id="collected_data"><value>IP address</value><value>date and time</value><value>pages visited</value></field>
+    <field type="poolpicker" id="collected_data_from_idp"><value>person’s name (first name and surname)</value><value>personal email</value><value>person’s organisation</value><value>affiliation in broad categories such as student, faculty, staff, etc.</value><value>indication of rights to specific resources (entitlement)</value><value>home organisation</value></field>
+    <field type="selectmany" id="web_analytics_tools"><value>Google Analytics</value></field>
+    <field type="oneline" id="cookies"><value>not used</value></field>
+    <field type="oneline" id="cookie_policy_url"><value></value></field>
+    <field type="boolean" id="third_party_cookies"><value>false</value></field>
+    <field type="oneline" id="processor_country"><value></value></field>
+    <field type="boolean" id="stored_as_necessary"><value>true</value></field>
+    <field type="integer" id="duration_of_storage"><value>null</value></field>
+    <field type="boolean" id="stored_ip_as_necessary"><value>true</value></field>
+    <field type="integer" id="duration_of_storage_ip"><value>null</value></field>
+    <field type="boolean" id="data_sharing"><value>false</value></field>
+    <field type="boolean" id="possible_transfer_outside_eu"><value>false</value></field>
+    <field type="boolean" id="data_erasure_may_limit_service"><value>false</value></field>
+    <field type="boolean" id="automated_processing"><value>false</value></field>
+    <field type="boolean" id="data_erasure"><value>false</value></field>
+    <field type="integer" id="age_limit"><value>null</value></field>
+    <field type="oneline" id="dpo_name"><value>Slavko Gajin</value></field>
+    <field type="oneline" id="dpo_organization"><value>University of Belgrade</value></field>
+    <field type="oneline" id="dpo_address"><value>Kumanovska 7</value></field>
+    <field type="oneline" id="dpo_country"><value>Serbia</value></field>
+    <field type="oneline" id="dpo_email"><value>dpo@rect.bg.ac.rs</value></field>
+    <field type="oneline" id="dpo_telephone"><value>+381 11 3031 257</value></field>
+    <field type="oneline" id="supervisor_name"><value>Nadzor nad zaštitom podataka kod rukovaoca iz oblasti obrazovanja</value></field>
+    <field type="oneline" id="supervisor_organization"><value>Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti </value></field>
+    <field type="oneline" id="supervisor_address"><value>Bulevar kralja Aleksandra 15, Beograd 11120</value></field>
+    <field type="oneline" id="supervisor_country"><value>Serbia</value></field>
+    <field type="oneline" id="supervisor_email"><value>+381 11 3408 900</value></field>
+    <field type="oneline" id="supervisor_telephone"><value>office@poverenik.rs</value></field>
+    <field type="boolean" id="policy_update_notifications"><value>false</value></field>
+</embedded-data>
+EMBEDDED_END-->
