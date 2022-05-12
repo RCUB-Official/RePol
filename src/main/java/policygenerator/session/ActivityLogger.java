@@ -22,7 +22,8 @@ public final class ActivityLogger implements Serializable {
 
     ActivityLogger() {
         sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
-        ipAddr = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+//        ipAddr = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+        ipAddr = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getHeader("X-Forwarded-For");
         header = sessionId + " (" + ipAddr + ")";
 
         LOG.log(Level.INFO, "{0}: started a session.", header);
