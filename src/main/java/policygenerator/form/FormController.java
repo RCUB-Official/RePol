@@ -53,8 +53,8 @@ public class FormController implements Serializable {
             } else {    // Form selection mode
                 formId = sessionController.getActivityLogger().getLastRequestedFormId(); // Get last form used from sessionController
 
-                if (formId == null && !formHeaders.isEmpty()) { // If it is still null, select the first header
-                    formId = formHeaders.get(0).getFormId();
+                if (formId == null && !formHeaders.isEmpty()) { // If it is still null, select the last header
+                    formId = formHeaders.get(formHeaders.size() - 1).getFormId();
                     form = sessionController.getForm(formId);   // Enabling the "Enter Data" in the navigation menu
                     form.sync();
                 }
