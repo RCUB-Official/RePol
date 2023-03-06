@@ -4,7 +4,7 @@ ${embedded_data?no_esc}
         	<head>
                        <title>Repository Policy - ${service_name}</title>
                 <style>
-			.red, red-strong {
+			.red, .red-strong {
 				color:red;
        }
 			.red-strong {
@@ -25,12 +25,12 @@ ${embedded_data?no_esc}
 <#if include_preamble>
 <h2>About ${service_name}</h2>
 
-<p><span class="red-strong">TODO:</span> TO REVIEW AND EDIT BY POLICY WRITER, (SEARCH FOR PARAGRAPHS WITH &quot;TODO:&quot;)</p>
-<p><span class="red-strong">TODO:</span> <#if service_owner_the>The </#if>${service_owner} has established the ${repo_type} repository <#if service_url!=""><a target="_blank" href="${service_url}">${service_name} (${service_url})</a><#else>${service_name})</#if>. It is the digital repository of ALL (OR THOSE QUALIFIED/CONSTRAINED WITH, E.G., �research�) MEMBERS OR DEPARTMENTS OR DEPOSITING/ASSOCIATED INSTITUTIONS of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if>.</p>
-<p><span class="red-strong">TODO:</span> The aim of the repository is to provide open access to DIGITAL COLLECTIONS OR RESEARCH OUTPUTS OR SCHOLARLY OUTPUTS of <#if service_owner_the>the </#if>${service_owner} IN SOME SPECIFIC FIELD (IN LINE WITH THE REPOSITORY TYPE (${repo_type}) AND SUBJECTS<#if repo_subjects?has_content> (<#list repo_subjects as element>${element}<#if element?has_next>, </#if></#list>)</#if>). The main aim of this repository is to increase the visibility of its <#if item_types_overally=="educational materials">teaching and </#if>research output / OR of the MEMBERS OR DEPARTMENTS<#if allowed_depositors?has_content> OR ALLOWED DEPOSITORS (<#list allowed_depositors as element>${element}<#if element?has_next>, </#if></#list>)</#if> of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if> and, at the same time, provide free access, in compliance with the <#if oa_policy_url!=""><a target="_blank" href="${oa_policy_url}"> Open Access/Science Policy (${oa_policy_url })</a><#else>LINK TO Open Access/Science Policy (ALSO PRINTABLE URL)</#if> of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if> passed by the GOVERNING BODY (DATE OF POLICY, E.G., 1 April 2020).</p>
-<p><span class="red-strong">TODO:</span> The aim of this policy is to ensure that the contents of <#if service_name_the>the </#if>${service_name} reflect and strengthen <#if service_owner_the>the </#if>${service_owner}&apos;s<#if parent_organization!=""> OR ${parent_organization}&apos;s</#if> tradition of research excellence, by increasing the visibility of <#if service_owner_the>the </#if>${service_owner}&apos;s research, and providing open access to its research outputs. This policy also establishes the framework within which <#if service_name_the>the </#if>${service_name} is managed.</p>
-<p><span class="red-strong">TODO:</span> DESCRIPTION OF REPOSITORY PLATFORM AND VENDOR; EXAMPLE: The repository uses a <a target="_blank" href="https://github.com/DSpace/DSpace">DSpace</a>-based software platform developed and maintained by the MAINTAINER/SUPPORTER (WITH LINK AND PRINTABLE URL). The software platform is compliant with the <a target="_blank" href="https://guidelines.openaire.eu/en/latest/literature/index_guidelines-lit_v3.html ">OpenAIRE Guidelines for Literature Repositories v3</a>.</p>
-<p><span class="red-strong">TODO:</span> DESCRIPTION OF FRONT-END APP SUPPORTING DEPOSITORS OR OTHER USERS, EXAMPLE: The repository is supplied with the external application FRONT END APP NAME (LINK AND PRINTABLE URL), developed by the SOLUTION DEVELOPER (LINK AND PRINTABLE URL). In FRONT-END APP, authors and funding information are presented as normalized entities. FRONT-END APP also enables metadata export and displays <a target="_blank" href="https://www.altmetric.com/">Altmetric scores</a> and <a target="_blank" href="https://www.dimensions.ai/">Dimensions</a> citations.</p>
+<p><span class="red-strong">TODO</span>: TO REVIEW AND EDIT BY POLICY WRITER, (SEARCH FOR PARAGRAPHS WITH &quot;TODO:&quot;)</p>
+<p><span class="red-strong">TODO</span>: <#if service_owner_the>The </#if>${service_owner} has established the ${repo_type} repository <#if service_url!=""><a target="_blank" href="${service_url}">${service_name} (${service_url})</a><#else>${service_name})</#if>. It is the digital repository of ALL (OR THOSE QUALIFIED/CONSTRAINED WITH, E.G., "research") MEMBERS OR DEPARTMENTS OR DEPOSITING/ASSOCIATED INSTITUTIONS of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if>.</p>
+<p><span class="red-strong">TODO</span>: The aim of the repository is to provide open access to DIGITAL COLLECTIONS OR RESEARCH OUTPUTS OR SCHOLARLY OUTPUTS of <#if service_owner_the>the </#if>${service_owner} IN SOME SPECIFIC FIELD (IN LINE WITH THE REPOSITORY TYPE (${repo_type}) AND SUBJECTS<#if repo_subjects?has_content> (<#list repo_subjects as element>${element}<#if element?has_next>, </#if></#list>)</#if>). The main aim of this repository is to increase the visibility of its <#if item_types_overally=="educational materials">teaching and </#if>research output / OR of the MEMBERS OR DEPARTMENTS<#if allowed_depositors?has_content> OR ALLOWED DEPOSITORS (<#list allowed_depositors as element>${element}<#if element?has_next>, </#if></#list>)</#if> of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if> and, at the same time, provide free access, in compliance with the <#if oa_policy_url!=""><a target="_blank" href="${oa_policy_url}"> Open Access/Science Policy (${oa_policy_url })</a><#else>LINK TO Open Access/Science Policy (ALSO PRINTABLE URL)</#if> of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if> passed by the GOVERNING BODY (DATE OF POLICY, E.G., 1 April 2020).</p>
+<p><span class="red-strong">TODO</span>: The aim of this policy is to ensure that the contents of <#if service_name_the>the </#if>${service_name} reflect and strengthen <#if service_owner_the>the </#if>${service_owner}&apos;s<#if parent_organization!=""> OR ${parent_organization}&apos;s</#if> tradition of research excellence, by increasing the visibility of <#if service_owner_the>the </#if>${service_owner}&apos;s research, and providing open access to its research outputs. This policy also establishes the framework within which <#if service_name_the>the </#if>${service_name} is managed.</p>
+<p><span class="red-strong">TODO</span>: DESCRIPTION OF REPOSITORY PLATFORM AND VENDOR; EXAMPLE: The repository uses a <a target="_blank" href="https://github.com/DSpace/DSpace">DSpace</a>-based software platform developed and maintained by the MAINTAINER/SUPPORTER (WITH LINK AND PRINTABLE URL). The software platform is compliant with the <a target="_blank" href="https://guidelines.openaire.eu/en/latest/literature/index_guidelines-lit_v3.html ">OpenAIRE Guidelines for Literature Repositories v3</a>.</p>
+<p><span class="red-strong">TODO</span>: DESCRIPTION OF FRONT-END APP SUPPORTING DEPOSITORS OR OTHER USERS, EXAMPLE: The repository is supplied with the external application FRONT END APP NAME (LINK AND PRINTABLE URL), developed by the SOLUTION DEVELOPER (LINK AND PRINTABLE URL). In FRONT-END APP, authors and funding information are presented as normalized entities. FRONT-END APP also enables metadata export and displays <a target="_blank" href="https://www.altmetric.com/">Altmetric scores</a> and <a target="_blank" href="https://www.dimensions.ai/">Dimensions</a> citations.</p>
 <p>Related documents:</p>
 <ul>
         	<#if include_cc_explainer>
@@ -39,25 +39,25 @@ ${embedded_data?no_esc}
         	<#if manual_url!="">
         	<li><a target="_blank" href="${manual_url}">User Manual (${manual_url})</a></li>
         	<#else>
-        	<li><span class="red-strong">TODO:</span> OPTIONAL LINK TO User Manual (ALSO PRINTABLE URL)</li>
+        	<li><span class="red-strong">TODO</span>: OPTIONAL LINK TO User Manual (ALSO PRINTABLE URL)</li>
         	</#if>
         	<#if oa_policy_url!="">
         	<li><a target="_blank" href="${oa_policy_url}">Open Access/Science Policy (${oa_policy_url })</a></li>
         	<#else>
-        	<li><span class="red-strong">TODO:</span> LINK TO Open Access/Science Policy (ALSO PRINTABLE URL)</li>
+        	<li><span class="red-strong">TODO</span>: LINK TO Open Access/Science Policy (ALSO PRINTABLE URL)</li>
         	</#if>
 </ul>
 </#if>
  
 <!-- DESIGNATED COMMUNITY -->
  
-<h2><span class=�red-strong�>TODO:</span> Designated Community</h2>
+<h2><span class="red-strong">TODO</span>: Designated Community</h2>
 <p>Describe briefly the groups of current and potential users and communities for whom the content of the repository is relevant. The designated community may include various sub-communities and it may be relevant to distinguish between primary and secondary communities or internal and external users. For example:</p>
 <p>The Designated Community of <#if service_name_the>the </#if>${service_name} includes the following user groups:</p>
 <ul>
         	<li>Internal users: MEMBERS, STAFF OR FACULTY of <#if service_owner_the>the </#if>${service_owner}<#if parent_organization!=""> OR ${parent_organization}</#if>. They can deposit their research outputs in the repository, browse and search the metadata, and, in most cases, download content from all repository collections.</li>
         	<li>External users: local and international professional researchers, citizen scientists, teachers, students, informed citizens, the general audience, etc. They can browse and search the metadata, and download the Open Access content from the repository.</li>
-        	<li>Associates: local and international professional researchers who have joint projects with internal users. They can browse and search the metadata, download Open Access content from the repository, access the collection dedicated to their project.</li>
+        	<li>Associates: local and international professional researchers who have joint projects with internal users. They can browse and search the metadata, download Open Access content from the repository, and access the collection dedicated to their project.</li>
 </ul>
  
 <!-- METADATA POLICY -->
@@ -72,8 +72,8 @@ ${embedded_data?no_esc}
 </#if>
  
 <#if metadata_policy_flavour=="cc0" || metadata_policy_flavour=="cc-by">
-        	<li>The metadata of the items deposited in <#if service_name_the>the </#if>${service_name} are made available under the Creative Commons <#if metadata_policy_flavour=="cc0"><a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option (�no rights reserved", https://creativecommons.org/publicdomain/zero/1.0/)</a>. This dedication<#else><a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Attribution CC BY (Attribution Only)</a> licence. This licence</#if> applies exclusively to the metadata associated with the items deposited and under no circumstances is a substitute for or affects their individual licences or permits.</li>
-        	<li>Anyone can access, copy, share, modify, harvest and re-use the metadata for any purpose, free of charge and without requiring permission from <#if service_owner_the>the </#if>${service_owner}<#if metadata_policy_flavour=="cc-by">, as long as the original source of metadata of is cited</#if>.</li>
+        	<li>The metadata of the items deposited in <#if service_name_the>the </#if>${service_name} are made available under the Creative Commons <#if metadata_policy_flavour=="cc0"><a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option ("no rights reserved", https://creativecommons.org/publicdomain/zero/1.0/)</a>. This dedication<#else><a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Attribution CC BY (Attribution Only)</a> licence. This licence</#if> applies exclusively to the metadata associated with the items deposited and under no circumstances is a substitute for or affects their licences or permits.</li>
+        	<li>Anyone can access, copy, share, modify, harvest and re-use the metadata for any purpose, free of charge and without requiring permission from <#if service_owner_the>the </#if>${service_owner}<#if metadata_policy_flavour=="cc-by">, as long as the source of metadata is cited</#if>.</li>
 <#else><!-- descriptive (OpenDOAR) -->
         	<#if commercial_metadata_use_allowed><!-- Minimum -->
         	<li>The metadata may be re-used in any medium without prior permission for not-for-profit purposes provided:</li>
@@ -105,7 +105,7 @@ ${embedded_data?no_esc}
         	<li>All items are individually tagged with appropriate permissions and terms of use.</li>
  
 <#if data_policy_flavour_cc>
-        	<li>The application of open licences, preferably the Creative Commons <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC BY (Attribution)</a> licence, is recommended. This is at the discretion of the author and depends on funder�s requirements<#if includes_publications> or publishing arrangements</#if>, and licensing requirements of input content. In some instances,
+        	<li>The application of open licences, preferably the Creative Commons <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC BY (Attribution)</a> licence, is recommended. This is at the discretion of the author and depends on funder"s requirements<#if includes_publications> or publishing arrangements</#if>, and licensing requirements of input content. In some instances,
 <#if mention_cc_by_sa>
 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA (Attribution + Share-alike)</a>,
 </#if>
@@ -116,7 +116,7 @@ ${embedded_data?no_esc}
 <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA (Attribution + No Commercial Use + Share-alike)</a>,
 </#if>
 <#if mention_cc_by_sa || mention_cc_by_nc || mention_cc_by_nc_sa>or </#if>
-<a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option (�no rights reserved")</a> may be more appropriate.<#if includes_software> When software is deposited, the applied commonly-used software licence should be indicated.</#if></li>
+<a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option ("no rights reserved")</a> may be more appropriate.<#if includes_software> When software is deposited, the applied commonly-used software licence should be indicated.</#if></li>
         	<li>The applied licence is explicitly indicated in item metadata.</li>
         	<#if includes_publications>
         	<li>Publication metadata must contain full bibliographic information including DOI or other persistent identifiers.</li>
@@ -134,7 +134,7 @@ ${embedded_data?no_esc}
         	<#else>
         	<li>If not tagged differently, copies of data can be:
                     	<ul>
-                                	<li>reproduced, displayed or performed, given to third parties and preserved in any format, medium or in a database</li>
+                                	<li>reproduced, displayed or performed, given to third parties and preserved in any format, medium or database</li>
                                 	<li>for personal research or study, educational, <#if commercial_item_use_allowed>not-for-profit, or commercial<#else>or not-for-profit</#if> purposes without prior permission or charge provided:
                                             	<ul>
                                                         	<li>the authors, title and full bibliographic details are given</li>
@@ -221,7 +221,7 @@ ${embedded_data?no_esc}
                     	</ul>
         	</li>
         	</#if>
-        	<li><span class="red-strong">TODO:</span> The submission process must conform to the submission guidelines in DETAILING DOCUMENT, E.G.,
+        	<li><span class="red-strong">TODO</span>: The submission process must conform to the submission guidelines in DETAILING DOCUMENT, E.G.,
 <#if manual_url!=""><a target="_blank" href="${manual_url}">User Manual (${manual_url})</a><#else>OPTIONAL LINK TO User Manual (ALSO PRINTABLE URL)</#if>
 AND/OR
 <#if oa_policy_url!=""><a target="_blank" href="${oa_policy_url}">Open Access/Science Policy (${oa_policy_url })</a><#else>LINK TO Open Access/Science Policy (ALSO PRINTABLE URL)</#if>
@@ -229,7 +229,7 @@ and applicable embargos</li>
         	<#if available_after_embargo> 
         	<li>Items can be deposited at any time, but will not be made publicly accessible before any publishers&apos; or funders&apos; embargo period has expired.</li>
         	<#else>
-        	<li>No embargo policy defined.</li>
+        	<li>No embargo policy is defined.</li>
         	</#if>
  
         	<#if opendoar_minimum>
@@ -247,7 +247,7 @@ and applicable embargos</li>
         	</#if>
  
         	<#if file_size_limit_mb gt 0>
-        	<li>Files exceeding ${file_size_limit_mb} MB in size should not be directly uploaded to the repository. For files with sizes larger than ${file_size_limit_mb} MB, a special upload permission may be sought out with repository administrators.</li>
+        	<li>Files exceeding ${file_size_limit_mb} MB in size should not be directly uploaded to the repository. For files with sizes larger than ${file_size_limit_mb} MB, special upload permission may be sought out with repository administrators.</li>
         	</#if>
  
         	<li>By depositing metadata and the content into <#if service_name_the>the </#if>${service_name}, the depositors accept the terms and conditions defined in this Repository Policy.</li>
@@ -277,10 +277,10 @@ and applicable embargos</li>
  
 <h2>Privacy Policy</h2>
 <ul>
-        	<li><span class="red-strong">TODO:</span> This is the minimal privacy policy, suitable for repositories that collect the minimum amount of personal data and do not share it with third parties. If your repository collects more detailed personal data, customize the text accordingly.</li>
+        	<li><span class="red-strong">TODO</span>: This is a minimal privacy policy suitable for repositories that collect the minimum amount of personal data and do not share it with third parties. If your repository collects more detailed personal data, customize the text accordingly.</li>
 
 <#if collected_data?size != 0>
-	<li>    
+	<li>
     	Whenever a user visits the repository, the following information is automatically collected and stored:
     	<ul>
         	<#list collected_data as element>
@@ -298,7 +298,7 @@ The system collects personal information submitted during the deposit process. S
 	<li>Google Analytics is used to analyse the use of this repository. Google&apos;s privacy policy is available at: <a href="http://www.google.com/privacypolicy.html" target="_blank">http://www.google.com/privacypolicy.html</a>.</li>
 </#if>
 
-	<li><span class="red-strong">TODO:</span> If you use third-party applications, you should list them in the privacy policy and provide links to their policies relating to personal data.</li>
+	<li><span class="red-strong">TODO</span>: If you use third-party applications, you should list them in the privacy policy and provide links to their policies relating to personal data.</li>
 </ul>
 
 <!-- CURATION POLICY, in line with CTS -->
@@ -307,7 +307,7 @@ The system collects personal information submitted during the deposit process. S
  
 <ul>
 <#if empty_curation_levels>
-        	<li>No curation policy defined.</li>
+        	<li>No curation policy is defined.</li>
 <#else>
         	<li>Initial items are retained unchanged and edits are only made on copies of originals.</li>
         	<li>Annotations or edits are made if allowed by relevant licences.</li>
@@ -397,7 +397,7 @@ The system collects personal information submitted during the deposit process. S
 <h2>Harvesting Policy</h2>
 
 <#if metadata_policy_flavour=="cc0">
-<li>The metadata of the items deposited in <#if service_name_the>the </#if>${service_name} are made available to harvesters and aggregators under the Creative Commons <a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option (�no rights reserved", https://creativecommons.org/publicdomain/zero/1.0/)</a></li>
+<li>The metadata of the items deposited in <#if service_name_the>the </#if>${service_name} are made available to harvesters and aggregators under the Creative Commons <a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option ("no rights reserved", https://creativecommons.org/publicdomain/zero/1.0/)</a></li>
 <#elseif metadata_policy_flavour=="cc-by">
 <li>Anyone can access, copy, share, modify, harvest and re-use the metadata for any purpose, free of charge and without requiring permission from <#if service_owner_the>the </#if>${service_owner}, as long as the original source of metadata of is cited</li>
 <#else><!-- descriptive (OpenDOAR) -->
@@ -441,7 +441,7 @@ The system collects personal information submitted during the deposit process. S
 <p>Unless <a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication option</a> is declared, the user must provide the attribution of the original work by giving appropriate credit, providing a link to its licence and indicating if changes were made. The credit is given by providing the name the creator, copyright notice, licence notice and disclaimer notice, as well as a reference to the source<#if includes_publications>, which in the case of publications include title and full bibliographic details</#if>. The user may not imply or suggest the licensor&apos;s endorsement of the user or their work.</p>
  
 <#if mention_cc_by_sa || mention_cc_by_nc_sa>
-        	<p>With Share-alike condition (if <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a> or <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a> licence is declared), any adaptation or derived contributions must be distributed under the same licence as the original or under a compatible one.</p>
+        	<p>With the "Share Alike" condition (if <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a> or <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a> licence is declared), any adaptation or derived contributions must be distributed under the same licence as the original or under a compatible one.</p>
 </#if>
  
 <#if mention_cc_by_nc || mention_cc_by_nc_sa>
